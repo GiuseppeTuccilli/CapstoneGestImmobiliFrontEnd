@@ -8,6 +8,13 @@ $new-theme-colors: (
   "grigioChiaro": #626262,
 );
 
+.navbar {
+  background-color: #626262;
+  a {
+    color: white;
+  }
+}
+
 $theme-colors: map-merge($theme-colors, $new-theme-colors);
 
 @import "../../scss/bootstrap.scss";
