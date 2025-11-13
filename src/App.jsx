@@ -11,6 +11,7 @@ import MyNavbar from "./components/MyNavbar";
 import RegisterForm from "./components/RegisterPage";
 import ElencoImmobili from "./components/ElencoImmobili";
 import LoginPage from "./components/LoginPage";
+import NuovoImmobile from "./components/NuovoImmobile";
 
 function App() {
   return (
@@ -31,6 +32,15 @@ function App() {
           />
           <Route path="/clienti" element={<MyNavbar />} />
           <Route path="/visite" element={<MyNavbar />} />
+          <Route
+            path="/NuovoImmobile"
+            element={
+              <>
+                <MyNavbar />
+                <NuovoImmobile />
+              </>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </>

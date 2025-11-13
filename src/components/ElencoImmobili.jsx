@@ -23,7 +23,7 @@ function ElencoImmobili() {
           <p className="  fw-semibold">
             Superficie: <span>data</span>
           </p>
-          <p className="  fw-semibold">
+          <p className=" fw-semibold">
             Comune: <span>data</span>
           </p>
         </Col>
