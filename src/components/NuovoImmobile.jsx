@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Modal from "react-bootstrap/Modal";
 import Alert from "react-bootstrap/Alert";
+import base from "../variabili";
 
 function NuovoImmobile() {
   const [comune, setComune] = useState("");
@@ -61,7 +62,7 @@ function NuovoImmobile() {
   let token = localStorage.getItem("token");
 
   const getProvince = () => {
-    fetch("http://localhost:8080/province", {
+    fetch(base + "/province", {
       method: "GET",
       headers: {
         Authorization: "Bearer " + token,
@@ -88,7 +89,7 @@ function NuovoImmobile() {
       setShowAlert(true);
       return;
     }
-    fetch("http://localhost:8080/comuni/" + idProvincia, {
+    fetch(base + "/comuni/" + idProvincia, {
       method: "GET",
       headers: {
         Authorization: "Bearer " + token,
@@ -110,7 +111,7 @@ function NuovoImmobile() {
   };
 
   const salvaImmobile = () => {
-    fetch("http://localhost:8080/immobili", {
+    fetch(base + "/immobili", {
       method: "POST",
       body: JSON.stringify(payload),
       headers: {

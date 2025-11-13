@@ -2,8 +2,17 @@ import { useState } from "react";
 import { Container, Row, Col, Image } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import base from "../variabili";
 
 function ElencoImmobili() {
+  //let token = localStorage.getItem("token");
+  let token =
+    "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NjMwNjMyMzEsImV4cCI6MTc2MzY2ODAzMSwic3ViIjoiMTAyIn0.QIRBpkEjNPa9jz_b8suA4ROsy_vf_uID0PDCmt4YiUk";
+
+  const [immobili, setImmobili] = useState([]);
+
+  console.log(base);
+
   return (
     <Container fluid>
       <Row className="py-1 border border-3 border-black">

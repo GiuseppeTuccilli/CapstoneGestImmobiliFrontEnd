@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form";
 import { Value } from "sass";
 import Modal from "react-bootstrap/Modal";
 import { Link, useNavigate } from "react-router-dom";
+import base from "../variabili";
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,7 +17,7 @@ function LoginPage() {
   };
 
   const Login = () => {
-    fetch("http://localhost:8080/auth/login", {
+    fetch(base + "/auth/login", {
       method: "POST",
       body: JSON.stringify(payload),
       headers: { "Content-type": "application/json" },

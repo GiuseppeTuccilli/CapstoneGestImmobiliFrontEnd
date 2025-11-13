@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form";
 import { Value } from "sass";
 import Modal from "react-bootstrap/Modal";
 import { Link } from "react-router-dom";
+import base from "../variabili";
 function RegisterForm() {
   const [nome, setNome] = useState("");
   const [cognome, setCognome] = useState("");
@@ -26,7 +27,7 @@ function RegisterForm() {
   };
 
   const submitForm = () => {
-    fetch("http://localhost:8080/auth/register", {
+    fetch(base + "/auth/register", {
       method: "POST",
       body: JSON.stringify(payload),
       headers: { "Content-type": "application/json" },
