@@ -3,12 +3,18 @@ import { Col, Container } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Value } from "sass";
+import Modal from "react-bootstrap/Modal";
 function RegisterForm() {
   const [nome, setNome] = useState("");
   const [cognome, setCognome] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [telefono, setTelefono] = useState("");
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const payload = {
     nome: nome,
@@ -25,6 +31,7 @@ function RegisterForm() {
       headers: { "Content-type": "application/json" },
     }).then((res) => {
       if (res.ok) {
+        handleShow();
         console.log(res);
       }
     });
@@ -32,6 +39,18 @@ function RegisterForm() {
 
   return (
     <Container className="p-5 d-flex justify-content-center">
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Registrazione avvenuta con successo</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Grazie, {nome} per esserti registrato</Modal.Body>
+        <Modal.Footer>
+          <Button variant="success" onClick={handleClose}>
+            ok
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
       <Col xs={12} md={6}>
         <Form
           onSubmit={(e) => {
