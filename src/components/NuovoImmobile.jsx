@@ -12,8 +12,7 @@ function NuovoImmobile() {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  let token =
-    "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NjMwNDQ3ODAsImV4cCI6MTc2MzY0OTU4MCwic3ViIjoiMTAzIn0.gOW_Bz58NUyeDWQIO3YEKh8St1Igo03nMO3WqzAhoOM";
+  let token = localStorage.getItem("token");
 
   const getProvince = () => {
     fetch("http://localhost:8080/province", {
