@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -37,8 +37,6 @@ function NuovoImmobile() {
         console.log(er);
       });
   };
-
-  const getComuni = () => {};
 
   return (
     <Container fluid>
