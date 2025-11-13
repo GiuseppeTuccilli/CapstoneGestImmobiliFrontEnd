@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Container, Row, Col, Image } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
@@ -5,18 +6,29 @@ import Card from "react-bootstrap/Card";
 function ElencoImmobili() {
   return (
     <Container fluid>
-      <Row className="py-1 border border-1 border-black">
-        <Col xs={6} lg={3} className="d-flex justify-content-center">
+      <Row className="py-1 border border-3 border-black">
+        <Col className="d-flex justify-content-center border-end  border-1">
           <Image src="holder.js/171x180" thumbnail style={{ height: "8em" }} />
         </Col>
-        <Col xs={0} lg={3} className="d-flex justify-content-center">
-          <h4>Descrizione</h4>
+        <Col className="d-none d-md-flex justify-content-center border-end  border-1">
+          <p className="  fw-semibold">descrizione immobile</p>
         </Col>
-        <Col xs={0} lg={3} className="d-flex justify-content-center">
-          <h4>Dati</h4>
+        <Col className="d-none d-md-flex flex-column justify-content-center border-end  border-1">
+          <p className="  fw-semibold">
+            Tipologia: <span>data</span>
+          </p>
+          <p className="  fw-semibold">
+            Prezzo: <span>data</span>{" "}
+          </p>
+          <p className="  fw-semibold">
+            Superficie: <span>data</span>
+          </p>
+          <p className="  fw-semibold">
+            Comune: <span>data</span>
+          </p>
         </Col>
-        <Col xs={6} lg={3} className="d-flex justify-content-center ">
-          <div className="d-flex flex-column px-4">
+        <Col className="d-flex justify-content-center ">
+          <div className="d-flex flex-column px-4  ">
             <Button className="my-1">Richieste Inerenti</Button>
             <Button className="my-1">Visite</Button>
             <Button className="my-1">Dettagli</Button>
