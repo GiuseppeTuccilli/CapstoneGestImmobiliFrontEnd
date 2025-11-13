@@ -40,10 +40,8 @@ function NuovoImmobile() {
   return (
     <Container fluid>
       <Modal show={show} onHide={handleClose} style={{ height: "20em" }}>
-        <Modal.Header closeButton>
-          <Modal.Title className="sticky-top top-0 z-1 bg-light">
-            Seleziona Provincia
-          </Modal.Title>
+        <Modal.Header className="sticky-top top-0 z-1 bg-light" closeButton>
+          <Modal.Title>Seleziona Provincia</Modal.Title>
         </Modal.Header>
         {province.map((p) => {
           return (
