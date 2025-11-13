@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Value } from "sass";
 import Modal from "react-bootstrap/Modal";
+import { Link } from "react-router-dom";
 function RegisterForm() {
   const [nome, setNome] = useState("");
   const [cognome, setCognome] = useState("");
@@ -38,7 +39,7 @@ function RegisterForm() {
   };
 
   return (
-    <Container className="p-5 d-flex justify-content-center">
+    <Container className="p-5 d-flex justify-content-center pb-0">
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Registrazione avvenuta con successo</Modal.Title>
@@ -124,6 +125,12 @@ function RegisterForm() {
             {" "}
             Submit{" "}
           </Button>
+          <p className="mt-2">
+            Sei già registrato? effetua il{" "}
+            <span>
+              <Link to={"/login"}>login</Link>
+            </span>
+          </p>
         </Form>
       </Col>
     </Container>
