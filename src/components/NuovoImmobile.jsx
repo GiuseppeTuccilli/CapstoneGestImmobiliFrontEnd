@@ -1,9 +1,67 @@
-import { Container, Row, Col } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
+import Modal from "react-bootstrap/Modal";
 
 function NuovoImmobile() {
+  const [comune, setComune] = useState("");
+  const [provincia, setProvincia] = useState("");
+  const [show, setShow] = useState(false);
+  const [province, setProvince] = useState([]);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  let token =
+    "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NjMwNDQ3ODAsImV4cCI6MTc2MzY0OTU4MCwic3ViIjoiMTAzIn0.gOW_Bz58NUyeDWQIO3YEKh8St1Igo03nMO3WqzAhoOM";
+
+  const getProvince = () => {
+    fetch("http://localhost:8080/province", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error(res.status);
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        setProvince(data);
+      })
+      .catch((er) => {
+        console.log(er);
+      });
+  };
+
+  const getComuni = () => {};
+
   return (
     <Container fluid>
+      <Modal show={show} onHide={handleClose} style={{ height: "20em" }}>
+        <Modal.Header closeButton>
+          <Modal.Title className="sticky-top top-0 z-1 bg-light">
+            Seleziona Provincia
+          </Modal.Title>
+        </Modal.Header>
+        {province.map((p) => {
+          return (
+            <Modal.Body
+              className="provinciaSelect"
+              onClick={() => {
+                setProvincia(p.nomeProvincia);
+                handleClose();
+              }}
+            >
+              {p.nomeProvincia}
+            </Modal.Body>
+          );
+        })}
+      </Modal>
       <h3 className="text-center my-2 py-2 border-bottom border-1 border-white">
         Nuovo Immobile
       </h3>
@@ -29,6 +87,7 @@ function NuovoImmobile() {
             <h4 className="m-0 w-50">Numero vani</h4>
             <input type="number" min={0} max={12}></input>
           </div>
+
           <div className="d-flex my-2 justify-content-start w-100">
             <h4 className="m-0 w-50">Prezzo</h4>
             <input type="number" min={0}></input>
@@ -135,6 +194,29 @@ function NuovoImmobile() {
               </div>
             </Col>
           </Row>
+        </Col>
+        <Col xs={12} md={6}>
+          <div className="d-flex my-2 justify-content-start w-100">
+            <h4 className="m-0 w-50 text-center">Provincia</h4>
+            <input type="text" value={provincia}></input>
+            <Button
+              onClick={() => {
+                handleShow();
+                getProvince();
+              }}
+            >
+              seleziona
+            </Button>
+          </div>
+          <div className="d-flex my-2 justify-content-start w-100">
+            <h4 className="m-0 w-50 text-center">Comune</h4>
+            <input type="text" value={comune}></input>
+            <Button>seleziona</Button>
+          </div>
+          <div className="d-flex my-2 justify-content-start w-100">
+            <h4 className="m-0 w-50 text-center">Indirizzo</h4>
+            <input type="text"></input>
+          </div>
         </Col>
       </Row>
     </Container>
