@@ -52,6 +52,7 @@ function RegisterForm() {
       </Modal>
 
       <Col xs={12} md={6}>
+        <h2 className="text-center">Registrazione utente</h2>
         <Form
           onSubmit={(e) => {
             e.preventDefault();
