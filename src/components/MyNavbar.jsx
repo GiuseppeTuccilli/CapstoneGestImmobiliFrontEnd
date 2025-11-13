@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 function MyNavbar() {
   return (
-    <nav className="navbar navbar-expand-lg ">
+    <nav className="navbar navbar-expand-lg sticky-top ">
       <div className="container-fluid">
         <button
           className="navbar-toggler text-light"
@@ -22,7 +22,7 @@ function MyNavbar() {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0 w-100 justify-content-around">
             <li className="nav-item">
-              <Link className="nav-link" aria-current="page" to={"/home"}>
+              <Link className="nav-link" aria-current="page" to={"/"}>
                 Home
               </Link>
             </li>
