@@ -4,10 +4,11 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Value } from "sass";
 import Modal from "react-bootstrap/Modal";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const payload = {
     email: email,
@@ -30,6 +31,7 @@ function LoginPage() {
       .then((data) => {
         console.log(data);
         localStorage.setItem("token", JSON.stringify(data.token));
+        navigate("/home");
       })
       .catch((er) => {
         console.log(er);
