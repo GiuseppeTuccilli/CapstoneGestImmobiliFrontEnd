@@ -43,12 +43,20 @@ function LoginPage() {
   return (
     <Container className="p-5 pb-0 d-flex justify-content-center">
       <Col xs={12} md={6}>
-        <h2 className="text-center">Login</h2>
+        <div>
+          <h1 className="text-center border border-1 border-azzurroPolvere p-3 bg-beige ">
+            Gestionale Immobili
+          </h1>
+          <h2 className="text-center border border-1 border-azzurroPolvere p-3 bg-bluGuado text-light">
+            Login
+          </h2>
+        </div>
         <Form
           onSubmit={(e) => {
             e.preventDefault();
             Login();
           }}
+          className="border border-1 border-beige bg-polvereScuro p-3"
         >
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email </Form.Label>
