@@ -48,6 +48,7 @@ function HomePage() {
       })
       .catch((er) => {
         console.log(er);
+        console.log("catch");
         setError(true);
         setLoading(false);
       });
@@ -101,13 +102,13 @@ function HomePage() {
         <Col className="border border-3 border-polvereScuro bg-azzurroPolvere p-3">
           <h3 className="mb-0">Utente:</h3>
           <p className="fs-5 pb-0 ">
-            <span>{loading ? <Spinner animation="grow" /> : userNome} </span>
-            <span>{loading ? <Spinner animation="grow" /> : userCognome}</span>
+            <span>{loading ? <Spinner /> : userNome} </span>
+            <span>{loading ? <Spinner /> : userCognome}</span>
           </p>
           <div className="d-flex align-items-end">
             <h4 className="mb-0">Ruolo: </h4>
             <p className="m-0 ms-2 fs-5">
-              <span> {loading ? <Spinner animation="grow" /> : userRuolo}</span>
+              <span> {loading ? <Spinner /> : userRuolo}</span>
             </p>
           </div>
           {userRuolo !== "" && (
@@ -117,8 +118,22 @@ function HomePage() {
           )}
         </Col>
         <Col className="d-flex flex-column align-items-center justify-content-center border border-3 border-polvereScuro bg-azzurroPolvere p-3">
-          <Button className="my-1 bg-success w-50 ">Nuovo cliente</Button>
-          <Button className="my-1 bg-success w-50 ">Visite</Button>
+          <Button
+            className="my-1 bg-success w-50 "
+            onClick={() => {
+              navigate("/nuovoCliente");
+            }}
+          >
+            Nuovo cliente
+          </Button>
+          <Button
+            className="my-1 bg-success w-50 "
+            onClick={() => {
+              navigate("/visite");
+            }}
+          >
+            Visite
+          </Button>
           {userRuolo === "ADMIN" && (
             <Button
               className="my-1 bg-success w-50 "

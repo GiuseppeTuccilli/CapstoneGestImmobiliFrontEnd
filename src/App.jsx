@@ -13,6 +13,7 @@ import ElencoImmobili from "./components/ElencoImmobili";
 import LoginPage from "./components/LoginPage";
 import NuovoImmobile from "./components/NuovoImmobile";
 import HomePage from "./components/HomePage";
+import NuovoCliente from "./components/NuovoCliente";
 
 function App() {
   return (
