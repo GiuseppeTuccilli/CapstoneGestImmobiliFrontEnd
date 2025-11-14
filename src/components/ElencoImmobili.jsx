@@ -8,6 +8,7 @@ import particolare from "../assets/immagini/particolare.jpg";
 import speciale from "../assets/immagini/speciale.jpg";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
+import { Link, useNavigate } from "react-router-dom";
 
 function ElencoImmobili() {
   const [token, setToken] = useState(
@@ -22,6 +23,8 @@ function ElencoImmobili() {
   const [provincia, setProvincia] = useState("");
   const [indirizzo, setIndirizzo] = useState("");
   const [tipologia, setTipologia] = useState("");
+
+  const navigate = useNavigate();
 
   const getImmobili = () => {
     fetch(
@@ -56,10 +59,10 @@ function ElencoImmobili() {
 
   useEffect(() => {
     if (!token) {
-      return;
+      navigate("/login");
     }
     getImmobili();
-  }, [comune, provincia, indirizzo]);
+  }, [comune, provincia, indirizzo, token]);
 
   const handleCheckProvincia = (e) => {
     let val = e.target.checked;
@@ -136,7 +139,7 @@ function ElencoImmobili() {
               Immobili
             </h2>
             <h4 className="text-center m-0 p-3 border border-1 border-beige bg-sabbia">
-              Filtri<i class="bi bi-funnel"></i>
+              Filtri<i className="bi bi-funnel"></i>
             </h4>
           </div>
           <div className="col-8">

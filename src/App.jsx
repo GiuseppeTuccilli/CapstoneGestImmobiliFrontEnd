@@ -14,6 +14,7 @@ import LoginPage from "./components/LoginPage";
 import NuovoImmobile from "./components/NuovoImmobile";
 import HomePage from "./components/HomePage";
 import NuovoCliente from "./components/NuovoCliente";
+import ElencoClienti from "./components/ElencoClienti";
 
 function App() {
   return (
@@ -40,7 +41,15 @@ function App() {
               </>
             }
           />
-          <Route path="/clienti" element={<MyNavbar />} />
+          <Route
+            path="/clienti"
+            element={
+              <>
+                <MyNavbar />
+                <ElencoClienti />
+              </>
+            }
+          />
           <Route path="/visite" element={<MyNavbar />} />
           <Route
             path="/NuovoImmobile"
