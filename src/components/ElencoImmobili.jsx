@@ -10,9 +10,7 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 
 function ElencoImmobili() {
-  //let token = localStorage.getItem("token");
-  let token =
-    "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NjMwNjMyMzEsImV4cCI6MTc2MzY2ODAzMSwic3ViIjoiMTAyIn0.QIRBpkEjNPa9jz_b8suA4ROsy_vf_uID0PDCmt4YiUk";
+  let token = localStorage.getItem("token");
 
   const [immobili, setImmobili] = useState([]);
   const [filtroComune, setFiltroComune] = useState(false);
