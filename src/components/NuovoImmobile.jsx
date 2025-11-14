@@ -7,6 +7,9 @@ import Alert from "react-bootstrap/Alert";
 import base from "../variabili";
 
 function NuovoImmobile() {
+  const [token, setToken] = useState(
+    localStorage.getItem("token").slice(1, -1)
+  );
   const [comune, setComune] = useState("");
   const [provincia, setProvincia] = useState("");
   const [idProvincia, setIdProvincia] = useState(null);
@@ -58,8 +61,6 @@ function NuovoImmobile() {
   const handleShowCom = () => setShowCom(true);
   const handleCloseSalvato = () => setSalvatoShow(false);
   const handleShowSalvato = () => setSalvatoShow(true);
-
-  let token = localStorage.getItem("token");
 
   const getProvince = () => {
     fetch(base + "/province", {

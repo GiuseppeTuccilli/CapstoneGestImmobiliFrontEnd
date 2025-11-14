@@ -32,7 +32,8 @@ function LoginPage() {
       .then((data) => {
         console.log(data);
         localStorage.setItem("token", JSON.stringify(data.token));
-        navigate("/home");
+        console.log(localStorage.getItem("token"));
+        //navigate("/");
       })
       .catch((er) => {
         console.log(er);

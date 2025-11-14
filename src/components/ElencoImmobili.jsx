@@ -10,8 +10,9 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 
 function ElencoImmobili() {
-  let token = localStorage.getItem("token");
-
+  const [token, setToken] = useState(
+    localStorage.getItem("token").slice(1, -1)
+  );
   const [immobili, setImmobili] = useState([]);
   const [filtroComune, setFiltroComune] = useState(false);
   const [filtroProvincia, setFiltroProvincia] = useState(false);
@@ -54,6 +55,9 @@ function ElencoImmobili() {
   };
 
   useEffect(() => {
+    if (!token) {
+      return;
+    }
     getImmobili();
   }, [comune, provincia, indirizzo]);
 
