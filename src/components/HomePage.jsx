@@ -4,6 +4,8 @@ import Button from "react-bootstrap/Button";
 import base from "../variabili";
 import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
+import { useNavigate } from "react-router-dom";
+import Modal from "react-bootstrap/Modal";
 
 function HomePage() {
   const [token, setToken] = useState(
@@ -16,6 +18,13 @@ function HomePage() {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const navigate = useNavigate();
 
   const getMe = () => {
     fetch(base + "/utenti/me", {
@@ -55,6 +64,36 @@ function HomePage() {
           Errore nel recupero dati
         </Alert>
       )}
+      <>
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Log-out</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Eseguire il log-out e tornare alla pagina di log-in?
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              variant="secondary"
+              onClick={() => {
+                handleClose();
+              }}
+            >
+              Annulla
+            </Button>
+            <Button
+              variant="danger"
+              onClick={() => {
+                localStorage.removeItem("token");
+                navigate("/login");
+                handleClose();
+              }}
+            >
+              Conferma
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </>
       <Row className="mt-3 ">
         <Col className="border border-3 border-polvereScuro bg-azzurroPolvere p-3">
           <h3 className="mb-0">Utente:</h3>
@@ -68,13 +107,24 @@ function HomePage() {
               <span> {loading ? <Spinner animation="grow" /> : userRuolo}</span>
             </p>
           </div>
-          <Button className="my-1 bg-danger ">Log-out</Button>
+          {userRuolo !== "" && (
+            <Button className="my-1 bg-danger " onClick={handleShow}>
+              Log-out
+            </Button>
+          )}
         </Col>
         <Col className="d-flex flex-column align-items-center justify-content-center border border-3 border-polvereScuro bg-azzurroPolvere p-3">
           <Button className="my-1 bg-success w-50 ">Nuovo cliente</Button>
           <Button className="my-1 bg-success w-50 ">Visite</Button>
           {userRuolo === "ADMIN" && (
-            <Button className="my-1 bg-success w-50 ">Nuovo Immobile</Button>
+            <Button
+              className="my-1 bg-success w-50 "
+              onClick={() => {
+                navigate("/NuovoImmobile");
+              }}
+            >
+              Nuovo Immobile
+            </Button>
           )}
         </Col>
       </Row>
