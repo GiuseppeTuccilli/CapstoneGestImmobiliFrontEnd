@@ -6,6 +6,8 @@ import base from "../variabili";
 import urbana from "../assets/immagini/urbana.png";
 import particolare from "../assets/immagini/particolare.jpg";
 import speciale from "../assets/immagini/speciale.jpg";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
 
 function ElencoImmobili() {
   //let token = localStorage.getItem("token");
@@ -53,11 +55,53 @@ function ElencoImmobili() {
   return (
     <>
       <Row className="d-flex justify-content-center">
-        <div className="bg-polvereScuro m-0, py-3 position-fixed">
-          <h2 className="text-center">Elenco Immobili</h2>
+        <div className="bg-polvereScuro m-0, py-1 position-fixed d-flex">
+          <div className="col-4 d-flex justify-content-end align-items-center">
+            <h2 className="text-center m-0">Elenco Immobili</h2>
+          </div>
+          <div className="col-8">
+            <div className="row  justify-content-center g-2">
+              <div className="d-flex col col-5">
+                <InputGroup>
+                  <InputGroup.Checkbox aria-label="Checkbox for following text input" />
+                  <Form.Control
+                    aria-label="Text input with checkbox"
+                    placeholder="filtra per Comune"
+                  />
+                </InputGroup>
+              </div>
+              <div className="d-flex col col-5">
+                <InputGroup>
+                  <InputGroup.Checkbox aria-label="Checkbox for following text input" />
+                  <Form.Control
+                    aria-label="Text input with checkbox"
+                    placeholder="filtra per Provincia"
+                  />
+                </InputGroup>
+              </div>
+              <div className="d-flex col col-5">
+                <InputGroup>
+                  <InputGroup.Checkbox aria-label="Checkbox for following text input" />
+                  <Form.Control
+                    aria-label="Text input with checkbox"
+                    placeholder="filtra per Indirizzo"
+                  />
+                </InputGroup>
+              </div>
+              <div className="d-flex col col-5">
+                <InputGroup>
+                  <InputGroup.Checkbox aria-label="Checkbox for following text input" />
+                  <Form.Control
+                    aria-label="Text input with checkbox"
+                    placeholder="filtra per Tipologia"
+                  />
+                </InputGroup>
+              </div>
+            </div>
+          </div>
         </div>
       </Row>
-      <Container fluid>
+      <Container fluid style={{ marginTop: "6em" }}>
         {immobili.map((i) => {
           return (
             <Row className="py-1 border-top border-bottom border-3 border-black">
