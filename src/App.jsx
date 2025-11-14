@@ -12,6 +12,7 @@ import RegisterForm from "./components/RegisterPage";
 import ElencoImmobili from "./components/ElencoImmobili";
 import LoginPage from "./components/LoginPage";
 import NuovoImmobile from "./components/NuovoImmobile";
+import HomePage from "./components/HomePage";
 
 function App() {
   return (
@@ -20,7 +21,15 @@ function App() {
         <Routes>
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/" element={<MyNavbar />} />
+          <Route
+            path="/"
+            element={
+              <>
+                <MyNavbar />
+                <HomePage />
+              </>
+            }
+          />
           <Route
             path="/immobili"
             element={

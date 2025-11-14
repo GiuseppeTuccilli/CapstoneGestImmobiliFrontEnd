@@ -1,1 +1,79 @@
-function HomePage() {}
+import { Container, Row, Col } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import Button from "react-bootstrap/Button";
+import base from "../variabili";
+import Spinner from "react-bootstrap/Spinner";
+
+function HomePage() {
+  const [token, setToken] = useState(
+    localStorage.getItem("token").slice(1, -1)
+  );
+
+  const [userNome, setUserNome] = useState("");
+  const [userCognome, setUserCognome] = useState("");
+  const [userRuolo, setUserRuolo] = useState("");
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  const getMe = () => {
+    fetch(base + "/utenti/me", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error(res.status);
+        }
+      })
+      .then((data) => {
+        setUserNome(data.nome);
+        setUserCognome(data.cognome);
+        setUserRuolo(data.ruolo);
+        setLoading(false);
+      })
+      .catch((er) => {
+        console.log(er);
+        setError(true);
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    getMe();
+  }, []);
+
+  return (
+    <Container>
+      <Row className="mt-3 ">
+        <Col className="border border-3 border-polvereScuro bg-azzurroPolvere p-3">
+          <h3 className="mb-0">Utente:</h3>
+          <p className="fs-5 pb-0 ">
+            <span>{loading ? <Spinner animation="grow" /> : userNome} </span>
+            <span>{loading ? <Spinner animation="grow" /> : userCognome}</span>
+          </p>
+          <div className="d-flex align-items-end">
+            <h4 className="mb-0">Ruolo: </h4>
+            <p className="m-0 ms-2 fs-5">
+              <span> {loading ? <Spinner animation="grow" /> : userRuolo}</span>
+            </p>
+          </div>
+          <Button className="my-1 bg-danger ">Log-out</Button>
+        </Col>
+        <Col className="d-flex flex-column align-items-center justify-content-center border border-3 border-polvereScuro bg-azzurroPolvere p-3">
+          <Button className="my-1 bg-success w-50 ">Nuovo cliente</Button>
+          <Button className="my-1 bg-success w-50 ">Visite</Button>
+          {userRuolo === "ADMIN" && (
+            <Button className="my-1 bg-success w-50 ">Nuovo Immobile</Button>
+          )}
+        </Col>
+      </Row>
+    </Container>
+  );
+}
+
+export default HomePage;
