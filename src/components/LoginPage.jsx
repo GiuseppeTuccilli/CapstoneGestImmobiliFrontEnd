@@ -33,7 +33,7 @@ function LoginPage() {
         console.log(data);
         localStorage.setItem("token", JSON.stringify(data.token));
         console.log(localStorage.getItem("token"));
-        //navigate("/");
+        navigate("/");
       })
       .catch((er) => {
         console.log(er);
