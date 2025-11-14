@@ -130,13 +130,18 @@ function ElencoImmobili() {
   return (
     <>
       <Row className="d-flex justify-content-center">
-        <div className="bg-polvereScuro m-0, py-1 position-fixed d-flex">
-          <div className="col-4 d-flex justify-content-end align-items-center">
-            <h2 className="text-center m-0">Elenco Immobili</h2>
+        <div className="bg-polvereScuro m-0, py-2 px-3 position-fixed d-flex">
+          <div className="col-4 d-flex  justify-content-between align-items-center px-3">
+            <h2 className="d-none d-lg-block text-center m-0 p-3 border border-1 border-beige bg-sabbia">
+              Immobili
+            </h2>
+            <h4 className="text-center m-0 p-3 border border-1 border-beige bg-sabbia">
+              Filtri<i class="bi bi-funnel"></i>
+            </h4>
           </div>
           <div className="col-8">
             <div className="row  justify-content-center g-2">
-              <div className="d-flex col col-5">
+              <div className="d-flex col col-5 w-50">
                 <InputGroup>
                   <InputGroup.Checkbox
                     aria-label="Checkbox for following text input"
@@ -151,7 +156,7 @@ function ElencoImmobili() {
                   />
                 </InputGroup>
               </div>
-              <div className="d-flex col col-5">
+              <div className="d-flex col col-5 w-50">
                 <InputGroup>
                   <InputGroup.Checkbox
                     aria-label="Checkbox for following text input"
@@ -166,7 +171,7 @@ function ElencoImmobili() {
                   />
                 </InputGroup>
               </div>
-              <div className="d-flex col col-5">
+              <div className="d-flex col col-5 w-50">
                 <InputGroup>
                   <InputGroup.Checkbox
                     aria-label="Checkbox for following text input"
@@ -181,7 +186,7 @@ function ElencoImmobili() {
                   />
                 </InputGroup>
               </div>
-              <div className="d-flex col col-5">
+              <div className="d-flex col col-5 w-50">
                 <InputGroup>
                   <InputGroup.Checkbox
                     aria-label="Checkbox for following text input"
