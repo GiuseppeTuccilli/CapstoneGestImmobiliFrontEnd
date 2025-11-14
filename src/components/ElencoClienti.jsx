@@ -80,55 +80,54 @@ function ElencoClienti() {
 
   return (
     <>
-      <Row className="d-flex justify-content-center">
-        <div className="bg-polvereScuro m-0, py-2 px-3 position-fixed d-flex">
-          <div className="col-6 d-flex  justify-content-between align-items-center px-3">
-            <h2 className="d-none d-lg-block text-center m-0 p-3 border border-1 border-beige bg-sabbia">
-              Clienti
-            </h2>
-            <h4 className="text-center m-0 p-3 border border-1 border-beige bg-sabbia">
-              Filtri<i className="bi bi-funnel"></i>
-            </h4>
-          </div>
-          <div className="col-6">
-            <div className="row  justify-content-start g-2">
-              <div className="d-flex col col-5 filtroCliente">
-                <InputGroup>
-                  <InputGroup.Checkbox
-                    aria-label="Checkbox for following text input"
-                    checked={filtroNome}
-                    onChange={handleCheckNome}
-                  />
-                  <Form.Control
-                    aria-label="Text input with checkbox"
-                    placeholder="filtra per nome"
-                    value={nome}
-                    onChange={handleChangeNome}
-                  />
-                </InputGroup>
-              </div>
-              <div className="d-flex col col-5 filtroCliente">
-                <InputGroup>
-                  <InputGroup.Checkbox
-                    aria-label="Checkbox for following text input"
-                    checked={filtroCognome}
-                    onChange={handleCheckCognome}
-                  />
-                  <Form.Control
-                    aria-label="Text input with checkbox"
-                    placeholder="filtra per cognome"
-                    value={cognome}
-                    onChange={handleChangeCognome}
-                  />
-                </InputGroup>
+      <div>
+        <Row className="d-flex justify-content-center position-fixed w-">
+          <div className="bg-polvereScuro m-0, py-2 px-3  d-flex">
+            <div className="col-6 d-flex  justify-content-end align-items-center px-3">
+              <h2 className="d-none d-lg-block text-center m-0 me-5 p-3 border border-1 border-beige bg-sabbia">
+                Clienti
+              </h2>
+              <h4 className="text-center m-0 p-3 flex-grow-1 ms-3 border border-1 border-beige bg-sabbia">
+                Filtri<i className="bi bi-funnel"></i>
+              </h4>
+            </div>
+            <div className="col-6 d-flex align-items-center">
+              <div className="row  justify-content-start g-2">
+                <div className="d-flex col col-5 filtroCliente">
+                  <InputGroup>
+                    <InputGroup.Checkbox
+                      aria-label="Checkbox for following text input"
+                      checked={filtroNome}
+                      onChange={handleCheckNome}
+                    />
+
+                    <Form.Control
+                      aria-label="Text input with checkbox"
+                      placeholder="filtra per nome"
+                      value={nome}
+                      onChange={handleChangeNome}
+                    />
+                  </InputGroup>
+                </div>
+                <div className="d-flex col col-5 filtroCliente">
+                  <InputGroup>
+                    <InputGroup.Checkbox
+                      aria-label="Checkbox for following text input"
+                      checked={filtroCognome}
+                      onChange={handleCheckCognome}
+                    />
+                    <Form.Control
+                      aria-label="Text input with checkbox"
+                      placeholder="filtra per cognome"
+                      value={cognome}
+                      onChange={handleChangeCognome}
+                    />
+                  </InputGroup>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </Row>
-      <div>
-        <Container fluid style={{ width: "80vw" }} id="contClienti">
-          <Row className="bg-beige position-fixed  " style={{ width: "80vw" }}>
+          <Row className="bg-beige p-0" style={{ width: "80vw" }}>
             <Col
               xs={6}
               md={3}
@@ -145,14 +144,18 @@ function ElencoClienti() {
             </Col>
             <Col xs={12} md={6}></Col>
           </Row>
-          <div style={{ paddingTop: "2.8em" }}>
+        </Row>
+      </div>
+      <div>
+        <Container fluid style={{ width: "80vw" }} id="contClienti">
+          <div>
             {loading ? (
               <Spinner></Spinner>
             ) : (
               clienti.map((c) => {
                 return (
                   <>
-                    <Row className="border border-1 border-beige bg-polvereScuro">
+                    <Row className="border border-1 border-beige bg-bianchetto">
                       <Col
                         xs={6}
                         md={3}
@@ -170,13 +173,21 @@ function ElencoClienti() {
                       <Col
                         xs={12}
                         md={6}
-                        className="d-flex align-items-center justify-content-center p-2 border border-1 border-beige"
+                        className=" p-2 border border-1 border-beige"
                       >
-                        <div className="d-md-flex">
-                          <Button variant="primary">Dettagli</Button>
-                          <Button variant="primary">Visite</Button>
-                          <Button variant="primary">Richieste</Button>
-                          <Button variant="success">+ Richiesta</Button>
+                        <div className="d-flex flex-wrap justify-content-center">
+                          <Button variant="primary" className="m-1">
+                            Dettagli
+                          </Button>
+                          <Button variant="primary" className="m-1">
+                            Visite
+                          </Button>
+                          <Button variant="primary" className="m-1">
+                            Richieste
+                          </Button>
+                          <Button variant="success" className="m-1">
+                            + Richiesta
+                          </Button>
                         </div>
                       </Col>
                     </Row>

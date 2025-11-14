@@ -9,6 +9,7 @@ $new-theme-colors: (
   "sabbia": #decfbc,
   "beige": #ceb69c,
   "beigeChiaro": #e0ddda,
+  "bianchetto": #dfdfdf,
 );
 
 .navbar {
@@ -32,17 +33,19 @@ $new-theme-colors: (
 @media (min-width: 999px) {
   .filtroCliente {
     width: 50% !important;
+    height: 50% !important;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 999px) {
   #contClienti {
-    margin-top: 6.3em !important;
+    margin-top: 8.6em !important;
   }
 }
-@media (min-width: 769px) {
+
+@media (min-width: 999px) {
   #contClienti {
-    margin-top: 6.5em !important;
+    margin-top: 7.9em !important;
   }
 }
 
