@@ -54,8 +54,11 @@ function HomePage() {
   };
 
   useEffect(() => {
+    if (token === null) {
+      navigate("/login");
+    }
     getMe();
-  }, []);
+  }, [token]);
 
   return (
     <Container>
