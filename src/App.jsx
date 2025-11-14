@@ -51,6 +51,15 @@ function App() {
               </>
             }
           />
+          <Route
+            path="/NuovoCliente"
+            element={
+              <>
+                <MyNavbar />
+                <NuovoCliente />
+              </>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </>
