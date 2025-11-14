@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import base from "../variabili";
 import Spinner from "react-bootstrap/Spinner";
+import Alert from "react-bootstrap/Alert";
 
 function HomePage() {
   const [token, setToken] = useState(
@@ -49,6 +50,11 @@ function HomePage() {
 
   return (
     <Container>
+      {error && (
+        <Alert variant="danger" className="text-center">
+          Errore nel recupero dati
+        </Alert>
+      )}
       <Row className="mt-3 ">
         <Col className="border border-3 border-polvereScuro bg-azzurroPolvere p-3">
           <h3 className="mb-0">Utente:</h3>
