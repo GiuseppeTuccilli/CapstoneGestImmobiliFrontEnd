@@ -69,7 +69,7 @@ function NuovoCliente() {
 
   return (
     <>
-      <Container>
+      <Container className="pb-3">
         {/*modale conferma */}
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
@@ -116,6 +116,11 @@ function NuovoCliente() {
           </Alert>
         )}
         <Row className="d-flex justify-content-center">
+          <div>
+            <h2 className="text-center border border-1 border-azzurroPolvere p-3 bg-beige ">
+              Nuovo Cliente
+            </h2>
+          </div>
           <Col xs={12} md={8} lg={6}>
             <Form
               onSubmit={(e) => {
