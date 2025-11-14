@@ -88,6 +88,14 @@ function LoginPage() {
             {" "}
             login{" "}
           </Button>
+          <p className="mt-2">
+            Non sei registrato registrato? <br />{" "}
+            <span>
+              <Link to={"/register"} className="text-danger fw-semibold">
+                registrati
+              </Link>
+            </span>
+          </p>
         </Form>
       </Col>
     </Container>

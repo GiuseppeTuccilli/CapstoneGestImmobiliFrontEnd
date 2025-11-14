@@ -171,7 +171,9 @@ function RegisterForm() {
             <p className="mt-2">
               Sei già registrato? effetua il{" "}
               <span>
-                <Link to={"/login"}>login</Link>
+                <Link to={"/login"} className="text-danger fw-semibold">
+                  login
+                </Link>
               </span>
             </p>
           </Form>
