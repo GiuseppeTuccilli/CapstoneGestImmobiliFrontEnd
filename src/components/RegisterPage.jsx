@@ -150,16 +150,6 @@ function RegisterForm() {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="phone">
-              {/*  <Form.Label>Telefono</Form.Label>
-            <Form.Control
-              placeholder="Telefono"
-              type=""
-              required
-              value={telefono}
-              onChange={(e) => {
-                setTelefono(e.target.value);
-              }}
-            />*/}
               <Form.Label>Telefono Cellulare</Form.Label>
 
               <PatternFormat
