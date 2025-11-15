@@ -301,11 +301,6 @@ function NuovaVisita() {
                     );
                   })
                 )}
-                <tr>
-                  <td>primo</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                </tr>
               </tbody>
             </Table>
 

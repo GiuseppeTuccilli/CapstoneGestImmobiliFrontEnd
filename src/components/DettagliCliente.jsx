@@ -153,7 +153,17 @@ function DettagliCliente() {
                   >
                     <i className="bi bi-trash3-fill"></i>
                   </Button>
-                  <Button variant="primary" className="px-4 h-75">
+                  <Button
+                    variant="primary"
+                    className="px-4 h-75"
+                    onClick={() => {
+                      if (!ruolo === "ADMIN") {
+                        alert("non hai i permessi per modificare i clienti");
+                        return;
+                      }
+                      navigate(`/clienti/${id}/modifica`);
+                    }}
+                  >
                     <i className="bi bi-pencil-fill"></i>
                   </Button>
                 </div>
