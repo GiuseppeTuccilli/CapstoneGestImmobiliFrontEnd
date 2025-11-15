@@ -6,6 +6,7 @@ import base from "../variabili";
 
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
+import { useNavigate } from "react-router-dom";
 function ElencoClienti() {
   const [token, setToken] = useState(
     localStorage.getItem("token").slice(1, -1)
@@ -23,6 +24,8 @@ function ElencoClienti() {
   const [firstPage, setFirstPage] = useState(true);
   const [lastPage, setLastPage] = useState(false);
   const [page, setPage] = useState(0);
+
+  const navigate = useNavigate();
 
   const handleCheckNome = (e) => {
     let val = e.target.checked;
@@ -189,15 +192,16 @@ function ElencoClienti() {
                         className=" p-2 border border-1 border-beige"
                       >
                         <div className="d-flex flex-wrap justify-content-center">
-                          <Button variant="primary" className="m-1">
+                          <Button
+                            variant="primary"
+                            className="m-1"
+                            onClick={() => {
+                              navigate(`/clienti/${c.id}`);
+                            }}
+                          >
                             Dettagli
                           </Button>
-                          <Button variant="primary" className="m-1">
-                            Visite
-                          </Button>
-                          <Button variant="primary" className="m-1">
-                            Richieste
-                          </Button>
+
                           <Button variant="success" className="m-1">
                             + Richiesta
                           </Button>

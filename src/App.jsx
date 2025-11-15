@@ -16,6 +16,7 @@ import HomePage from "./components/HomePage";
 import NuovoCliente from "./components/NuovoCliente";
 import ElencoClienti from "./components/ElencoClienti";
 import NuovaVisita from "./components/NuovaVisita";
+import DettagliCliente from "./components/DettagliCliente";
 
 function App() {
   return (
@@ -57,6 +58,15 @@ function App() {
               <>
                 <MyNavbar />
                 <ElencoClienti />
+              </>
+            }
+          />
+          <Route
+            path="/clienti/:idCliente"
+            element={
+              <>
+                <MyNavbar />
+                <DettagliCliente />
               </>
             }
           />
