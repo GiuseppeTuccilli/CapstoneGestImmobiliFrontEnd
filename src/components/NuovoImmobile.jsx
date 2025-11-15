@@ -422,20 +422,22 @@ function NuovoImmobile() {
             md={6}
             className="d-flex flex-column align-items-center border border-1 border-beige bg-polvereScuro p-2"
           >
-            <div className="d-flex my-2 justify-content-start w-100">
-              <h4 className="m-0 w-50 text-center">Provincia</h4>
-              <input type="text" value={provincia} required></input>
-              <Button
-                onClick={() => {
-                  handleShowProv();
-                  getProvince();
-                }}
-              >
-                seleziona
-              </Button>
+            <div className="d-flex my-2 justify-content-center w-100">
+              <h6 className="m-0 me-2 text-end w-25 pt-2">Provincia</h6>
+              <div className="d-flex">
+                <input type="text" value={provincia} required></input>
+                <Button
+                  onClick={() => {
+                    handleShowProv();
+                    getProvince();
+                  }}
+                >
+                  <i className="bi bi-search"></i>
+                </Button>
+              </div>
             </div>
-            <div className="d-flex my-2 justify-content-start w-100">
-              <h4 className="m-0 w-50 text-center">Comune</h4>
+            <div className="d-flex my-2 justify-content-center w-100">
+              <h6 className="m-0 me-2 text-end w-25 pt-2">Comune</h6>
               <input
                 type="text"
                 value={comune}
@@ -454,11 +456,11 @@ function NuovoImmobile() {
                   }
                 }}
               >
-                seleziona
+                <i className="bi bi-search"></i>
               </Button>
             </div>
-            <div className="d-flex my-2 justify-content-start w-100">
-              <h4 className="m-0 w-50 text-center">Indirizzo</h4>
+            <div className="d-flex my-2 justify-content-center w-100">
+              <h6 className="m-0 me-2 text-end w-25 pt-2">Indirizzo</h6>
               <input
                 type="text"
                 required
