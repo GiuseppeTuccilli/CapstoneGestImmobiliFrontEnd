@@ -23,6 +23,9 @@ function ElencoImmobili() {
   const [provincia, setProvincia] = useState("");
   const [indirizzo, setIndirizzo] = useState("");
   const [tipologia, setTipologia] = useState("");
+  const [firstPage, setFirstPage] = useState(true);
+  const [lastPage, setLastPage] = useState(false);
+  const [page, setPage] = useState(0);
 
   const navigate = useNavigate();
 
@@ -34,7 +37,9 @@ function ElencoImmobili() {
         "&comune=" +
         comune +
         "&indirizzo=" +
-        indirizzo,
+        indirizzo +
+        "&page=" +
+        page,
       {
         method: "GET",
         headers: {
@@ -51,6 +56,9 @@ function ElencoImmobili() {
       })
       .then((data) => {
         setImmobili(data.content);
+        setPage(data.number);
+        setFirstPage(data.first);
+        setLastPage(data.last);
       })
       .catch((er) => {
         console.log(er);
@@ -229,26 +237,35 @@ function ElencoImmobili() {
           })
           .map((i) => {
             return (
-              <Row className="py-1 border-top border-bottom border-3 border-black">
+              <Row
+                className="py-1 border-top border-bottom border-3 border-black "
+                key={i.id}
+              >
                 <Col
                   xs={6}
-                  md={2}
-                  lg={2}
-                  className="d-flex justify-content-center align-items-center border  border-1"
+                  md={3}
+                  lg={3}
+                  className="d-flex flex-column justify-content-center align-items-center border  border-1"
                 >
+                  <p className="  fw-semibold m-1 mb-0 ">
+                    <span style={{ fontSize: "0.8em" }}>
+                      {i.macroTipologia}
+                    </span>
+                  </p>
                   <Image
+                    className="mb-1"
                     src={getImage(i)}
                     thumbnail
-                    style={{ height: "10em" }}
+                    style={{ height: "5em" }}
                   />
                 </Col>
                 <Col
                   xs={6}
-                  md={4}
-                  lg={6}
-                  className=" d-flex flex-column justify-content-start  border  border-1"
+                  md={3}
+                  lg={4}
+                  className=" d-flex flex-column justify-content-center  border  border-1"
                 >
-                  <div className="h-100">
+                  <div>
                     <h5 className="  fw-semibold mb-0">Descrizione:</h5>
                     <div
                       className="border border-1 border-black bg-beigeChiaro p-1"
@@ -261,19 +278,16 @@ function ElencoImmobili() {
                 <Col
                   xs={6}
                   md={3}
-                  lg={2}
+                  lg={3}
                   className="d-flex flex-column justify-content-center border  border-1"
                 >
-                  <p className="  fw-semibold">
-                    Tipologia: <span>{i.macroTipologia}</span>
-                  </p>
-                  <p className="  fw-semibold">
+                  <p className="  fw-semibold m-1">
                     Prezzo: € <span>{i.prezzo}</span>{" "}
                   </p>
-                  <p className="  fw-semibold">
+                  <p className="  fw-semibold m-1">
                     Superficie: <span>{i.superficie + " mq"}</span>
                   </p>
-                  <p className=" fw-semibold">
+                  <p className=" fw-semibold m-1">
                     Comune:{" "}
                     <span>
                       {i.comune.denominazione +
@@ -289,9 +303,7 @@ function ElencoImmobili() {
                   lg={2}
                   className="d-flex justify-content-center  border  border-1 "
                 >
-                  <div className="d-flex flex-column px-4  ">
-                    <Button className="my-1">Richieste Inerenti</Button>
-                    <Button className="my-1">Visite</Button>
+                  <div className="d-flex flex-column justify-content-center ">
                     <Button className="my-1">Dettagli</Button>
                     <Button
                       className="my-1 bg-success "
@@ -306,6 +318,41 @@ function ElencoImmobili() {
               </Row>
             );
           })}
+        <Row className="my-3">
+          <Col xs={4} md={3} lg={2} className="d-flex justify-content-start">
+            {!firstPage && (
+              <Button
+                variant="primary"
+                onClick={() => {
+                  if (firstPage) {
+                    return;
+                  }
+                  let prev = page - 1;
+                  setPage(prev);
+                }}
+              >
+                <i className="bi bi-chevron-left"></i>
+              </Button>
+            )}
+          </Col>
+          <Col xs={4} md={6} lg={8}></Col>
+          <Col xs={4} md={3} lg={2} className="d-flex justify-content-end">
+            {!lastPage && (
+              <Button
+                variant="primary"
+                onClick={() => {
+                  if (lastPage) {
+                    return;
+                  }
+                  let next = page + 1;
+                  setPage(next);
+                }}
+              >
+                <i className="bi bi-chevron-right "></i>
+              </Button>
+            )}
+          </Col>
+        </Row>
       </Container>
     </>
   );
