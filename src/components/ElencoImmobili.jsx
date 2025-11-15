@@ -293,7 +293,14 @@ function ElencoImmobili() {
                     <Button className="my-1">Richieste Inerenti</Button>
                     <Button className="my-1">Visite</Button>
                     <Button className="my-1">Dettagli</Button>
-                    <Button className="my-1 bg-success ">Nuova Visita</Button>
+                    <Button
+                      className="my-1 bg-success "
+                      onClick={() => {
+                        navigate(`/immobili/${i.id}/nuovaVisita`);
+                      }}
+                    >
+                      Nuova Visita
+                    </Button>
                   </div>
                 </Col>
               </Row>

@@ -15,6 +15,7 @@ import NuovoImmobile from "./components/NuovoImmobile";
 import HomePage from "./components/HomePage";
 import NuovoCliente from "./components/NuovoCliente";
 import ElencoClienti from "./components/ElencoClienti";
+import NuovaVisita from "./components/NuovaVisita";
 
 function App() {
   return (
@@ -38,6 +39,15 @@ function App() {
               <>
                 <MyNavbar />
                 <ElencoImmobili />
+              </>
+            }
+          />
+          <Route
+            path="/immobili/:idImmobile/nuovaVisita"
+            element={
+              <>
+                <MyNavbar />
+                <NuovaVisita />
               </>
             }
           />

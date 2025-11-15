@@ -49,6 +49,24 @@ $new-theme-colors: (
   }
 }
 
+@media (max-width: 768px) {
+  .elencoClienti {
+    margin-top: 16.5em !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .elencoClienti {
+    margin-top: 16.9em !important;
+  }
+}
+
+@media (min-width: 999px) {
+  .elencoClienti {
+    margin-top: 17em !important;
+  }
+}
+
 .provinciaSelect {
   cursor: pointer;
 }
