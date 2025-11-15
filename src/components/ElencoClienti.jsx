@@ -20,6 +20,10 @@ function ElencoClienti() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
+  const [firstPage, setFirstPage] = useState(true);
+  const [lastPage, setLastPage] = useState(false);
+  const [page, setPage] = useState(0);
+
   const handleCheckNome = (e) => {
     let val = e.target.checked;
     setFiltroNome(val);
@@ -49,12 +53,15 @@ function ElencoClienti() {
   };
 
   const getClienti = () => {
-    fetch(base + "/clienti?nome=" + nome + "&cognome=" + cognome, {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    })
+    fetch(
+      base + "/clienti?nome=" + nome + "&cognome=" + cognome + "&page=" + page,
+      {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    )
       .then((res) => {
         if (res.ok) {
           return res.json();
@@ -65,6 +72,9 @@ function ElencoClienti() {
       .then((data) => {
         setClienti(data.content);
         setLoading(false);
+        setPage(data.number);
+        setFirstPage(data.first);
+        setLastPage(data.last);
         console.log(data);
       })
       .catch((er) => {
@@ -155,7 +165,10 @@ function ElencoClienti() {
               clienti.map((c) => {
                 return (
                   <>
-                    <Row className="border border-1 border-beige bg-bianchetto">
+                    <Row
+                      className="border border-1 border-beige bg-bianchetto"
+                      key={c.id}
+                    >
                       <Col
                         xs={6}
                         md={3}
@@ -196,6 +209,41 @@ function ElencoClienti() {
               })
             )}
           </div>
+          <Row className="my-3">
+            <Col xs={4} md={3} lg={2} className="d-flex justify-content-start">
+              {!firstPage && (
+                <Button
+                  variant="primary"
+                  onClick={() => {
+                    if (firstPage) {
+                      return;
+                    }
+                    let prev = page - 1;
+                    setPage(prev);
+                  }}
+                >
+                  <i className="bi bi-chevron-left"></i>
+                </Button>
+              )}
+            </Col>
+            <Col xs={4} md={6} lg={8}></Col>
+            <Col xs={4} md={3} lg={2} className="d-flex justify-content-end">
+              {!lastPage && (
+                <Button
+                  variant="primary"
+                  onClick={() => {
+                    if (lastPage) {
+                      return;
+                    }
+                    let next = page + 1;
+                    setPage(next);
+                  }}
+                >
+                  <i className="bi bi-chevron-right "></i>
+                </Button>
+              )}
+            </Col>
+          </Row>
         </Container>
       </div>
     </>
