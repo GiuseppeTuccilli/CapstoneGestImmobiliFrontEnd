@@ -49,15 +49,15 @@ $new-theme-colors: (
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 419px) {
   .elencoClienti {
-    margin-top: 16.5em !important;
+    margin-top: 18em !important;
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 420px) {
   .elencoClienti {
-    margin-top: 16.9em !important;
+    margin-top: 16.6em !important;
   }
 }
 

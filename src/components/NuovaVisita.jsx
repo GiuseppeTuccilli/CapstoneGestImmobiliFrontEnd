@@ -144,7 +144,7 @@ function NuovaVisita() {
       {errSalv && <Alert variant="danger">Errore nel salvataggio</Alert>}
       <Container className="d-flex flex-column align-items-center">
         <Row className="d-flex justify-content-center position-fixed bg-secondary py-2">
-          <Col xs={9} md={6}>
+          <Col xs={9} md={6} className="px-0 ps-2">
             <h2 className="text-center border border-1 border-azzurroPolvere p-3 bg-beige ">
               Nuova Visita
             </h2>
@@ -308,6 +308,47 @@ function NuovaVisita() {
                 </tr>
               </tbody>
             </Table>
+
+            <Row className="mb-3">
+              <Col
+                xs={4}
+                md={3}
+                lg={2}
+                className="d-flex justify-content-start"
+              >
+                {!firstPage && (
+                  <Button
+                    variant="primary"
+                    onClick={() => {
+                      if (firstPage) {
+                        return;
+                      }
+                      let prev = page - 1;
+                      setPage(prev);
+                    }}
+                  >
+                    <i className="bi bi-chevron-left"></i>
+                  </Button>
+                )}
+              </Col>
+              <Col xs={4} md={6} lg={8}></Col>
+              <Col xs={4} md={3} lg={2} className="d-flex justify-content-end">
+                {!lastPage && (
+                  <Button
+                    variant="primary"
+                    onClick={() => {
+                      if (lastPage) {
+                        return;
+                      }
+                      let next = page + 1;
+                      setPage(next);
+                    }}
+                  >
+                    <i className="bi bi-chevron-right "></i>
+                  </Button>
+                )}
+              </Col>
+            </Row>
           </Col>
         </Row>
       </Container>
