@@ -202,7 +202,13 @@ function ElencoClienti() {
                             Dettagli
                           </Button>
 
-                          <Button variant="success" className="m-1">
+                          <Button
+                            variant="success"
+                            className="m-1"
+                            onClick={() => {
+                              navigate(`/clienti/${c.id}/nuovaRichiesta`);
+                            }}
+                          >
                             + Richiesta
                           </Button>
                         </div>

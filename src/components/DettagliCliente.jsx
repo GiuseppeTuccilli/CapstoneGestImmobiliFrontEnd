@@ -204,7 +204,14 @@ function DettagliCliente() {
           <Col xs={12} md={6} className="d-flex justify-content-evenly">
             <Button variant="primary">Richieste</Button>
             <Button variant="primary">Visite</Button>
-            <Button variant="success">+ Richiesta</Button>
+            <Button
+              variant="success"
+              onClick={() => {
+                navigate(`/clienti/${id}/nuovaRichiesta`);
+              }}
+            >
+              + Richiesta
+            </Button>
           </Col>
         </Row>
       </Container>
