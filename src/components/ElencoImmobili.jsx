@@ -304,7 +304,14 @@ function ElencoImmobili() {
                   className="d-flex justify-content-center  border  border-1 "
                 >
                   <div className="d-flex flex-column justify-content-center ">
-                    <Button className="my-1">Dettagli</Button>
+                    <Button
+                      className="my-1"
+                      onClick={() => {
+                        navigate("/immobili/" + i.id);
+                      }}
+                    >
+                      Dettagli
+                    </Button>
                     <Button
                       className="my-1 bg-success "
                       onClick={() => {
