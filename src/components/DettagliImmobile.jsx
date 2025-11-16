@@ -110,7 +110,7 @@ function DettagliImmobile() {
             xs={12}
             md={12}
             lg={4}
-            className="border border-2 border-beige bg-polvereScuro p-3"
+            className="border border-2 border-beige bg-polvereScuro p-3 d-flex flex-column justify-content-around"
           >
             <p className="m-0 p-0 fw-semibold ">
               Comune: <span className="fw-bold">poipoipooi (LI)</span>
