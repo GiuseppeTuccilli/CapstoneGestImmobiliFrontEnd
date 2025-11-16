@@ -14,7 +14,7 @@ function DettagliImmobile() {
     <>
       <Container>
         <Row>
-          <div className="d-flex flex-row justify-content-around p-3 border border-2 border-beige bg-polvereScuro">
+          <div className="d-flex flex-row justify-content-around p-3 border border-2 border-beige bg-polvereScuro align-items-center">
             <div>
               <Button variant="primary">
                 <i className="bi bi-arrow-bar-left"></i>
@@ -24,7 +24,6 @@ function DettagliImmobile() {
               <h2 className="m-0">DESTINAZIONE PARTICOLARE</h2>
             </div>
             <div>
-              <Button variant="success">+ Visita</Button>
               <Button variant="danger">
                 <i className="bi bi-trash3-fill"></i>
               </Button>
@@ -33,6 +32,18 @@ function DettagliImmobile() {
               </Button>
             </div>
           </div>
+        </Row>
+        <Row className="d-flex justify-content-center p-1 border border-1 border-beige bg-bluGuado">
+          <Col xs={12} md={8}>
+            {" "}
+            <div className="d-flex justify-content-between">
+              <Button variant="primary">
+                Richieste <i className="bi bi-check2-all"></i>
+              </Button>
+              <Button variant="primary">Visite</Button>
+              <Button variant="success">+ Visita</Button>
+            </div>
+          </Col>
         </Row>
 
         <Row>
