@@ -289,6 +289,12 @@ function NuovaRichiesta() {
             </div>
           </Col>
         </Row>
+        <Row className="p-2 border border-1 border-azzurroPolvere bg-beige">
+          <h6 className="m-0 text-center">
+            I parametri vuoti o con valore "0" non verranno presi in
+            considerazione per gli incroci
+          </h6>
+        </Row>
         <Row>
           <Col
             xs={12}
