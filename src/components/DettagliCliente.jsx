@@ -20,9 +20,19 @@ function DettagliCliente() {
   const [loading, setLoading] = useState(true);
   const [errElimina, setErrElimina] = useState(false);
   const [showVisite, setShowVisite] = useState(false);
+  const [showRichieste, setShowRichieste] = useState(false);
+  const [showImmobili, setShowImmobili] = useState(false);
 
   const [visite, setVisite] = useState([]);
   const [richieste, setRichieste] = useState([]);
+  const [immoComp, setImmoComp] = useState([]);
+
+  const [idImmobileSel, setIdImmobileSel] = useState(0);
+  const [idVisitaSel, setIdVisitaSel] = useState(0);
+  const [idRichiestaSel, setIdRichiestaSel] = useState(0);
+  const [idImmoCompSel, setIdImmoCompSel] = useState(0);
+
+  const [isFirstRender, setIsFirstRender] = useState(true);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -104,7 +114,7 @@ function DettagliCliente() {
         setVisite(data);
       })
       .catch((er) => {
-        alert("errore nel recupero visite " + er.toString());
+        console.log(er.toString());
       });
   };
 
@@ -133,6 +143,51 @@ function DettagliCliente() {
       });
   };
 
+  const getRichieste = () => {
+    fetch(base + "/clienti/" + params.idCliente + "/richieste", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error(res.status);
+        }
+      })
+      .then((data) => {
+        setRichieste(data);
+      })
+      .catch((er) => {
+        console.log(er.toString());
+      });
+  };
+
+  const getImmoCompatibili = () => {
+    fetch(base + "/richieste/" + idRichiestaSel + "/incroci", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error(res.status);
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        setImmoComp(data);
+      })
+      .catch((er) => {
+        alert("errore recupero dati immobili " + er.toString());
+      });
+  };
+
   useEffect(() => {
     if (token === null) {
       navigate("/login");
@@ -140,7 +195,20 @@ function DettagliCliente() {
     getMe();
     getCliente();
     getVisite();
+    getRichieste();
   }, [token]);
+
+  useEffect(() => {
+    if (isFirstRender) {
+      setIsFirstRender(false);
+      return;
+    }
+    if (idRichiestaSel === 0) {
+      return;
+    }
+
+    getImmoCompatibili();
+  }, [idRichiestaSel]);
 
   return (
     <>
@@ -239,14 +307,41 @@ function DettagliCliente() {
         </Row>
         <Row className="d-flex justify-content-center border border-1 border-azzurroPolvere bg-polvereScuro p-3">
           <Col xs={12} md={6} className="d-flex justify-content-evenly">
-            <Button variant="primary">Richieste</Button>
+            <Button
+              variant="primary"
+              onClick={() => {
+                if (showRichieste) {
+                  setShowRichieste(false);
+                  setShowImmobili(false);
+                  setIdImmobileSel(0);
+                  setIdRichiestaSel(0);
+                } else {
+                  setShowVisite(false);
+                  setShowRichieste(true);
+                  setIdVisitaSel(0);
+                  setIdImmobileSel(0);
+                }
+              }}
+            >
+              {showRichieste ? (
+                <i className="bi bi-x-lg"></i>
+              ) : (
+                <i className="bi bi-arrow-90deg-down"></i>
+              )}{" "}
+              Richieste
+            </Button>
             <Button
               variant="primary"
               onClick={() => {
                 if (showVisite) {
                   setShowVisite(false);
+                  setIdVisitaSel(0);
+                  setIdImmobileSel(0);
                 } else {
+                  setShowRichieste(false);
+                  setShowImmobili(false);
                   setShowVisite(true);
+                  setIdRichiestaSel(0);
                 }
               }}
             >
@@ -269,11 +364,30 @@ function DettagliCliente() {
         </Row>
 
         {/*Row visite cliente */}
-        <Row className={!showVisite && "d-none"}>
+        <Row className={"bg-bluGuado " + (!showVisite && "d-none")}>
           <Col style={{ height: "20em", overflowY: "auto" }}>
             <Row>
               <Table striped bordered hover className="mb-0">
                 <thead className="position-sticky" style={{ top: "-0.5%" }}>
+                  <th colSpan={3}>
+                    <div className="d-flex  justify-content-around p-3 border border-1 border-beige bg-polvereScuro">
+                      <div>
+                        <h4 className="m-0 p-2 border border-1 border-azzurroPolvere bg-beige">
+                          Visite
+                        </h4>
+                      </div>
+                      {idImmobileSel > 0 && (
+                        <Button
+                          variant="success"
+                          onClick={() => {
+                            navigate("/immobili/" + idImmobileSel);
+                          }}
+                        >
+                          Vedi Immobile{" "}
+                        </Button>
+                      )}
+                    </div>
+                  </th>
                   <tr>
                     <th className="text-center">Data</th>
 
@@ -284,46 +398,164 @@ function DettagliCliente() {
                 </thead>
 
                 <tbody>
-                  <tr style={{ cursor: "pointer" }}>
-                    <td>primo</td>
-                    <td>sdfsdfsdfdsf</td>
-                    <td>sdfsdfsdf</td>
+                  {visite.map((v) => {
+                    return (
+                      <tr
+                        key={v.id}
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                          setIdVisitaSel(v.id);
+                          setIdImmobileSel(v.immobile.id);
+                        }}
+                        className={
+                          idVisitaSel === v.id &&
+                          "border border-2 border-success"
+                        }
+                      >
+                        <td>{v.data}</td>
+                        <td>{v.immobile.indirizzo}</td>
+                        <td>
+                          {v.immobile.comune.denominazione +
+                            " (" +
+                            v.immobile.comune.provincia.sigla +
+                            ")"}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </Table>
+            </Row>
+          </Col>
+        </Row>
+
+        {/*Row richieste cliente */}
+        <Row className={"bg-bluGuado " + (!showRichieste && "d-none")}>
+          <Col style={{ height: "20em", overflowY: "auto" }}>
+            <Row className="d-flex justify-content-center">
+              <Table striped bordered hover className="mb-0">
+                <thead className="position-sticky" style={{ top: "-0.5%" }}>
+                  <th colSpan={3}>
+                    <div className="d-flex  justify-content-around p-3 border border-1 border-beige bg-polvereScuro">
+                      <div>
+                        <h4 className="m-0 p-2 border border-1 border-azzurroPolvere bg-beige">
+                          Richieste
+                        </h4>
+                      </div>
+                      {idRichiestaSel > 0 && (
+                        <Button
+                          variant="success"
+                          onClick={() => {
+                            setShowImmobili(true);
+                          }}
+                        >
+                          Immobili Compatibili{" "}
+                        </Button>
+                      )}
+                    </div>
+                  </th>
+                  <tr>
+                    <th className="text-center">Data</th>
+
+                    <th className="text-center">Prezzo Massimo (€)</th>
+                    <th className="text-center">Comune</th>
                   </tr>
-                  <tr style={{ cursor: "pointer" }}>
-                    <td>sdfsdfsdfsdf</td>
-                    <td>sdfsdfsdfdsf</td>
-                    <td>sdfsdfsdf</td>
+                </thead>
+
+                <tbody>
+                  {richieste.map((r) => {
+                    return (
+                      <tr
+                        key={r.id}
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                          setIdRichiestaSel(r.id);
+                        }}
+                        className={
+                          idRichiestaSel === r.id &&
+                          "border border-2 border-success"
+                        }
+                      >
+                        <td>{r.data}</td>
+                        <td>{r.prezzoMassimo}</td>
+                        <td>
+                          {r.comune !== "" ? r.comune : "non specificato"}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </Table>
+            </Row>
+          </Col>
+          <Col
+            style={{ height: "20em", overflowY: "auto" }}
+            xs={10}
+            md={8}
+            className={!showImmobili && "d-none"}
+          >
+            <Row>
+              <Table striped bordered hover className="mb-0">
+                <thead className="position-sticky" style={{ top: "-0.5%" }}>
+                  <th colSpan={3}>
+                    <div className="border border-1 border-beige bg-polvereScuro d-flex justify-content-evenly">
+                      <Button
+                        variant="primary"
+                        onClick={() => {
+                          setShowImmobili(false);
+                        }}
+                      >
+                        <i className="bi bi-arrow-bar-left"></i>
+                      </Button>
+                      <h6 className="m-0 text-center pt-2">
+                        Immobili Compatibili
+                      </h6>
+                      {idImmoCompSel !== 0 && (
+                        <Button
+                          variant="success"
+                          onClick={() => {
+                            navigate("/immobili/" + idImmoCompSel);
+                          }}
+                        >
+                          <i className="bi bi-box-arrow-up-right"></i>
+                        </Button>
+                      )}
+                    </div>
+                  </th>
+
+                  <tr>
+                    <th>Indirizzo</th>
+                    <th>Comune</th>
+                    <th>Tipologia</th>
                   </tr>
-                  <tr style={{ cursor: "pointer" }}>
-                    <td>sdfsdfsdfsdf</td>
-                    <td>sdfsdfsdfdsf</td>
-                    <td>sdfsdfsdf</td>
-                  </tr>
-                  <tr style={{ cursor: "pointer" }}>
-                    <td>sdfsdfsdfsdf</td>
-                    <td>sdfsdfsdfdsf</td>
-                    <td>sdfsdfsdf</td>
-                  </tr>
-                  <tr style={{ cursor: "pointer" }}>
-                    <td>sdfsdfsdfsdf</td>
-                    <td>sdfsdfsdfdsf</td>
-                    <td>sdfsdfsdf</td>
-                  </tr>
-                  <tr style={{ cursor: "pointer" }}>
-                    <td>sdfsdfsdfsdf</td>
-                    <td>sdfsdfsdfdsf</td>
-                    <td>sdfsdfsdf</td>
-                  </tr>
-                  <tr style={{ cursor: "pointer" }}>
-                    <td>sdfsdfsdfsdf</td>
-                    <td>sdfsdfsdfdsf</td>
-                    <td>sdfsdfsdf</td>
-                  </tr>
-                  <tr style={{ cursor: "pointer" }}>
-                    <td>sdfsdfsdfsdf</td>
-                    <td>sdfsdfsdfdsf</td>
-                    <td>sdfsdfsdf</td>
-                  </tr>
+                </thead>
+
+                <tbody>
+                  {immoComp.length > 0 &&
+                    immoComp.map((i) => {
+                      return (
+                        <tr
+                          key={i.id}
+                          style={{ cursor: "pointer" }}
+                          onClick={() => {
+                            setIdImmoCompSel(i.id);
+                          }}
+                          className={
+                            idImmoCompSel === i.id &&
+                            "border border-2 border-success"
+                          }
+                        >
+                          <td>{i.indirizzo}</td>
+                          <td>
+                            {i.comune.denominazione +
+                              " (" +
+                              i.comune.provincia.sigla +
+                              ")"}
+                          </td>
+                          <td>{i.macroTipologia.split("_")[1]}</td>
+                        </tr>
+                      );
+                    })}
                 </tbody>
               </Table>
             </Row>
