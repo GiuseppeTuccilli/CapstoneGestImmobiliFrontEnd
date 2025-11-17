@@ -126,6 +126,25 @@ function DettagliImmobile() {
       });
   };
 
+  const cancellaImmobile = () => {
+    fetch(base + "/immobili/" + params.idImmobile, {
+      method: "DELETE",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          alert("immobile eliminato");
+        } else {
+          throw new Error(res.status);
+        }
+      })
+      .catch((er) => {
+        alert(er.toString());
+      });
+  };
+
   useEffect(() => {
     getImmobile();
     getFotoImmobile();
