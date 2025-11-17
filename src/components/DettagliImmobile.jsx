@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import base from "../variabili";
 import { Modal, Alert } from "react-bootstrap/";
 import { useParams, useNavigate } from "react-router-dom";
+import RichiesteCompatibili from "./RichiesteCompatibili";
 
 function DettagliImmobile() {
   const [token, setToken] = useState(
@@ -34,6 +35,7 @@ function DettagliImmobile() {
   const [showConferma, setShowConferma] = useState(false);
   const [showElimina, setShowElimina] = useState(false);
   const [showEliminaImmo, setShowEliminaImmo] = useState(false);
+  const [showRichieste, setShowRichieste] = useState(false);
 
   const [file, setFile] = useState(null);
   const [fotoIndex, setFotoIndex] = useState(0);
@@ -351,7 +353,16 @@ function DettagliImmobile() {
           <Col xs={12} md={8}>
             {" "}
             <div className="d-flex justify-content-between">
-              <Button variant="primary">
+              <Button
+                variant="primary"
+                onClick={() => {
+                  if (showRichieste) {
+                    setShowRichieste(false);
+                  } else {
+                    setShowRichieste(true);
+                  }
+                }}
+              >
                 Richieste <i className="bi bi-check2-all"></i>
               </Button>
               <Button variant="primary">Visite</Button>
@@ -523,6 +534,13 @@ function DettagliImmobile() {
               <p className="m-0 p-0  ">{desc}</p>
             </div>
           </Col>
+        </Row>
+        <Row className={!showRichieste && "d-none"}>
+          <RichiesteCompatibili
+            idImmo={params.idImmobile}
+            base={base}
+            token={token}
+          />
         </Row>
         <Row>
           <div className="d-flex justify-content-around p-2 border border-2 border-beige bg-bluGuado">
