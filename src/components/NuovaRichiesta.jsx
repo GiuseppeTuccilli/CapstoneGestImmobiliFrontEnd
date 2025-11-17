@@ -236,7 +236,7 @@ function NuovaRichiesta() {
       {/*modale conferma */}
       <Modal show={showConferma} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Nuovo Cliente</Modal.Title>
+          <Modal.Title>Nuova Richiesta</Modal.Title>
         </Modal.Header>
         <Modal.Body>Confermare e salvare?</Modal.Body>
         <Modal.Footer>

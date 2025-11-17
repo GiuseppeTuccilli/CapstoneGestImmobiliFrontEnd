@@ -1,4 +1,4 @@
-import { Container, Row, Col, Image, Spinner } from "react-bootstrap";
+import { Container, Row, Col, Image, Spinner, Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { useEffect, useState } from "react";
 import base from "../variabili";
@@ -31,9 +31,21 @@ function DettagliImmobile() {
   const [loading, setLoading] = useState(true);
   const [loadingFoto, setLoadingFoto] = useState(true);
   const [ruolo, setRuolo] = useState("");
+  const [showConferma, setShowConferma] = useState(false);
+  const [showElimina, setShowElimina] = useState(false);
+
+  const [file, setFile] = useState(null);
+  const [fotoIndex, setFotoIndex] = useState(0);
+  const [fotoId, setFotoId] = useState(0);
 
   const params = useParams();
   const navigate = useNavigate();
+
+  const handleClose = () => setShowConferma(false);
+  const handleShow = () => setShowConferma(true);
+
+  const handleCloseElimina = () => setShowElimina(false);
+  const handleShowElimina = () => setShowElimina(true);
 
   const getImmobile = () => {
     fetch(base + "/immobili/" + params.idImmobile, {
@@ -94,6 +106,8 @@ function DettagliImmobile() {
       })
       .then((data) => {
         setListaFoto(data);
+        setFotoIndex(0);
+        setFotoId(data[0].idFoto);
         setLoadingFoto(false);
       })
       .catch((er) => {
@@ -141,15 +155,94 @@ function DettagliImmobile() {
         }
       })
       .catch((er) => {
-        alert(er.toString());
+        alert("errore " + er.toString());
       });
+  };
+
+  const aggiungiFoto = () => {
+    const formData = new FormData();
+    formData.append("foto", file);
+    fetch(base + "/immobili/" + params.idImmobile + "/foto", {
+      method: "POST",
+      body: formData,
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          console.log(res);
+        } else {
+          console.log(res);
+          throw new Error(res.status);
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        alert("foto aggiunta");
+        setFile(null);
+        window.location.reload();
+      })
+      .catch((er) => {
+        console.log(er.toString());
+      });
+  };
+
+  const cancellaFoto = () => {
+    fetch(base + "/immobili/" + params.idImmobile + "/foto/" + fotoId, {
+      method: "DELETE",
+
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          alert("foto eliminata");
+          window.location.reload();
+        } else {
+          throw new error(res.status);
+        }
+      })
+      .catch((er) => {
+        console.log(er.toString());
+        alert("errore nell'eliminazione");
+      });
+  };
+
+  const prevFoto = () => {
+    if (listaFoto.length > 1) {
+      let i = fotoIndex;
+      let l = listaFoto.length - 1;
+      if (i <= 0) {
+        setFotoIndex(l);
+        setFotoId(listaFoto[l].idFoto);
+      } else {
+        setFotoIndex(i - 1);
+        setFotoId(listaFoto[i - 1].idFoto);
+      }
+    }
+  };
+
+  const nextFoto = () => {
+    if (listaFoto.length > 1) {
+      let i = fotoIndex;
+      let l = listaFoto.length - 1;
+      if (i <= l - 1) {
+        setFotoIndex(i + 1);
+        setFotoId(listaFoto[i + 1].idFoto);
+      } else {
+        setFotoIndex(0);
+        setFotoId(listaFoto[0].idFoto);
+      }
+    }
   };
 
   /*
   da fare:
-  - fetch aggiungi foto
-  - tech elimina foto
-  -logica scorrimento foto
+  
+  - fetch elimina foto
+  
   - collegare buttons
   */
 
@@ -161,6 +254,46 @@ function DettagliImmobile() {
 
   return (
     <>
+      {/*modale conferma */}
+      <Modal show={showConferma} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Upload Foto</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Confermare e salvare?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="danger" onClick={handleClose}>
+            Annulla
+          </Button>
+          <Button
+            variant="success"
+            onClick={() => {
+              handleClose();
+              aggiungiFoto();
+            }}
+          >
+            Salva
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      {/*modale elimina */}
+      <Modal show={showElimina} onHide={handleCloseElimina}>
+        <Modal.Header closeButton>
+          <Modal.Title>Elimina Foto</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Eliminare definitivamente questa foto??</Modal.Body>
+        <Modal.Footer>
+          <Button onClick={handleCloseElimina}>Annulla</Button>
+          <Button
+            variant="danger"
+            onClick={() => {
+              handleCloseElimina();
+              cancellaFoto();
+            }}
+          >
+            Elimina
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <Container>
         <Row>
           <div className="d-flex flex-row justify-content-around p-3 border border-2 border-beige bg-polvereScuro align-items-center">
@@ -168,7 +301,7 @@ function DettagliImmobile() {
               <Button
                 variant="primary"
                 onClick={() => {
-                  navigate("/immobili");
+                  navigate(-1);
                 }}
               >
                 <i className="bi bi-arrow-bar-left"></i>
@@ -369,7 +502,7 @@ function DettagliImmobile() {
         <Row>
           <div className="d-flex justify-content-around p-2 border border-2 border-beige bg-bluGuado">
             {ruolo === "ADMIN" && (
-              <Button variant="danger">
+              <Button variant="danger" onClick={handleShowElimina}>
                 <i className="bi bi-trash3-fill"></i>
               </Button>
             )}
@@ -377,28 +510,70 @@ function DettagliImmobile() {
               Foto:
             </h5>
             {ruolo === "ADMIN" && (
-              <Button variant="success">
-                <i className="bi bi-plus-circle"></i>
-              </Button>
+              <>
+                <Form
+                  className="d-flex align-items-center"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    if (file !== null) {
+                      handleShow();
+                    }
+                  }}
+                >
+                  <p
+                    className="m-0 p-1 text-end fw-semibold  border border-1 border-beide bg-azzurroPolvere"
+                    style={{ fontSize: "0.8em" }}
+                  >
+                    Aggiungi Foto:{" "}
+                  </p>
+                  <Form.Group controlId="formFile" className=" rounded-0 ">
+                    <Form.Control
+                      className=" rounded-0 h-100"
+                      type="file"
+                      name="foto"
+                      accept="image/*"
+                      onChange={(e) => {
+                        const f = e.target.files[0];
+                        if (f && f.size > 1048576) {
+                          alert("il file selezionato è troppo grande");
+                          return;
+                        }
+                        let estAr = f.name.split(".");
+                        let est = estAr[estAr.length - 1];
+                        console.log(est);
+                        if (est == "png" || est == "jpg" || est == "jepg") {
+                          setFile(f);
+                          return;
+                        } else {
+                          alert("formato non valido");
+                        }
+                      }}
+                    />
+                  </Form.Group>
+                  <Button variant="success" type="submit">
+                    <i className="bi bi-cloud-upload"></i>
+                  </Button>
+                </Form>
+              </>
             )}
           </div>
         </Row>
         <Row className=" p-2 border border-2 border-beige bg-polvereScuro mb-3">
           {listaFoto.length > 0 ? (
             <div className="d-flex justify-content-center">
-              <Button variant="primary">
+              <Button variant="primary" onClick={prevFoto}>
                 <i className="bi bi-chevron-double-left"></i>
               </Button>
 
               <div style={{ maxWidth: "70%" }}>
                 <img
                   id="fotoImmobile"
-                  src={listaFoto[0].urlFoto}
+                  src={listaFoto[fotoIndex].urlFoto}
                   className="img-fluid"
                   alt="fotoImmobile"
                 ></img>
               </div>
-              <Button variant="primary">
+              <Button variant="primary" onClick={nextFoto}>
                 <i className="bi bi-chevron-double-right"></i>
               </Button>
             </div>
