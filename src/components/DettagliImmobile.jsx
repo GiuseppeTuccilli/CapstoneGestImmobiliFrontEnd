@@ -33,6 +33,7 @@ function DettagliImmobile() {
   const [ruolo, setRuolo] = useState("");
   const [showConferma, setShowConferma] = useState(false);
   const [showElimina, setShowElimina] = useState(false);
+  const [showEliminaImmo, setShowEliminaImmo] = useState(false);
 
   const [file, setFile] = useState(null);
   const [fotoIndex, setFotoIndex] = useState(0);
@@ -46,6 +47,9 @@ function DettagliImmobile() {
 
   const handleCloseElimina = () => setShowElimina(false);
   const handleShowElimina = () => setShowElimina(true);
+
+  const handleCloseEliminaImmo = () => setShowEliminaImmo(false);
+  const handleShowEliminaImmo = () => setShowEliminaImmo(true);
 
   const getImmobile = () => {
     fetch(base + "/immobili/" + params.idImmobile, {
@@ -150,6 +154,7 @@ function DettagliImmobile() {
       .then((res) => {
         if (res.ok) {
           alert("immobile eliminato");
+          navigate(-1);
         } else {
           throw new Error(res.status);
         }
@@ -280,7 +285,7 @@ function DettagliImmobile() {
         <Modal.Header closeButton>
           <Modal.Title>Elimina Foto</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Eliminare definitivamente questa foto??</Modal.Body>
+        <Modal.Body>Eliminare definitivamente questa foto?</Modal.Body>
         <Modal.Footer>
           <Button onClick={handleCloseElimina}>Annulla</Button>
           <Button
@@ -288,6 +293,25 @@ function DettagliImmobile() {
             onClick={() => {
               handleCloseElimina();
               cancellaFoto();
+            }}
+          >
+            Elimina
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      {/*modale elimina immobile */}
+      <Modal show={showEliminaImmo} onHide={handleCloseEliminaImmo}>
+        <Modal.Header closeButton>
+          <Modal.Title>Cancellazione Immobile</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Eliminare definitivamente questo Immobile?</Modal.Body>
+        <Modal.Footer>
+          <Button onClick={handleCloseEliminaImmo}>Annulla</Button>
+          <Button
+            variant="danger"
+            onClick={() => {
+              handleCloseEliminaImmo();
+              cancellaImmobile();
             }}
           >
             Elimina
@@ -313,7 +337,10 @@ function DettagliImmobile() {
             {ruolo === "ADMIN" && (
               <div>
                 <Button variant="danger">
-                  <i className="bi bi-trash3-fill"></i>
+                  <i
+                    className="bi bi-trash3-fill"
+                    onClick={handleShowEliminaImmo}
+                  ></i>
                 </Button>
                 <Button variant="primary">
                   <i className="bi bi-pencil-fill"></i>
