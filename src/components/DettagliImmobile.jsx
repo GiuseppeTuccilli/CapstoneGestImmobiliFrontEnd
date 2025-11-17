@@ -145,6 +145,14 @@ function DettagliImmobile() {
       });
   };
 
+  /*
+  da fare:
+  - fetch aggiungi foto
+  - tech elimina foto
+  -logica scorrimento foto
+  - collegare buttons
+  */
+
   useEffect(() => {
     getImmobile();
     getFotoImmobile();
