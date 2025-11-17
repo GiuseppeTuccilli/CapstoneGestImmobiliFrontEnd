@@ -38,6 +38,8 @@ function ElencoImmobili() {
         comune +
         "&indirizzo=" +
         indirizzo +
+        "&tipo=" +
+        tipologia +
         "&page=" +
         page,
       {
@@ -70,7 +72,7 @@ function ElencoImmobili() {
       navigate("/login");
     }
     getImmobili();
-  }, [comune, provincia, indirizzo, token]);
+  }, [comune, provincia, indirizzo, tipologia, token]);
 
   const handleCheckProvincia = (e) => {
     let val = e.target.checked;
@@ -100,7 +102,7 @@ function ElencoImmobili() {
     let val = e.target.checked;
     setFiltroTipologia(val);
     if (!val) {
-      setTipologia("_");
+      setTipologia("");
     }
   };
 
@@ -231,100 +233,94 @@ function ElencoImmobili() {
         </div>
       </Row>
       <Container fluid style={{ marginTop: "6em" }}>
-        {immobili
-          .filter((im) => {
-            return im.macroTipologia.includes(tipologia);
-          })
-          .map((i) => {
-            return (
-              <Row
-                className="py-1 border-top border-bottom border-3 border-black "
-                key={i.id}
+        {immobili.map((i) => {
+          return (
+            <Row
+              className="py-1 border-top border-bottom border-3 border-black "
+              key={i.id}
+            >
+              <Col
+                xs={6}
+                md={3}
+                lg={3}
+                className="d-flex flex-column justify-content-center align-items-center border  border-1"
               >
-                <Col
-                  xs={6}
-                  md={3}
-                  lg={3}
-                  className="d-flex flex-column justify-content-center align-items-center border  border-1"
-                >
-                  <p className="  fw-semibold m-1 mb-0 ">
-                    <span style={{ fontSize: "0.8em" }}>
-                      {i.macroTipologia}
-                    </span>
-                  </p>
-                  <Image
-                    className="mb-1"
-                    src={getImage(i)}
-                    thumbnail
-                    style={{ height: "5em" }}
-                  />
-                </Col>
-                <Col
-                  xs={6}
-                  md={3}
-                  lg={4}
-                  className=" d-flex flex-column justify-content-center  border  border-1"
-                >
-                  <div>
-                    <h5 className="  fw-semibold mb-0">Descrizione:</h5>
-                    <div
-                      className="border border-1 border-black bg-beigeChiaro p-1"
-                      style={{ height: "80%" }}
-                    >
-                      <p>{i.descrizione}</p>
-                    </div>
+                <p className="  fw-semibold m-1 mb-0 ">
+                  <span style={{ fontSize: "0.8em" }}>{i.macroTipologia}</span>
+                </p>
+                <Image
+                  className="mb-1"
+                  src={getImage(i)}
+                  thumbnail
+                  style={{ height: "5em" }}
+                />
+              </Col>
+              <Col
+                xs={6}
+                md={3}
+                lg={4}
+                className=" d-flex flex-column justify-content-center  border  border-1"
+              >
+                <div>
+                  <h5 className="  fw-semibold mb-0">Descrizione:</h5>
+                  <div
+                    className="border border-1 border-black bg-beigeChiaro p-1"
+                    style={{ height: "80%" }}
+                  >
+                    <p>{i.descrizione}</p>
                   </div>
-                </Col>
-                <Col
-                  xs={6}
-                  md={3}
-                  lg={3}
-                  className="d-flex flex-column justify-content-center border  border-1"
-                >
-                  <p className="  fw-semibold m-1">
-                    Prezzo: € <span>{i.prezzo}</span>{" "}
-                  </p>
-                  <p className="  fw-semibold m-1">
-                    Superficie: <span>{i.superficie + " mq"}</span>
-                  </p>
-                  <p className=" fw-semibold m-1">
-                    Comune:{" "}
-                    <span>
-                      {i.comune.denominazione +
-                        " (" +
-                        i.comune.provincia.sigla +
-                        ")"}{" "}
-                    </span>
-                  </p>
-                </Col>
-                <Col
-                  xs={6}
-                  md={3}
-                  lg={2}
-                  className="d-flex justify-content-center  border  border-1 "
-                >
-                  <div className="d-flex flex-column justify-content-center ">
-                    <Button
-                      className="my-1"
-                      onClick={() => {
-                        navigate("/immobili/" + i.id);
-                      }}
-                    >
-                      Dettagli
-                    </Button>
-                    <Button
-                      className="my-1 bg-success "
-                      onClick={() => {
-                        navigate(`/immobili/${i.id}/nuovaVisita`);
-                      }}
-                    >
-                      Nuova Visita
-                    </Button>
-                  </div>
-                </Col>
-              </Row>
-            );
-          })}
+                </div>
+              </Col>
+              <Col
+                xs={6}
+                md={3}
+                lg={3}
+                className="d-flex flex-column justify-content-center border  border-1"
+              >
+                <p className="  fw-semibold m-1">
+                  Prezzo: € <span>{i.prezzo}</span>{" "}
+                </p>
+                <p className="  fw-semibold m-1">
+                  Superficie: <span>{i.superficie + " mq"}</span>
+                </p>
+                <p className=" fw-semibold m-1">
+                  Comune:{" "}
+                  <span>
+                    {i.comune.denominazione +
+                      " (" +
+                      i.comune.provincia.sigla +
+                      ")"}{" "}
+                  </span>
+                </p>
+              </Col>
+              <Col
+                xs={6}
+                md={3}
+                lg={2}
+                className="d-flex justify-content-center  border  border-1 "
+              >
+                <div className="d-flex flex-column justify-content-center ">
+                  <Button
+                    className="my-1"
+                    onClick={() => {
+                      navigate("/immobili/" + i.id);
+                    }}
+                  >
+                    Dettagli
+                  </Button>
+                  <Button
+                    className="my-1 bg-success "
+                    onClick={() => {
+                      navigate(`/immobili/${i.id}/nuovaVisita`);
+                    }}
+                  >
+                    Nuova Visita
+                  </Button>
+                </div>
+              </Col>
+            </Row>
+          );
+        })}
         <Row className="my-3">
           <Col xs={4} md={3} lg={2} className="d-flex justify-content-start">
             {!firstPage && (
