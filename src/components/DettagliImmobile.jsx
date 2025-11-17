@@ -337,13 +337,11 @@ function DettagliImmobile() {
             {ruolo === "ADMIN" && (
               <div>
                 <Button variant="danger">
+                  Elimina{" "}
                   <i
                     className="bi bi-trash3-fill"
                     onClick={handleShowEliminaImmo}
                   ></i>
-                </Button>
-                <Button variant="primary">
-                  <i className="bi bi-pencil-fill"></i>
                 </Button>
               </div>
             )}
