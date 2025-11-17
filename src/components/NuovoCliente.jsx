@@ -94,9 +94,9 @@ function NuovoCliente() {
         {/*modale cliente salvato */}
         <Modal show={showSalvato} onHide={handleCloseSalvato}>
           <Modal.Header closeButton>
-            <Modal.Title>Nuovo Cliente</Modal.Title>
+            <Modal.Title>Cliente Salvato</Modal.Title>
           </Modal.Header>
-          <Modal.Body>Confermare e salvare?</Modal.Body>
+          <Modal.Body>fare click su Ok per chiudere</Modal.Body>
           <Modal.Footer>
             <Button
               variant="success"

@@ -5,6 +5,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Modal from "react-bootstrap/Modal";
 import Alert from "react-bootstrap/Alert";
 import base from "../variabili";
+import { useNavigate } from "react-router-dom";
 
 function NuovoImmobile() {
   const [token, setToken] = useState(
@@ -61,6 +62,8 @@ function NuovoImmobile() {
   const handleShowCom = () => setShowCom(true);
   const handleCloseSalvato = () => setSalvatoShow(false);
   const handleShowSalvato = () => setSalvatoShow(true);
+
+  const navigate = useNavigate();
 
   const getProvince = () => {
     fetch(base + "/province", {
@@ -199,7 +202,13 @@ function NuovoImmobile() {
         </Modal.Header>
         <Modal.Body>Immobile salvato correttamente</Modal.Body>
         <Modal.Footer>
-          <Button variant="success" onClick={handleCloseSalvato}>
+          <Button
+            variant="success"
+            onClick={() => {
+              handleCloseSalvato();
+              navigate("/immobili");
+            }}
+          >
             Ok
           </Button>
         </Modal.Footer>
