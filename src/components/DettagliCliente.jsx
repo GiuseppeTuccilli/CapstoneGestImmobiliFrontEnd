@@ -1,4 +1,4 @@
-import { Container, Row, Col, Image, Spinner } from "react-bootstrap";
+import { Container, Row, Col, Image, Spinner, Table } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { useEffect, useState } from "react";
 import base from "../variabili";
@@ -19,6 +19,10 @@ function DettagliCliente() {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [errElimina, setErrElimina] = useState(false);
+  const [showVisite, setShowVisite] = useState(false);
+
+  const [visite, setVisite] = useState([]);
+  const [richieste, setRichieste] = useState([]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -82,6 +86,28 @@ function DettagliCliente() {
       });
   };
 
+  const getVisite = () => {
+    fetch(base + "/clienti/" + params.idCliente + "/visite", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error(res.status);
+        }
+      })
+      .then((data) => {
+        setVisite(data);
+      })
+      .catch((er) => {
+        alert("errore nel recupero visite " + er.toString());
+      });
+  };
+
   const eliminaCliente = () => {
     fetch(base + "/clienti/" + id.toString(), {
       method: "DELETE",
@@ -113,6 +139,7 @@ function DettagliCliente() {
     }
     getMe();
     getCliente();
+    getVisite();
   }, [token]);
 
   return (
@@ -137,10 +164,20 @@ function DettagliCliente() {
           </Button>
         </Modal.Footer>
       </Modal>
-      <Container>
+      <Container className="mb-3">
         <Row className="d-flex justify-content-center border border-1 border-beige p-4 bg-polvereScuro">
           <Col xs={12} md={8}>
             <div className="d-flex justify-content-between">
+              <Button
+                className="px-4 h-100"
+                variant="primary"
+                onClick={() => {
+                  navigate(-1);
+                }}
+              >
+                <i className="bi bi-arrow-bar-left"></i>
+              </Button>
+
               <div className="border border-1 border-beige p-3 bg-bianchetto">
                 <h2>Cliente</h2>
               </div>
@@ -203,7 +240,23 @@ function DettagliCliente() {
         <Row className="d-flex justify-content-center border border-1 border-azzurroPolvere bg-polvereScuro p-3">
           <Col xs={12} md={6} className="d-flex justify-content-evenly">
             <Button variant="primary">Richieste</Button>
-            <Button variant="primary">Visite</Button>
+            <Button
+              variant="primary"
+              onClick={() => {
+                if (showVisite) {
+                  setShowVisite(false);
+                } else {
+                  setShowVisite(true);
+                }
+              }}
+            >
+              {showVisite ? (
+                <i className="bi bi-x-lg"></i>
+              ) : (
+                <i className="bi bi-arrow-90deg-down"></i>
+              )}{" "}
+              Visite
+            </Button>
             <Button
               variant="success"
               onClick={() => {
@@ -212,6 +265,68 @@ function DettagliCliente() {
             >
               + Richiesta
             </Button>
+          </Col>
+        </Row>
+
+        {/*Row visite cliente */}
+        <Row className={!showVisite && "d-none"}>
+          <Col style={{ height: "20em", overflowY: "auto" }}>
+            <Row>
+              <Table striped bordered hover className="mb-0">
+                <thead className="position-sticky" style={{ top: "-0.5%" }}>
+                  <tr>
+                    <th className="text-center">Data</th>
+
+                    <th colSpan={2} className="text-center">
+                      Immobile
+                    </th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr style={{ cursor: "pointer" }}>
+                    <td>primo</td>
+                    <td>sdfsdfsdfdsf</td>
+                    <td>sdfsdfsdf</td>
+                  </tr>
+                  <tr style={{ cursor: "pointer" }}>
+                    <td>sdfsdfsdfsdf</td>
+                    <td>sdfsdfsdfdsf</td>
+                    <td>sdfsdfsdf</td>
+                  </tr>
+                  <tr style={{ cursor: "pointer" }}>
+                    <td>sdfsdfsdfsdf</td>
+                    <td>sdfsdfsdfdsf</td>
+                    <td>sdfsdfsdf</td>
+                  </tr>
+                  <tr style={{ cursor: "pointer" }}>
+                    <td>sdfsdfsdfsdf</td>
+                    <td>sdfsdfsdfdsf</td>
+                    <td>sdfsdfsdf</td>
+                  </tr>
+                  <tr style={{ cursor: "pointer" }}>
+                    <td>sdfsdfsdfsdf</td>
+                    <td>sdfsdfsdfdsf</td>
+                    <td>sdfsdfsdf</td>
+                  </tr>
+                  <tr style={{ cursor: "pointer" }}>
+                    <td>sdfsdfsdfsdf</td>
+                    <td>sdfsdfsdfdsf</td>
+                    <td>sdfsdfsdf</td>
+                  </tr>
+                  <tr style={{ cursor: "pointer" }}>
+                    <td>sdfsdfsdfsdf</td>
+                    <td>sdfsdfsdfdsf</td>
+                    <td>sdfsdfsdf</td>
+                  </tr>
+                  <tr style={{ cursor: "pointer" }}>
+                    <td>sdfsdfsdfsdf</td>
+                    <td>sdfsdfsdfdsf</td>
+                    <td>sdfsdfsdf</td>
+                  </tr>
+                </tbody>
+              </Table>
+            </Row>
           </Col>
         </Row>
       </Container>
