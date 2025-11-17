@@ -156,7 +156,7 @@ function DettagliImmobile() {
       .then((res) => {
         if (res.ok) {
           alert("immobile eliminato");
-          navigate(-1);
+          navigate("/immobili");
         } else {
           throw new Error(res.status);
         }
@@ -245,14 +245,6 @@ function DettagliImmobile() {
     }
   };
 
-  /*
-  da fare:
-  
-  - fetch elimina foto
-  
-  - collegare buttons
-  */
-
   useEffect(() => {
     getImmobile();
     getFotoImmobile();
@@ -338,12 +330,8 @@ function DettagliImmobile() {
             </div>
             {ruolo === "ADMIN" && (
               <div>
-                <Button variant="danger">
-                  Elimina{" "}
-                  <i
-                    className="bi bi-trash3-fill"
-                    onClick={handleShowEliminaImmo}
-                  ></i>
+                <Button variant="danger" onClick={handleShowEliminaImmo}>
+                  Elimina <i className="bi bi-trash3-fill"></i>
                 </Button>
               </div>
             )}
