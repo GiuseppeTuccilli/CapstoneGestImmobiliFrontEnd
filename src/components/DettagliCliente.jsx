@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import base from "../variabili";
 import { Modal, Alert } from "react-bootstrap/";
 import { useParams, useNavigate } from "react-router-dom";
+import FattureCliente from "./FattureCliente";
 
 function DettagliCliente() {
   const [token, setToken] = useState(
@@ -22,6 +23,7 @@ function DettagliCliente() {
   const [showVisite, setShowVisite] = useState(false);
   const [showRichieste, setShowRichieste] = useState(false);
   const [showImmobili, setShowImmobili] = useState(false);
+  const [showFatture, setShowFatture] = useState(false);
 
   const [visite, setVisite] = useState([]);
   const [richieste, setRichieste] = useState([]);
@@ -319,6 +321,7 @@ function DettagliCliente() {
                 } else {
                   setShowVisite(false);
                   setShowRichieste(true);
+                  setShowFatture(false);
                   setIdVisitaSel(0);
                   setIdImmobileSel(0);
                 }
@@ -341,6 +344,7 @@ function DettagliCliente() {
                 } else {
                   setShowRichieste(false);
                   setShowImmobili(false);
+                  setShowFatture(false);
                   setShowVisite(true);
                   setIdRichiestaSel(0);
                 }
@@ -352,6 +356,31 @@ function DettagliCliente() {
                 <i className="bi bi-arrow-90deg-down"></i>
               )}{" "}
               Visite
+            </Button>
+            <Button
+              variant="primary"
+              onClick={() => {
+                if (showFatture) {
+                  setShowFatture(false);
+                  setIdVisitaSel(0);
+                  setIdImmobileSel(0);
+                  setIdRichiestaSel(0);
+                } else {
+                  setShowRichieste(false);
+                  setShowImmobili(false);
+                  setShowVisite(false);
+                  setShowFatture(true);
+                  setIdImmobileSel(0);
+                  setIdVisitaSel(0);
+                }
+              }}
+            >
+              {showFatture ? (
+                <i className="bi bi-x-lg"></i>
+              ) : (
+                <i className="bi bi-arrow-90deg-down"></i>
+              )}{" "}
+              Fatture
             </Button>
             <Button
               variant="success"
@@ -561,6 +590,15 @@ function DettagliCliente() {
               </Table>
             </Row>
           </Col>
+        </Row>
+        {/*Row richieste cliente */}
+        <Row className={"bg-bluGuado " + (!showFatture && "d-none")}>
+          <FattureCliente
+            ruolo={ruolo}
+            idCliente={params.idCliente}
+            token={token}
+            base={base}
+          />
         </Row>
       </Container>
     </>
