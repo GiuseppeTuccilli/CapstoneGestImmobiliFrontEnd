@@ -591,7 +591,7 @@ function DettagliCliente() {
             </Row>
           </Col>
         </Row>
-        {/*Row richieste cliente */}
+        {/*Row fatture cliente */}
         <Row className={"bg-bluGuado " + (!showFatture && "d-none")}>
           <FattureCliente
             ruolo={ruolo}
