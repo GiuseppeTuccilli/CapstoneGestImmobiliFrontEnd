@@ -5,6 +5,7 @@ import base from "../variabili";
 import { Modal, Alert } from "react-bootstrap/";
 import { useParams, useNavigate } from "react-router-dom";
 import RichiesteCompatibili from "./RichiesteCompatibili";
+import VisiteImmobile from "./VisiteImmobile";
 
 function DettagliImmobile() {
   const [token, setToken] = useState(
@@ -36,7 +37,7 @@ function DettagliImmobile() {
   const [showElimina, setShowElimina] = useState(false);
   const [showEliminaImmo, setShowEliminaImmo] = useState(false);
   const [showRichieste, setShowRichieste] = useState(false);
-
+  const [showVisite, setShowVisite] = useState(false);
   const [file, setFile] = useState(null);
   const [fotoIndex, setFotoIndex] = useState(0);
   const [fotoId, setFotoId] = useState(0);
@@ -348,12 +349,35 @@ function DettagliImmobile() {
                     setShowRichieste(false);
                   } else {
                     setShowRichieste(true);
+                    setShowVisite(false);
                   }
                 }}
               >
-                Richieste <i className="bi bi-check2-all"></i>
+                {showRichieste ? (
+                  <i className="bi bi-x-lg"></i>
+                ) : (
+                  <i className="bi bi-arrow-90deg-down"></i>
+                )}{" "}
+                Richieste
               </Button>
-              <Button variant="primary">Visite</Button>
+              <Button
+                variant="primary"
+                onClick={() => {
+                  if (showVisite) {
+                    setShowVisite(false);
+                  } else {
+                    setShowRichieste(false);
+                    setShowVisite(true);
+                  }
+                }}
+              >
+                {showVisite ? (
+                  <i className="bi bi-x-lg"></i>
+                ) : (
+                  <i className="bi bi-arrow-90deg-down"></i>
+                )}{" "}
+                Visite
+              </Button>
               <Button
                 variant="success"
                 onClick={() => {
@@ -511,6 +535,26 @@ function DettagliImmobile() {
               Indirizzo: <span className="fw-bold">{indirizzo}</span>
             </p>
           </Col>
+          {/* richieste compatibili */}
+          <Col xs={12} className={!showRichieste && "d-none"}>
+            <Row className={!showRichieste && "d-none"}>
+              <RichiesteCompatibili
+                idImmo={params.idImmobile}
+                base={base}
+                token={token}
+              />
+            </Row>
+          </Col>
+          {/*visite */}
+          <Col xs={12} className={!showVisite && "d-none"}>
+            <Row>
+              <VisiteImmobile
+                idImmo={params.idImmobile}
+                base={base}
+                token={token}
+              />
+            </Row>
+          </Col>
           <Col
             xs={12}
             className="border border-2 border-beige bg-polvereScuro p-3"
@@ -523,13 +567,13 @@ function DettagliImmobile() {
             </div>
           </Col>
         </Row>
-        <Row className={!showRichieste && "d-none"}>
+        {/* <Row className={!showRichieste && "d-none"}>
           <RichiesteCompatibili
             idImmo={params.idImmobile}
             base={base}
             token={token}
           />
-        </Row>
+        </Row>*/}
         <Row>
           <div className="d-flex justify-content-around p-2 border border-2 border-beige bg-bluGuado">
             {ruolo === "ADMIN" && (
