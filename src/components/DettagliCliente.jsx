@@ -226,6 +226,7 @@ function DettagliCliente() {
             variant="danger"
             onClick={() => {
               eliminaCliente();
+              handleClose();
             }}
           >
             Elimina

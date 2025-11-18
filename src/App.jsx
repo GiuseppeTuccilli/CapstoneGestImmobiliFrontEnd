@@ -20,6 +20,7 @@ import DettagliCliente from "./components/DettagliCliente";
 import ModificaCliente from "./components/ModificaCliente";
 import NuovaRichiesta from "./components/NuovaRichiesta";
 import DettagliImmobile from "./components/DettagliImmobile";
+import MieVisite from "./components/MieVisite";
 
 function App() {
   return (
@@ -101,7 +102,15 @@ function App() {
               </>
             }
           />
-          <Route path="/visite" element={<MyNavbar />} />
+          <Route
+            path="/visite"
+            element={
+              <>
+                <MyNavbar />
+                <MieVisite />
+              </>
+            }
+          />
           <Route
             path="/NuovoImmobile"
             element={

@@ -75,7 +75,7 @@ function VisiteImmobile(props) {
                 <th className="text-center">Data</th>
 
                 <th colSpan={2} className="text-center">
-                  Immobile
+                  Cliente
                 </th>
               </tr>
             </thead>
@@ -95,13 +95,8 @@ function VisiteImmobile(props) {
                     }
                   >
                     <td>{v.data}</td>
-                    <td>{v.immobile.indirizzo}</td>
-                    <td>
-                      {v.immobile.comune.denominazione +
-                        " (" +
-                        v.immobile.comune.provincia.sigla +
-                        ")"}
-                    </td>
+                    <td>{v.cliente.nome}</td>
+                    <td>{v.cliente.cognome}</td>
                   </tr>
                 );
               })}
