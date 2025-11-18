@@ -1,9 +1,10 @@
 import { Container, Row, Col, Image, Spinner, Table } from "react-bootstrap";
+import { Modal, Alert } from "react-bootstrap/";
 import Button from "react-bootstrap/Button";
 import { useEffect, useState } from "react";
 import base from "../variabili";
-import { Modal, Alert } from "react-bootstrap/";
 import { useParams, useNavigate } from "react-router-dom";
+import ModaleNuovaFattura from "./ModaleNuovaFattura";
 function FattureCliente(props) {
   let token = props.token;
   let idCliente = props.idCliente;
@@ -13,7 +14,7 @@ function FattureCliente(props) {
   const [idFatturaSel, setIdFatturaSel] = useState(0);
   const [error, setError] = useState(false);
   const [show, setShow] = useState(false);
-  console.log(idCliente);
+  const [modalShow, setModalShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -71,6 +72,16 @@ function FattureCliente(props) {
 
   return (
     <>
+      {/*modale nuova fattura */}
+      <ModaleNuovaFattura
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        idClient={idCliente}
+        nome={props.nomeCliente}
+        cognome={props.cognomeCliente}
+        tok={token}
+      />
+
       {/*modale elimina */}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -111,7 +122,13 @@ function FattureCliente(props) {
                     </Button>
                   )}
                   {ruolo === "ADMIN" && (
-                    <Button variant="success"> + Fattura</Button>
+                    <Button
+                      variant="success"
+                      onClick={() => setModalShow(true)}
+                    >
+                      {" "}
+                      + Fattura
+                    </Button>
                   )}
                 </div>
               </th>

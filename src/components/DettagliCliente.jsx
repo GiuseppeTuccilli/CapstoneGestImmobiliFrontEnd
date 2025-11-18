@@ -598,6 +598,8 @@ function DettagliCliente() {
             idCliente={params.idCliente}
             token={token}
             base={base}
+            nomeCliente={nome}
+            cognomeCliente={cognome}
           />
         </Row>
       </Container>
