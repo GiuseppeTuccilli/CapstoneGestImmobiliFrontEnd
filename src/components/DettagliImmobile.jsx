@@ -596,7 +596,7 @@ function DettagliImmobile() {
                   }}
                 >
                   <p
-                    className="m-0 p-1 text-end fw-semibold  border border-1 border-beide bg-azzurroPolvere"
+                    className="m-0 p-1 text-end fw-semibold  border border-1 border-beide bg-azzurroPolvere pe-2 border-end-0 "
                     style={{ fontSize: "0.8em" }}
                   >
                     Aggiungi Foto:{" "}

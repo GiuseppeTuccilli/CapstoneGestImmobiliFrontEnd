@@ -18,6 +18,8 @@ function NuovaVisita() {
   const [page, setPage] = useState(0);
   const [firstPage, setFirstPage] = useState(true);
   const [lastPage, setLastPage] = useState(false);
+  const [nomeSelected, setNomeSelected] = useState("");
+  const [cognomeSelected, setCognomeSelected] = useState("");
 
   const [indImmobile, setIndImmobile] = useState("");
   const [tipoImmobile, setTipoImmobile] = useState("");
@@ -142,8 +144,8 @@ function NuovaVisita() {
   return (
     <>
       {errSalv && <Alert variant="danger">Errore nel salvataggio</Alert>}
-      <Container className="d-flex flex-column align-items-center">
-        <Row className="d-flex justify-content-center position-fixed bg-secondary py-2">
+      <Container className="d-flex flex-column align-items-center bg-bluGuado">
+        <Row className="d-flex justify-content-center  bg-secondary py-2">
           <Col xs={9} md={6} className="px-0 ps-2">
             <h2 className="text-center border border-1 border-azzurroPolvere p-3 bg-beige ">
               Nuova Visita
@@ -195,30 +197,42 @@ function NuovaVisita() {
             md={3}
             className="d-flex flex-column justify-content-around"
           >
-            <Button
-              variant="success"
-              onClick={() => {
-                if (data === "") {
-                  alert("seleziona una data");
-                  return;
-                }
-                if (idSelected === 0) {
-                  alert("seleziona un cliente");
-                  return;
-                }
-                salvaVisita();
-              }}
+            <div className="d-flex flex-column justify-content-around">
+              <Button
+                variant="success"
+                onClick={() => {
+                  if (data === "") {
+                    alert("seleziona una data");
+                    return;
+                  }
+                  if (idSelected === 0) {
+                    alert("seleziona un cliente");
+                    return;
+                  }
+                  salvaVisita();
+                }}
+              >
+                Salva
+              </Button>
+              <Button
+                variant="danger"
+                onClick={() => {
+                  navigate("/immobili");
+                }}
+              >
+                Annulla
+              </Button>
+            </div>
+            <div
+              className="p-2 border border-1 border-sabbia bg-azzurroPolvere d-flex flex-column justify-content-center"
+              style={{ height: "6em" }}
             >
-              Salva
-            </Button>
-            <Button
-              variant="danger"
-              onClick={() => {
-                navigate("/immobili");
-              }}
-            >
-              Annulla
-            </Button>
+              <h5 className="text-center">Cliente:</h5>
+              <div className="d-flex justify-content-center p-2 border border-1 border-bluGuado bg-beigeChiaro">
+                <p className="m-0 me-1 fw-semibold">{nomeSelected} </p>
+                <p className="m-0 fw-semibold">{cognomeSelected}</p>
+              </div>
+            </div>
           </Col>
           <Col xs={12} md={9}>
             <h5 className="m-0 mt-2 text-light">
@@ -246,104 +260,128 @@ function NuovaVisita() {
             </div>
           </Col>
         </Row>
-
-        <Container
-          className="d-flex justify-content-center position-fixed bg-secondary elencoClienti"
-          style={{ marginTop: "15.4em" }}
-        >
-          <Row className="w-100 justify-content-center ">
-            <Col xs={12} md={9}>
-              <Table striped bordered hover className="m-0">
-                <thead>
+        {/*row clienti */}
+        <Row className=" w-100 justify-content-center">
+          <Col style={{ height: "25em", overflowY: "auto" }} xs={12} md={9}>
+            <Row>
+              <Table striped bordered hover className="mb-0">
+                <thead className="position-sticky" style={{ top: "-0.5%" }}>
+                  <th colSpan={3}>
+                    <div className="d-flex  justify-content-around p-3 border border-1 border-beige bg-polvereScuro">
+                      <div>
+                        <h4 className="m-0 p-2 border border-1 border-azzurroPolvere bg-beige">
+                          Clienti
+                        </h4>
+                      </div>
+                    </div>
+                  </th>
                   <tr>
-                    <th style={{ width: "30%" }}>Nome</th>
-                    <th style={{ width: "30%" }}>Cognome</th>
-                    <th style={{ width: "40%" }}>indirizzo</th>
+                    <th className="text-center">Data</th>
+
+                    <th colSpan={2} className="text-center">
+                      Immobile
+                    </th>
                   </tr>
                 </thead>
-              </Table>
-            </Col>
-          </Row>
-        </Container>
 
-        <Row
-          className="d-flex justify-content-center w-100 elencoClienti"
-          style={{ marginTop: "15.4em" }}
-        >
-          <Col xs={12} md={9}>
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Nome</th>
-                  <th>Cognome</th>
-                  <th>indirizzo</th>
-                </tr>
-              </thead>
-              <tbody>
-                {loading ? (
-                  <Spinner />
-                ) : (
-                  clienti.map((c) => {
+                <tbody>
+                  {clienti.map((c) => {
                     return (
                       <tr
-                        style={{
-                          border: idSelected === c.id && "2px solid red",
-                        }}
                         key={c.id}
+                        style={{ cursor: "pointer" }}
                         onClick={() => {
                           setIdSelected(c.id);
+                          setNomeSelected(c.nome);
+                          setCognomeSelected(c.cognome);
                         }}
+                        className={
+                          idSelected === c.id &&
+                          "border border-2 border-success"
+                        }
                       >
-                        <td style={{ width: "30%" }}>{c.nome}</td>
-                        <td style={{ width: "30%" }}>{c.cognome}</td>
-                        <td style={{ width: "40%" }}>{c.indirizzo}</td>
+                        <td>{c.nome}</td>
+                        <td>{c.cognome}</td>
+                        <td>sdfdsfdsf</td>
                       </tr>
                     );
-                  })
-                )}
-              </tbody>
-            </Table>
-
-            <Row className="mb-3">
-              <Col
-                xs={4}
-                md={3}
-                lg={2}
-                className="d-flex justify-content-start"
-              >
-                {!firstPage && (
-                  <Button
-                    variant="primary"
-                    onClick={() => {
-                      if (firstPage) {
-                        return;
-                      }
-                      let prev = page - 1;
-                      setPage(prev);
-                    }}
-                  >
-                    <i className="bi bi-chevron-left"></i>
-                  </Button>
-                )}
-              </Col>
-              <Col xs={4} md={6} lg={8}></Col>
-              <Col xs={4} md={3} lg={2} className="d-flex justify-content-end">
-                {!lastPage && (
-                  <Button
-                    variant="primary"
-                    onClick={() => {
-                      if (lastPage) {
-                        return;
-                      }
-                      let next = page + 1;
-                      setPage(next);
-                    }}
-                  >
-                    <i className="bi bi-chevron-right "></i>
-                  </Button>
-                )}
-              </Col>
+                  })}
+                </tbody>
+              </Table>
             </Row>
+          </Col>
+        </Row>
+        {/*row scorrimento pages */}
+        <Row className="mb-3">
+          <Col xs={4} md={3} lg={2} className="d-flex justify-content-start">
+            {!firstPage && (
+              <Button
+                variant="primary"
+                onClick={() => {
+                  if (firstPage) {
+                    return;
+                  }
+                  let prev = page - 1;
+                  setPage(prev);
+                }}
+              >
+                <i className="bi bi-chevron-left"></i>
+              </Button>
+            )}
+          </Col>
+          <Col xs={4} md={6} lg={8}></Col>
+          <Col xs={4} md={3} lg={2} className="d-flex justify-content-end">
+            {!lastPage && (
+              <Button
+                variant="primary"
+                onClick={() => {
+                  if (lastPage) {
+                    return;
+                  }
+                  let next = page + 1;
+                  setPage(next);
+                }}
+              >
+                <i className="bi bi-chevron-right "></i>
+              </Button>
+            )}
+          </Col>
+        </Row>
+
+        {/*row scorrimento pages */}
+        <Row className="mb-3">
+          <Col xs={4} md={3} lg={2} className="d-flex justify-content-start">
+            {!firstPage && (
+              <Button
+                variant="primary"
+                onClick={() => {
+                  if (firstPage) {
+                    return;
+                  }
+                  let prev = page - 1;
+                  setPage(prev);
+                }}
+              >
+                <i className="bi bi-chevron-left"></i>
+              </Button>
+            )}
+          </Col>
+          <Col xs={4} md={6} lg={8}></Col>
+          <Col xs={4} md={3} lg={2} className="d-flex justify-content-end">
+            {!lastPage && (
+              <Button
+                variant="primary"
+                onClick={() => {
+                  if (lastPage) {
+                    return;
+                  }
+                  let next = page + 1;
+                  setPage(next);
+                }}
+              >
+                <i className="bi bi-chevron-right "></i>
+              </Button>
+            )}
           </Col>
         </Row>
       </Container>
