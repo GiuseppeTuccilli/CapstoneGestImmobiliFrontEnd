@@ -26,6 +26,7 @@ function ElencoImmobili() {
   const [firstPage, setFirstPage] = useState(true);
   const [lastPage, setLastPage] = useState(false);
   const [page, setPage] = useState(0);
+  const [idImmoSel, setIdImmoSel] = useState(0);
 
   const navigate = useNavigate();
 
@@ -53,7 +54,7 @@ function ElencoImmobili() {
         if (res.ok) {
           return res.json();
         } else {
-          throw new Error(res.status.valueOf);
+          throw new Error(res.status);
         }
       })
       .then((data) => {
@@ -63,7 +64,7 @@ function ElencoImmobili() {
         setLastPage(data.last);
       })
       .catch((er) => {
-        console.log(er);
+        console.log(er.toString());
       });
   };
 
@@ -143,101 +144,127 @@ function ElencoImmobili() {
   return (
     <>
       <Row className="d-flex justify-content-center">
-        <div className="bg-polvereScuro m-0, py-2 px-3 position-fixed d-flex">
-          <div className="col-4 d-flex  justify-content-between align-items-center px-3">
-            <h2 className="d-none d-lg-block text-center m-0 p-3 border border-1 border-beige bg-sabbia">
-              Immobili
-            </h2>
-            <h4 className="text-center m-0 p-3 border border-1 border-beige bg-sabbia">
-              Filtri<i className="bi bi-funnel"></i>
-            </h4>
-          </div>
-          <div className="col-8">
-            <div className="row  justify-content-center g-2">
-              <div className="d-flex col col-5 w-50">
-                <InputGroup>
-                  <InputGroup.Checkbox
-                    aria-label="Checkbox for following text input"
-                    checked={filtroComune}
-                    onChange={handleCheckComune}
-                  />
-                  <Form.Control
-                    aria-label="Text input with checkbox"
-                    placeholder="filtra per Comune"
-                    value={comune}
-                    onChange={handleChangeComune}
-                  />
-                </InputGroup>
-              </div>
-              <div className="d-flex col col-5 w-50">
-                <InputGroup>
-                  <InputGroup.Checkbox
-                    aria-label="Checkbox for following text input"
-                    checked={filtroProvincia}
-                    onChange={handleCheckProvincia}
-                  />
-                  <Form.Control
-                    aria-label="Text input with checkbox"
-                    placeholder="filtra per Provincia"
-                    value={provincia}
-                    onChange={handleChangeProvincia}
-                  />
-                </InputGroup>
-              </div>
-              <div className="d-flex col col-5 w-50">
-                <InputGroup>
-                  <InputGroup.Checkbox
-                    aria-label="Checkbox for following text input"
-                    checked={filtroIndirizzo}
-                    onChange={handleCheckIndirizzo}
-                  />
-                  <Form.Control
-                    aria-label="Text input with checkbox"
-                    placeholder="filtra per Indirizzo"
-                    value={indirizzo}
-                    onChange={handleChangeIndirizzo}
-                  />
-                </InputGroup>
-              </div>
-              <div className="d-flex col col-5 w-50">
-                <InputGroup>
-                  <InputGroup.Checkbox
-                    aria-label="Checkbox for following text input"
-                    checked={filtroTipologia}
-                    onChange={handleCheckTipologia}
-                  />
-                  {/* <Form.Control
+        <div className="bg-bluGuado m-0, pt-2 px-3 border-bottom border-1 border-sabbia position-fixed d-flex flex-column">
+          <div className="d-flex">
+            <div className="col-4 d-flex  justify-content-between align-items-center px-3">
+              <h2 className="d-none d-lg-block text-center m-0 p-3 border border-1 border-beige bg-sabbia">
+                Immobili
+              </h2>
+              <h4 className="text-center m-0 p-3 border border-1 border-beige bg-sabbia">
+                Filtri<i className="bi bi-funnel"></i>
+              </h4>
+            </div>
+            <div className="col-8">
+              <div className="row  justify-content-center g-2">
+                <div className="d-flex col col-5 w-50">
+                  <InputGroup>
+                    <InputGroup.Checkbox
+                      aria-label="Checkbox for following text input"
+                      checked={filtroComune}
+                      onChange={handleCheckComune}
+                    />
+                    <Form.Control
+                      aria-label="Text input with checkbox"
+                      placeholder="filtra per Comune"
+                      value={comune}
+                      onChange={handleChangeComune}
+                    />
+                  </InputGroup>
+                </div>
+                <div className="d-flex col col-5 w-50">
+                  <InputGroup>
+                    <InputGroup.Checkbox
+                      aria-label="Checkbox for following text input"
+                      checked={filtroProvincia}
+                      onChange={handleCheckProvincia}
+                    />
+                    <Form.Control
+                      aria-label="Text input with checkbox"
+                      placeholder="filtra per Provincia"
+                      value={provincia}
+                      onChange={handleChangeProvincia}
+                    />
+                  </InputGroup>
+                </div>
+                <div className="d-flex col col-5 w-50">
+                  <InputGroup>
+                    <InputGroup.Checkbox
+                      aria-label="Checkbox for following text input"
+                      checked={filtroIndirizzo}
+                      onChange={handleCheckIndirizzo}
+                    />
+                    <Form.Control
+                      aria-label="Text input with checkbox"
+                      placeholder="filtra per Indirizzo"
+                      value={indirizzo}
+                      onChange={handleChangeIndirizzo}
+                    />
+                  </InputGroup>
+                </div>
+                <div className="d-flex col col-5 w-50">
+                  <InputGroup>
+                    <InputGroup.Checkbox
+                      aria-label="Checkbox for following text input"
+                      checked={filtroTipologia}
+                      onChange={handleCheckTipologia}
+                    />
+                    {/* <Form.Control
                     aria-label="Text input with checkbox"
                     placeholder="filtra per Tipologia"
                   />*/}
-                  <Form.Select
-                    aria-label="Default select example"
-                    placeholder="filtra per Tipologia"
-                    value={tipologia}
-                    onChange={handleChangeTipologia}
-                    disabled={!filtroTipologia}
-                  >
-                    <option value="_">_</option>
-                    <option value="ENTITÀ_URBANA">Entità Urbana</option>
-                    <option value="DESTINAZIONE_SPECIALE">
-                      Destinazione Speciale
-                    </option>
-                    <option value="DESTINAZIONE_PARTICOLARE">
-                      Destinazione Particolare
-                    </option>
-                  </Form.Select>
-                </InputGroup>
+                    <Form.Select
+                      aria-label="Default select example"
+                      placeholder="filtra per Tipologia"
+                      value={tipologia}
+                      onChange={handleChangeTipologia}
+                      disabled={!filtroTipologia}
+                    >
+                      <option value="_">_</option>
+                      <option value="ENTITÀ_URBANA">Entità Urbana</option>
+                      <option value="DESTINAZIONE_SPECIALE">
+                        Destinazione Speciale
+                      </option>
+                      <option value="DESTINAZIONE_PARTICOLARE">
+                        Destinazione Particolare
+                      </option>
+                    </Form.Select>
+                  </InputGroup>
+                </div>
               </div>
             </div>
           </div>
+          <div className="mt-1  d-flex justify-content-around mt-2 ">
+            <div className="p-2 border border-1 bprder-azzurroPolvere bg-bluGuado ">
+              <h5 className="m-0 text-sabbia ">Seleziona un Immobile</h5>
+            </div>
+            {idImmoSel > 0 && (
+              <Button
+                variant="success"
+                className="my-1"
+                onClick={() => {
+                  navigate("/immobili/" + idImmoSel);
+                }}
+              >
+                Apri Scheda <i className="bi bi-box-arrow-up-right"></i>
+              </Button>
+            )}
+          </div>
         </div>
       </Row>
-      <Container fluid style={{ marginTop: "6em" }}>
+
+      <Container
+        style={{ marginTop: " 9em" }}
+        className="bg-polvereScuro containerImmobili border border-2 border-beige"
+      >
         {immobili.map((i) => {
           return (
             <Row
-              className="py-1 border-top border-bottom border-3 border-black "
+              className={idImmoSel === i.id && "border border-3 border-success"}
               key={i.id}
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                setIdImmoSel(i.id);
+              }}
             >
               <Col
                 xs={6}
@@ -252,7 +279,7 @@ function ElencoImmobili() {
                   className="mb-1"
                   src={getImage(i)}
                   thumbnail
-                  style={{ height: "5em" }}
+                  style={{ height: "3.5em" }}
                 />
               </Col>
               <Col
@@ -277,9 +304,7 @@ function ElencoImmobili() {
                 <p className="  fw-semibold m-1">
                   Prezzo: € <span>{i.prezzo}</span>{" "}
                 </p>
-                <p className="  fw-semibold m-1">
-                  Superficie: <span>{i.superficie + " mq"}</span>
-                </p>
+
                 <p className=" fw-semibold m-1">
                   Comune:{" "}
                   <span>
@@ -294,26 +319,15 @@ function ElencoImmobili() {
                 xs={6}
                 md={3}
                 lg={2}
-                className="d-flex justify-content-center  border  border-1 "
+                className="d-flex flex-column justify-content-center border  border-1"
               >
-                <div className="d-flex flex-column justify-content-center ">
-                  <Button
-                    className="my-1"
-                    onClick={() => {
-                      navigate("/immobili/" + i.id);
-                    }}
-                  >
-                    Dettagli
-                  </Button>
-                  <Button
-                    className="my-1 bg-success "
-                    onClick={() => {
-                      navigate(`/immobili/${i.id}/nuovaVisita`);
-                    }}
-                  >
-                    Nuova Visita
-                  </Button>
-                </div>
+                <p className="  fw-semibold m-1">
+                  Locali <span>{i.locali}</span>{" "}
+                </p>
+
+                <p className=" fw-semibold m-1">
+                  mq: <span>{i.superficie} </span>
+                </p>
               </Col>
             </Row>
           );
