@@ -17,6 +17,7 @@ function ElencoClienti() {
   const [filtroCognome, setFiltroCognome] = useState(false);
   const [nome, setNome] = useState("");
   const [cognome, setCognome] = useState("");
+  const [idSel, setIdSel] = useState(0);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -140,22 +141,51 @@ function ElencoClienti() {
               </div>
             </div>
           </div>
+          <Row className="bg-bluGuado ">
+            <div className="d-flex justify-content-around p-2">
+              <h4 className="m-0 text-beigeChiaro mt-1 border border-1 border-azzurroPolvere px-2">
+                Seleziona un cliente
+              </h4>
+              {idSel > 0 && (
+                <Button
+                  variant="primary"
+                  onClick={() => {
+                    navigate("/clienti/" + idSel);
+                  }}
+                >
+                  Apri Scheda <i className="bi bi-box-arrow-up-right"></i>
+                </Button>
+              )}
+            </div>
+          </Row>
           <Row className="bg-beige p-0" style={{ width: "80vw" }}>
             <Col
-              xs={6}
+              xs={4}
               md={3}
               className="border-top border-start border-end border-2 border-azzurroPolvere d-flex align-items-end p-1 justify-content-center"
             >
-              <h4 className="m-0">Nome</h4>
+              <h5 className="m-0">Nome</h5>
             </Col>
             <Col
-              xs={6}
+              xs={4}
               md={3}
               className="border-top border-start border-end border-2 border-azzurroPolvere d-flex align-items-end p-1 justify-content-center"
             >
-              <h4 className="m-0">Cognome</h4>
+              <h5 className="m-0">Cognome</h5>
             </Col>
-            <Col xs={12} md={6}></Col>
+            <Col
+              xs={4}
+              md={3}
+              className="border-top border-start border-end border-2 border-azzurroPolvere d-flex align-items-end p-1 justify-content-center"
+            >
+              <h5 className="m-0">Email</h5>
+            </Col>
+            <Col
+              xs={3}
+              className="d-none d-md-flex border-top border-start border-end border-2 border-azzurroPolvere d-flex align-items-end p-1 justify-content-center"
+            >
+              <h5 className="m-0">Indirizzo</h5>
+            </Col>
           </Row>
         </Row>
       </div>
@@ -169,49 +199,52 @@ function ElencoClienti() {
                 return (
                   <>
                     <Row
-                      className="border border-1 border-beige bg-bianchetto"
+                      style={{ cursor: "pointer" }}
+                      className={
+                        "bg-bianchetto " +
+                        (idSel === c.id && " border border-2 border-primary")
+                      }
                       key={c.id}
+                      onClick={() => {
+                        if (idSel === c.id) {
+                          setIdSel(0);
+                        } else {
+                          setIdSel(c.id);
+                        }
+                      }}
                     >
                       <Col
-                        xs={6}
+                        xs={4}
                         md={3}
-                        className="d-flex align-items-center justify-content-center p-2 border border-1 border-beige"
+                        className="d-flex align-items-center justify-content-center p-2 border border-1 border-beige "
                       >
                         <p className="m-0 fw-semibold ">{c.nome}</p>
                       </Col>
                       <Col
-                        xs={6}
+                        xs={4}
                         md={3}
-                        className="d-flex align-items-center justify-content-center p-2 border border-1 border-beige"
+                        className="d-flex align-items-center justify-content-center p-2 border border-1 border-beige "
                       >
                         <p className="m-0 fw-semibold">{c.cognome}</p>
                       </Col>
                       <Col
-                        xs={12}
-                        md={6}
-                        className=" p-2 border border-1 border-beige"
+                        xs={4}
+                        md={3}
+                        className=" p-2 border border-1 border-beige "
+                        style={{ overflowX: "scroll" }}
                       >
-                        <div className="d-flex flex-wrap justify-content-center">
-                          <Button
-                            variant="primary"
-                            className="m-1"
-                            onClick={() => {
-                              navigate(`/clienti/${c.id}`);
-                            }}
-                          >
-                            Dettagli
-                          </Button>
-
-                          <Button
-                            variant="success"
-                            className="m-1"
-                            onClick={() => {
-                              navigate(`/clienti/${c.id}/nuovaRichiesta`);
-                            }}
-                          >
-                            + Richiesta
-                          </Button>
-                        </div>
+                        <p className="m-0 " style={{ fontSize: "0.9em" }}>
+                          {c.email}
+                        </p>
+                      </Col>
+                      <Col
+                        xs={3}
+                        className="d-none d-md-flex p-2 border border-1 border-beige "
+                        style={{ overflowX: "scroll" }}
+                      >
+                        <p className="m-0 " style={{ fontSize: "0.9em" }}>
+                          {c.indirizzo}
+                        </p>
                       </Col>
                     </Row>
                   </>
