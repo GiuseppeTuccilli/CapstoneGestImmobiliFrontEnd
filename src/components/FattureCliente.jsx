@@ -114,6 +114,21 @@ function FattureCliente(props) {
                       Fatture
                     </h4>
                   </div>
+                  <div className="d-flex align-items-center p-2 border border-1 border-beige">
+                    <h6
+                      className="m-0 me-1"
+                      style={{
+                        textDecoration: "underline",
+                        textDecorationColor: "beige",
+                        textUnderlineOffset: "0.2em",
+                      }}
+                    >
+                      Totale Fatturato:{" "}
+                    </h6>
+                    <p className="m-0 fw-semibold p-1 border border-1 border-beige bg-beigeChiaro">
+                      {fatture.reduce((sum, f) => sum + f.importo, 0) + " €"}
+                    </p>
+                  </div>
 
                   {ruolo === "ADMIN" && idFatturaSel > 0 && (
                     <Button variant="danger" onClick={handleShow}>
