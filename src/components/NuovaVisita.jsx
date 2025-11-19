@@ -1,5 +1,12 @@
 import { useRef, useState, useEffect } from "react";
-import { Container, Row, Col, Button, Form } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Form,
+  AlertHeading,
+} from "react-bootstrap";
 import { useParams, useNavigate } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import base from "../variabili";
@@ -143,7 +150,17 @@ function NuovaVisita() {
 
   return (
     <>
-      {errSalv && <Alert variant="danger">Errore nel salvataggio</Alert>}
+      {errSalv && (
+        <Alert variant="danger" className="text-center">
+          Questo immobile ha bià una visita prenotata per la data{" "}
+          <span className="fw-semibold">{data}</span>
+          <div className="d-flex justify-content-center ">
+            <Button onClick={() => setErrSalv(false)} variant="outline-danger">
+              Ok
+            </Button>
+          </div>
+        </Alert>
+      )}
       <Container className="d-flex flex-column align-items-center bg-bluGuado">
         <Row className="d-flex justify-content-center  bg-secondary py-2">
           <Col xs={9} md={6} className="px-0 ps-2">
