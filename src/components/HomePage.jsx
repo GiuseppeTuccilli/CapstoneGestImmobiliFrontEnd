@@ -99,51 +99,73 @@ function HomePage() {
         </Modal>
       </>
       <Row className="mt-3 ">
-        <Col className="border border-3 border-polvereScuro bg-azzurroPolvere p-3">
-          <h3 className="mb-0">Utente:</h3>
-          <p className="fs-5 pb-0 ">
-            <span>{loading ? <Spinner /> : userNome} </span>
-            <span>{loading ? <Spinner /> : userCognome}</span>
-          </p>
-          <div className="d-flex align-items-end">
+        <Col
+          xs={12}
+          md={6}
+          className="border border-3 border-bluGuado bg-polvereScuro p-3"
+        >
+          <div className="p-2 border border-1 border-bluGuado bg-sabbia">
+            <h3 className="mb-0">Utente:</h3>
+            <p className="fs-5 pb-0 ">
+              <span>{loading ? <Spinner /> : userNome} </span>
+              <span>{loading ? <Spinner /> : userCognome}</span>
+            </p>
+          </div>
+          <div className="d-flex p-2 border border-1 border-bluGuado bg-sabbia ">
             <h4 className="mb-0">Ruolo: </h4>
             <p className="m-0 ms-2 fs-5">
               <span> {loading ? <Spinner /> : userRuolo}</span>
             </p>
           </div>
-          {userRuolo !== "" && (
-            <Button className="my-1 bg-danger " onClick={handleShow}>
-              Log-out
-            </Button>
-          )}
+          <div className="text-end">
+            {userRuolo !== "" && (
+              <Button variant="danger" className="my-1  " onClick={handleShow}>
+                Log-out
+              </Button>
+            )}
+          </div>
         </Col>
-        <Col className="d-flex flex-column align-items-center justify-content-center border border-3 border-polvereScuro bg-azzurroPolvere p-3">
-          <Button
-            className="my-1 bg-success w-50 "
-            onClick={() => {
-              navigate("/nuovoCliente");
-            }}
-          >
-            Nuovo cliente
-          </Button>
-          <Button
-            className="my-1 bg-success w-50 "
-            onClick={() => {
-              navigate("/visite");
-            }}
-          >
-            Visite
-          </Button>
-          {userRuolo === "ADMIN" && (
-            <Button
-              className="my-1 bg-success w-50 "
-              onClick={() => {
-                navigate("/NuovoImmobile");
-              }}
+        <Col
+          xs={12}
+          md={6}
+          className="d-flex flex-column align-items-center justify-content-center border border-3 border-bluGuado bg-polvereScuro p-3"
+        >
+          <Row className="d-flex justify-content-center">
+            <Col
+              xs={12}
+              className="d-flex flex-column justify-content-center p-2 border border-1 border-beige bg-bluGuado"
             >
-              Nuovo Immobile
-            </Button>
-          )}
+              <Button
+                variant="success"
+                className="my-1  "
+                onClick={() => {
+                  navigate("/nuovoCliente");
+                }}
+              >
+                Nuovo cliente
+              </Button>
+              <Button
+                variant="success"
+                className="my-1 "
+                onClick={() => {
+                  navigate("/visite");
+                }}
+              >
+                Visite
+              </Button>
+              {userRuolo === "ADMIN" && (
+                <Button
+                  variant="success"
+                  className="my-1  "
+                  onClick={() => {
+                    navigate("/NuovoImmobile");
+                  }}
+                >
+                  Nuovo Immobile
+                </Button>
+              )}
+            </Col>
+          </Row>
         </Col>
       </Row>
     </Container>

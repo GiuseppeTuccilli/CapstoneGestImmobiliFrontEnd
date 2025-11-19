@@ -123,7 +123,7 @@ function NuovaVisita() {
         if (res.ok) {
           console.log(res);
           alert("visita salvata");
-          navigate("/immobili");
+          navigate(-1);
         } else {
           throw new Error(res.status);
         }

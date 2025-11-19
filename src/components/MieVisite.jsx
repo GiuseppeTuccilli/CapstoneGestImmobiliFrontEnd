@@ -97,7 +97,7 @@ function MieVisite() {
         <Row className="d-flex justify-content-center border border-1 border-beige p-4 bg-polvereScuro">
           <Col xs={12} md={8}>
             <div className="d-flex flex-column  justify-content-center">
-              <div className="border border-1 border-beige p-3 bg-bianchetto">
+              <div className="border border-1 border-bianchetto p-3 bg-sabbia">
                 <h2 className="text-center m-0">Le Mie Visite</h2>
               </div>
               <h5 className="m-0 mt-2 text-center ">
