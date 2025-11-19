@@ -90,7 +90,7 @@ function ElencoClienti() {
 
   useEffect(() => {
     getClienti();
-  }, [nome, cognome, token]);
+  }, [nome, cognome, token, page]);
 
   return (
     <>
