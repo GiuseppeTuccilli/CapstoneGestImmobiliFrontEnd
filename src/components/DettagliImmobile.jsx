@@ -626,7 +626,11 @@ function DettagliImmobile() {
         <Row className=" p-2 border border-2 border-beige bg-polvereScuro mb-3">
           {listaFoto.length > 0 ? (
             <div className="d-flex justify-content-center">
-              <Button variant="primary" onClick={prevFoto}>
+              <Button
+                variant="primary"
+                onClick={prevFoto}
+                className="rounded-start-4"
+              >
                 <i className="bi bi-chevron-double-left"></i>
               </Button>
 
@@ -638,7 +642,11 @@ function DettagliImmobile() {
                   alt="fotoImmobile"
                 ></img>
               </div>
-              <Button variant="primary" onClick={nextFoto}>
+              <Button
+                variant="primary"
+                onClick={nextFoto}
+                className="rounded-end-4"
+              >
                 <i className="bi bi-chevron-double-right"></i>
               </Button>
             </div>
