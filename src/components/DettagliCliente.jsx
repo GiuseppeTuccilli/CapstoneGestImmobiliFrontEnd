@@ -239,16 +239,6 @@ function DettagliCliente() {
         <Row className="d-flex justify-content-center border border-1 border-beige p-4 bg-polvereScuro">
           <Col xs={12} md={8}>
             <div className="d-flex justify-content-between">
-              <Button
-                className="px-4 h-100"
-                variant="primary"
-                onClick={() => {
-                  navigate(-1);
-                }}
-              >
-                <i className="bi bi-arrow-bar-left"></i>
-              </Button>
-
               <div className="border border-1 border-beige p-3 bg-bianchetto">
                 <h2>Cliente</h2>
               </div>

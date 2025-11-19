@@ -316,16 +316,6 @@ function DettagliImmobile() {
       <Container>
         <Row>
           <div className="d-flex flex-row justify-content-around p-3 border border-2 border-beige bg-polvereScuro align-items-center">
-            <div>
-              <Button
-                variant="primary"
-                onClick={() => {
-                  navigate(-1);
-                }}
-              >
-                <i className="bi bi-arrow-bar-left"></i>
-              </Button>
-            </div>
             <div className="p-2 border border-1 border-bluGuado bg-beige">
               <h2 className="m-0">{tipo}</h2>
             </div>
