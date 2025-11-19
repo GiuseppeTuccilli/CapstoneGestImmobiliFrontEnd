@@ -104,6 +104,7 @@ function MieVisite() {
                 Per prenotare una visita consulta{" "}
                 <span>
                   <Link
+                    id="linkImmobili"
                     to={"/immobili"}
                     className="text-bianchetto"
                     style={{

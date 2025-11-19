@@ -1,6 +1,8 @@
 @import "../../scss/functions";
 @import "../../scss/variables";
 
+$enable-shadows: false;
+
 $new-theme-colors: (
   "nero": #1f1f1f,
   "bluGuado": #586375,
@@ -23,6 +25,8 @@ $modal-footer-bg: #586375;
 
 .btn {
   border: 1.5px solid #ceb69c !important;
+  -webkit-box-shadow: 5px 1px 21px 3px rgba(56, 93, 130, 0.65);
+  box-shadow: 5px 1px 21px 3px rgba(56, 93, 130, 0.65);
 }
 .btn-success {
   color: white !important;
@@ -31,7 +35,14 @@ $modal-footer-bg: #586375;
 .navbar {
   background-color: #626262;
   a {
-    color: white;
+    color: #dfdfdf;
+  }
+
+  .active {
+    color: #83aacf !important;
+    text-decoration: underline;
+    transition: 1s, linear;
+    font-weight: 500;
   }
 }
 

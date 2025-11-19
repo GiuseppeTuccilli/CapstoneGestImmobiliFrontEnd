@@ -113,7 +113,7 @@ function RichiesteCompatibili(props) {
                           key={r.id}
                           onClick={() => {
                             setIdRichiestaSel(r.id);
-                            setIdClienteSel(0);
+                            setIdClienteSel(r.cliente.id);
                           }}
                           className={
                             idRichiestaSel === r.id &&
