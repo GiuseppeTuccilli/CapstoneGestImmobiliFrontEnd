@@ -263,10 +263,7 @@ function ElencoImmobili() {
               >
                 <div>
                   <h5 className="  fw-semibold mb-0">Descrizione:</h5>
-                  <div
-                    className="border border-1 border-black bg-beigeChiaro p-1"
-                    style={{ height: "80%" }}
-                  >
+                  <div className=" " style={{ height: "80%" }}>
                     <p>{i.descrizione}</p>
                   </div>
                 </div>

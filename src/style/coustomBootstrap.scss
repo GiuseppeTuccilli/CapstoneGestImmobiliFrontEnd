@@ -10,9 +10,23 @@ $new-theme-colors: (
   "beige": #ceb69c,
   "beigeChiaro": #e0ddda,
   "bianchetto": #dfdfdf,
+  "primary": #83aacf,
+  "success": #279e7a,
 );
+
 $modal-content-bg: #afbdca;
 $modal-footer-bg: #586375;
+
+#body {
+  background-color: #abb8d1;
+}
+
+.btn {
+  border: 1.5px solid #ceb69c !important;
+}
+.btn-success {
+  color: white !important;
+}
 
 .navbar {
   background-color: #626262;
