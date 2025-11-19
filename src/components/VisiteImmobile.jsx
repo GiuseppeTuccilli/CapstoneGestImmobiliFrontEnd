@@ -66,7 +66,8 @@ function VisiteImmobile(props) {
                         navigate("/clienti/" + idClienteSel);
                       }}
                     >
-                      Vedi Cliente{" "}
+                      Scheda Cliente{" "}
+                      <i className="bi bi-box-arrow-up-right"></i>
                     </Button>
                   )}
                 </div>

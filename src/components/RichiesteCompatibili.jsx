@@ -10,6 +10,7 @@ function RichiesteCompatibili(props) {
   const [isFirstRender, setIsFirstRender] = useState(true);
   const [richieste, setRichieste] = useState([]);
   const [immoCompatibili, setImmoCompatibili] = useState([]);
+  const [idClienteSel, setIdClienteSel] = useState(0);
 
   let idImmo = props.idImmo;
   let base = props.base;
@@ -68,15 +69,6 @@ function RichiesteCompatibili(props) {
     getRichiesteCompatibili();
   }, [token]);
 
-  useEffect(() => {
-    if (isFirstRender) {
-      setIsFirstRender(false);
-      return;
-    }
-
-    getImmoCompatibili();
-  }, [idRichiestaSel]);
-
   return (
     <>
       <Container fluid>
@@ -90,10 +82,10 @@ function RichiesteCompatibili(props) {
             {idRichiestaSel !== 0 && (
               <Button
                 onClick={() => {
-                  setShowImmobili(true);
+                  navigate("/clienti/" + idClienteSel);
                 }}
               >
-                Immobili Compatibili
+                Scheda Cliente <i className="bi bi-box-arrow-up-right"></i>
               </Button>
             )}
           </Col>
@@ -121,7 +113,7 @@ function RichiesteCompatibili(props) {
                           key={r.id}
                           onClick={() => {
                             setIdRichiestaSel(r.id);
-                            setIdImmoSel(0);
+                            setIdClienteSel(0);
                           }}
                           className={
                             idRichiestaSel === r.id &&
@@ -131,79 +123,6 @@ function RichiesteCompatibili(props) {
                           <td>{r.cliente.nome}</td>
                           <td>{r.cliente.cognome}</td>
                           <td>{r.cliente.indirizzo}</td>
-                        </tr>
-                      );
-                    })}
-                </tbody>
-              </Table>
-            </Row>
-          </Col>
-          <Col
-            style={{ height: "20em", overflowY: "auto" }}
-            xs={10}
-            md={8}
-            className={!showImmobili && "d-none"}
-          >
-            <Row>
-              <Table striped bordered hover className="mb-0">
-                <thead className="position-sticky" style={{ top: "-0.5%" }}>
-                  <th colSpan={3}>
-                    <div className="border border-1 border-beige bg-polvereScuro d-flex justify-content-evenly">
-                      <Button
-                        variant="primary"
-                        onClick={() => {
-                          setShowImmobili(false);
-                        }}
-                      >
-                        <i className="bi bi-arrow-bar-left"></i>
-                      </Button>
-                      <h6 className="m-0 text-center pt-2">
-                        Immobili Compatibili
-                      </h6>
-                      {idImmoSel !== 0 && (
-                        <Button
-                          variant="success"
-                          onClick={() => {
-                            navigate("/immobili/" + idImmoSel);
-                            window.location.reload();
-                          }}
-                        >
-                          <i className="bi bi-box-arrow-up-right"></i>
-                        </Button>
-                      )}
-                    </div>
-                  </th>
-
-                  <tr>
-                    <th>Indirizzo</th>
-                    <th>Comune</th>
-                    <th>Tipologia</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {immoCompatibili.length > 0 &&
-                    immoCompatibili.map((i) => {
-                      return (
-                        <tr
-                          key={i.id}
-                          style={{ cursor: "pointer" }}
-                          onClick={() => {
-                            setIdImmoSel(i.id);
-                          }}
-                          className={
-                            idImmoSel === i.id &&
-                            "border border-2 border-success"
-                          }
-                        >
-                          <td>{i.indirizzo}</td>
-                          <td>
-                            {i.comune.denominazione +
-                              " (" +
-                              i.comune.provincia.sigla +
-                              ")"}
-                          </td>
-                          <td>{i.macroTipologia.split("_")[1]}</td>
                         </tr>
                       );
                     })}
