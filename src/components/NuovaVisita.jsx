@@ -276,11 +276,11 @@ function NuovaVisita() {
                     </div>
                   </th>
                   <tr>
-                    <th className="text-center">Data</th>
-
                     <th colSpan={2} className="text-center">
-                      Immobile
+                      Cliente
                     </th>
+
+                    <th className="text-center">Indirizzo</th>
                   </tr>
                 </thead>
 
@@ -302,7 +302,7 @@ function NuovaVisita() {
                       >
                         <td>{c.nome}</td>
                         <td>{c.cognome}</td>
-                        <td>sdfdsfdsf</td>
+                        <td>{c.indirizzo}</td>
                       </tr>
                     );
                   })}
