@@ -3,28 +3,45 @@
 
 $enable-shadows: false;
 
+$danger: #c42938;
+
+$sabbia: #decfbc;
+$primary: #83aacf;
+$success: #279e7a;
+$bluGuado: #586375;
+$polvereScuro: #8691a5;
+$azzurroPolvere: #afbdca;
+$beige: #ceb69c;
+$beigeChiaro: #e0ddda;
+$bianchetto: #dfdfdf;
+$sfondo: #abb8d1;
+$navGrigio: #626262;
+$nero: #1f1f1f;
+$grigioScuro: #272727;
+
 $new-theme-colors: (
-  "nero": #1f1f1f,
-  "bluGuado": #586375,
-  "polvereScuro": #8691a5,
-  "azzurroPolvere": #afbdca,
-  "sabbia": #decfbc,
-  "beige": #ceb69c,
-  "beigeChiaro": #e0ddda,
-  "bianchetto": #dfdfdf,
-  "primary": #83aacf,
-  "success": #279e7a,
+  "nero": $nero,
+  "bluGuado": $bluGuado,
+  "polvereScuro": $polvereScuro,
+  "azzurroPolvere": $azzurroPolvere,
+  "sabbia": $sabbia,
+  "beige": $beige,
+  "beigeChiaro": $beigeChiaro,
+  "bianchetto": $bianchetto,
+  "primary": $primary,
+  "success": $success,
+  "danger": $danger,
 );
 
-$modal-content-bg: #afbdca;
-$modal-footer-bg: #586375;
+$modal-content-bg: $azzurroPolvere;
+$modal-footer-bg: $bluGuado;
 
 #body {
-  background-color: #abb8d1;
+  background-color: $sfondo;
 }
 
 .btn {
-  border: 1.5px solid #ceb69c !important;
+  border: 1.5px solid $beige !important;
   -webkit-box-shadow: 5px 1px 21px 3px rgba(56, 93, 130, 0.65);
   box-shadow: 5px 1px 21px 3px rgba(56, 93, 130, 0.65);
 }
@@ -33,13 +50,16 @@ $modal-footer-bg: #586375;
 }
 
 .navbar {
-  background-color: #626262;
+  background-color: $grigioScuro;
   a {
     color: #dfdfdf;
   }
+  a:hover {
+    color: $azzurroPolvere !important;
+  }
 
   .active {
-    color: #83aacf !important;
+    color: $primary !important;
     text-decoration: underline;
     transition: 1s, linear;
     font-weight: 500;
