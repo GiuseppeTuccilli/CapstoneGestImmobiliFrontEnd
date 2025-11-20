@@ -18,6 +18,7 @@ $sfondo: #abb8d1;
 $navGrigio: #626262;
 $nero: #1f1f1f;
 $grigioScuro: #272727;
+$navBianco: #dfdfdf;
 
 $new-theme-colors: (
   "nero": $nero,
@@ -52,7 +53,7 @@ $modal-footer-bg: $bluGuado;
 .navbar {
   background-color: $grigioScuro;
   a {
-    color: #dfdfdf;
+    color: $bianchetto;
   }
   a:hover {
     color: $azzurroPolvere !important;
