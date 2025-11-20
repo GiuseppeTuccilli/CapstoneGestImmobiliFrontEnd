@@ -315,8 +315,8 @@ function DettagliImmobile() {
       </Modal>
       <Container>
         <Row>
-          <div className="d-flex flex-row justify-content-around p-3 border border-2 border-beige bg-polvereScuro align-items-center">
-            <div className="p-2 border border-1 border-bluGuado bg-beige">
+          <div className="d-flex flex-row justify-content-around p-3 border border-2 border-sabbia bg-polvereScuro align-items-center">
+            <div className="p-2 border border-1 border-bluGuado bg-sabbia">
               <h2 className="m-0">{tipo}</h2>
             </div>
             {ruolo === "ADMIN" && (
@@ -328,7 +328,7 @@ function DettagliImmobile() {
             )}
           </div>
         </Row>
-        <Row className="d-flex justify-content-center p-1 border border-1 border-beige bg-bluGuado">
+        <Row className="d-flex justify-content-center p-1 border border-1 border-sabbia bg-bluGuado">
           <Col xs={12} md={8}>
             {" "}
             <div className="d-flex justify-content-between">
@@ -385,7 +385,7 @@ function DettagliImmobile() {
             xs={12}
             md={6}
             lg={4}
-            className="border border-2 border-beige bg-polvereScuro p-3"
+            className="border border-2 border-sabbia bg-polvereScuro p-3"
           >
             <Row className="d-flex">
               <Col className="pe-0">
@@ -422,9 +422,9 @@ function DettagliImmobile() {
             xs={12}
             md={6}
             lg={4}
-            className="border border-2 border-beige bg-polvereScuro p-3"
+            className="border border-2 border-sabbia bg-polvereScuro p-3"
           >
-            <h4 className="m-0 mb-1 p-2 border- border-1 border-bluGuado bg-beige text-center">
+            <h4 className="m-0 mb-1 p-2 border- border-1 border-bluGuado bg-sabbia text-center">
               Accessori
             </h4>
             <Row>
@@ -516,7 +516,7 @@ function DettagliImmobile() {
             xs={12}
             md={12}
             lg={4}
-            className="border border-2 border-beige bg-polvereScuro p-3 d-flex flex-column justify-content-around"
+            className="border border-2 border-sabbia bg-polvereScuro p-3 d-flex flex-column justify-content-around"
           >
             <p className="m-0 p-0 fw-semibold ">
               Comune: <span className="fw-bold">{comune}</span>
@@ -547,9 +547,9 @@ function DettagliImmobile() {
           </Col>
           <Col
             xs={12}
-            className="border border-2 border-beige bg-polvereScuro p-3"
+            className="border border-2 border-sabbia bg-polvereScuro p-3"
           >
-            <h5 className="m-0 mb-1 p-2 border- border-1 border-bluGuado bg-beige text-center">
+            <h5 className="m-0 mb-1 p-2 border- border-1 border-bluGuado bg-sabbia text-center">
               Descrizione:
             </h5>
             <div className="p-2 border border-1 border-bluGuado bg-bianchetto">
@@ -565,13 +565,13 @@ function DettagliImmobile() {
           />
         </Row>*/}
         <Row>
-          <div className="d-flex justify-content-around p-2 border border-2 border-beige bg-bluGuado">
+          <div className="d-flex justify-content-around p-2 border border-2 border-sabbia bg-bluGuado">
             {ruolo === "ADMIN" && (
               <Button variant="danger" onClick={handleShowElimina}>
                 <i className="bi bi-trash3-fill"></i>
               </Button>
             )}
-            <h5 className="m-0  p-2 border- border-1 border-bluGuado bg-beige text-center">
+            <h5 className="m-0  p-2 border- border-1 border-bluGuado bg-sabbia text-center">
               Foto:
             </h5>
             {ruolo === "ADMIN" && (
@@ -623,7 +623,7 @@ function DettagliImmobile() {
             )}
           </div>
         </Row>
-        <Row className=" p-2 border border-2 border-beige bg-polvereScuro mb-3">
+        <Row className=" p-2 border border-2 border-sabbia bg-polvereScuro mb-3">
           {listaFoto.length > 0 ? (
             <div className="d-flex justify-content-center">
               <Button
@@ -651,7 +651,7 @@ function DettagliImmobile() {
               </Button>
             </div>
           ) : (
-            <h6 className="m-0  p-2 border- border-1 border-bluGuado bg-beige text-center">
+            <h6 className="m-0  p-2 border- border-1 border-bluGuado bg-sabbia text-center">
               Non ci sono foto per questo immobile
             </h6>
           )}

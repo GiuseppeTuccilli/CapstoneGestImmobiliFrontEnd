@@ -53,9 +53,9 @@ function VisiteImmobile(props) {
           <Table striped bordered hover className="mb-0">
             <thead className="position-sticky" style={{ top: "-0.5%" }}>
               <th colSpan={3}>
-                <div className="d-flex  justify-content-around p-3 border border-1 border-beige bg-polvereScuro">
+                <div className="d-flex  justify-content-around p-3 border border-1 border-sabbia bg-polvereScuro">
                   <div>
-                    <h4 className="m-0 p-2 border border-1 border-azzurroPolvere bg-beige">
+                    <h4 className="m-0 p-2 border border-1 border-azzurroPolvere bg-sabbia">
                       Visite
                     </h4>
                   </div>

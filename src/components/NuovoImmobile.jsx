@@ -315,7 +315,9 @@ function NuovoImmobile() {
             md={6}
             className="d-flex flex-column align-items-center border border-1 border-beige bg-polvereScuro p-2 "
           >
-            <h4>Descrizione</h4>
+            <h4>
+              Descrizione <span className="fs-6 ">(max 180 caratteri)</span>
+            </h4>
             <div className=" w-100">
               <textarea
                 style={{ height: "10em" }}
@@ -324,6 +326,7 @@ function NuovoImmobile() {
                 id="descrizione"
                 required
                 value={desc}
+                maxLength={180}
                 onChange={(e) => {
                   setDescrizione(e.target.value);
                 }}

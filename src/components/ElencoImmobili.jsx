@@ -73,7 +73,7 @@ function ElencoImmobili() {
       navigate("/login");
     }
     getImmobili();
-  }, [comune, provincia, indirizzo, tipologia, token]);
+  }, [comune, provincia, indirizzo, tipologia, token, page]);
 
   const handleCheckProvincia = (e) => {
     let val = e.target.checked;
@@ -110,24 +110,28 @@ function ElencoImmobili() {
   const handleChangeComune = (e) => {
     if (filtroComune) {
       setComune(e.target.value);
+      setPage(0);
     }
   };
 
   const handleChangeProvincia = (e) => {
     if (filtroProvincia) {
       setProvincia(e.target.value);
+      setPage(0);
     }
   };
 
   const handleChangeIndirizzo = (e) => {
     if (filtroIndirizzo) {
       setIndirizzo(e.target.value);
+      setPage(0);
     }
   };
 
   const handleChangeTipologia = (e) => {
     if (filtroTipologia) {
       setTipologia(e.target.value);
+      setPage(0);
     }
   };
 
@@ -286,11 +290,11 @@ function ElencoImmobili() {
                 xs={6}
                 md={3}
                 lg={4}
-                className=" d-flex flex-column justify-content-center  border  border-1"
+                className=" d-flex flex-column justify-content-start  border  border-1"
               >
                 <div>
                   <h5 className="  fw-semibold mb-0">Descrizione:</h5>
-                  <div className=" " style={{ height: "80%" }}>
+                  <div className=" " id="descrizioneImmobile">
                     <p>{i.descrizione}</p>
                   </div>
                 </div>
@@ -336,6 +340,7 @@ function ElencoImmobili() {
           <Col xs={4} md={3} lg={2} className="d-flex justify-content-start">
             {!firstPage && (
               <Button
+                className="rounded-start-5"
                 variant="primary"
                 onClick={() => {
                   if (firstPage) {
@@ -345,7 +350,7 @@ function ElencoImmobili() {
                   setPage(prev);
                 }}
               >
-                <i className="bi bi-chevron-left"></i>
+                <i className="bi bi-chevron-left "></i>
               </Button>
             )}
           </Col>
@@ -353,6 +358,7 @@ function ElencoImmobili() {
           <Col xs={4} md={3} lg={2} className="d-flex justify-content-end">
             {!lastPage && (
               <Button
+                className=" rounded-end-5"
                 variant="primary"
                 onClick={() => {
                   if (lastPage) {

@@ -72,9 +72,9 @@ function RichiesteCompatibili(props) {
   return (
     <>
       <Container fluid>
-        <Row className="p-3 border border-2 border-beige bg-bluGuado ">
+        <Row className="p-3 border border-2 border-sabbia bg-bluGuado ">
           <Col xs={12} md={8}>
-            <h6 className="m-0 p-2 border border-1 border-azzurroPolvere bg-beige text-center">
+            <h6 className="m-0 p-2 border border-1 border-azzurroPolvere bg-sabbia text-center">
               Richieste Compatibili con questo Immobile
             </h6>
           </Col>

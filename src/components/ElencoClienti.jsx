@@ -47,12 +47,14 @@ function ElencoClienti() {
   const handleChangeNome = (e) => {
     if (filtroNome) {
       setNome(e.target.value);
+      setPage(0);
     }
   };
 
   const handleChangeCognome = (e) => {
     if (filtroCognome) {
       setCognome(e.target.value);
+      setPage(0);
     }
   };
 
@@ -158,7 +160,7 @@ function ElencoClienti() {
               )}
             </div>
           </Row>
-          <Row className="bg-beige p-0" style={{ width: "80vw" }}>
+          <Row className="bg-sabbia p-0" style={{ width: "80vw" }}>
             <Col
               xs={4}
               md={3}
@@ -256,6 +258,7 @@ function ElencoClienti() {
             <Col xs={4} md={3} lg={2} className="d-flex justify-content-start">
               {!firstPage && (
                 <Button
+                  className="rounded-start-5"
                   variant="primary"
                   onClick={() => {
                     if (firstPage) {
@@ -273,6 +276,7 @@ function ElencoClienti() {
             <Col xs={4} md={3} lg={2} className="d-flex justify-content-end">
               {!lastPage && (
                 <Button
+                  className="rounded-end-5"
                   variant="primary"
                   onClick={() => {
                     if (lastPage) {

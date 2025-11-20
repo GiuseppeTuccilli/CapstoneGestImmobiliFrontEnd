@@ -46,6 +46,12 @@ $modal-footer-bg: #586375;
   }
 }
 
+#descrizioneImmobile {
+  word-wrap: break-word;
+  overflow-y: auto;
+  height: 3.8em;
+}
+
 @media (max-width: 768px) {
   #descrizione {
     height: 5em !important;
