@@ -430,40 +430,25 @@ function DettagliImmobile() {
             <Row>
               <Col>
                 <p
-                  className="m-0 p-0 fw-semibold text-center "
-                  style={
-                    cantina
-                      ? { border: "2px solid green" }
-                      : {
-                          textDecoration: "line-through",
-                          textDecorationColor: "red",
-                        }
+                  className={
+                    "m-0 p-0 fw-semibold text-center" +
+                    (cantina ? " posseduto" : " nonPosseduto")
                   }
                 >
                   Cantina
                 </p>
                 <p
-                  className="m-0 p-0 fw-semibold text-center "
-                  style={
-                    ascensore
-                      ? { border: "2px solid green" }
-                      : {
-                          textDecoration: "line-through",
-                          textDecorationColor: "red",
-                        }
+                  className={
+                    "m-0 p-0 fw-semibold text-center" +
+                    (ascensore ? " posseduto " : " nonPosseduto")
                   }
                 >
                   Ascensore
                 </p>
                 <p
-                  className="m-0 p-0 fw-semibold text-center "
-                  style={
-                    auto
-                      ? { border: "2px solid green" }
-                      : {
-                          textDecoration: "line-through",
-                          textDecorationColor: "red",
-                        }
+                  className={
+                    "m-0 p-0 fw-semibold text-center" +
+                    (auto ? " posseduto " : " nonPosseduto")
                   }
                 >
                   Posto Auto
@@ -471,40 +456,25 @@ function DettagliImmobile() {
               </Col>
               <Col>
                 <p
-                  className="m-0 p-0 fw-semibold text-center "
-                  style={
-                    giardino
-                      ? { border: "2px solid green" }
-                      : {
-                          textDecoration: "line-through",
-                          textDecorationColor: "red",
-                        }
+                  className={
+                    "m-0 p-0 fw-semibold text-center" +
+                    (giardino ? " posseduto " : " nonPosseduto")
                   }
                 >
                   Giardino
                 </p>
                 <p
-                  className="m-0 p-0 fw-semibold text-center "
-                  style={
-                    terrazzo
-                      ? { border: "2px solid green" }
-                      : {
-                          textDecoration: "line-through",
-                          textDecorationColor: "red",
-                        }
+                  className={
+                    "m-0 p-0 fw-semibold text-center" +
+                    (terrazzo ? " posseduto " : " nonPosseduto")
                   }
                 >
                   Terrazzo
                 </p>
                 <p
-                  className="m-0 p-0 fw-semibold text-center "
-                  style={
-                    arredato
-                      ? { border: "2px solid green" }
-                      : {
-                          textDecoration: "line-through",
-                          textDecorationColor: "red",
-                        }
+                  className={
+                    "m-0 p-0 fw-semibold text-center" +
+                    (arredato ? " posseduto " : " nonPosseduto")
                   }
                 >
                   Arredato
@@ -552,7 +522,10 @@ function DettagliImmobile() {
             <h5 className="m-0 mb-1 p-2 border- border-1 border-bluGuado bg-sabbia text-center">
               Descrizione:
             </h5>
-            <div className="p-2 border border-1 border-bluGuado bg-bianchetto">
+            <div
+              id="descDettagliImmobile"
+              className="p-2 border border-1 border-bluGuado bg-bianchetto"
+            >
               <p className="m-0 p-0  ">{desc}</p>
             </div>
           </Col>

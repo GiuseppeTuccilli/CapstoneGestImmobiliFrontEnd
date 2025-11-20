@@ -46,10 +46,25 @@ $modal-footer-bg: #586375;
   }
 }
 
+.posseduto {
+  border: 2px solid #279e7a;
+}
+
+.nonPosseduto {
+  text-decoration: line-through;
+  text-decoration-color: red;
+}
+
 #descrizioneImmobile {
   word-wrap: break-word;
   overflow-y: auto;
   height: 3.8em;
+}
+
+#descDettagliImmobile {
+  word-wrap: break-word;
+  overflow-y: auto;
+  height: 5em;
 }
 
 @media (max-width: 768px) {
