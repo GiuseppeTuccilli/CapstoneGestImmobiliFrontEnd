@@ -96,6 +96,35 @@ $modal-footer-bg: $bluGuado;
   height: 5em;
 }
 
+//modali
+.modal-content {
+  color: white !important;
+  background-color: $bluGuado !important;
+  .modal-header {
+    color: $grigioScuro;
+    border-radius: 0 !important;
+    background-color: $azzurroPolvere;
+  }
+
+  .modal-footer {
+    border-radius: 0 !important;
+    background-color: $polvereScuro;
+  }
+  border: 2px solid $grigioScuro !important;
+  border-radius: 0 !important;
+}
+
+#nuovaFattura {
+  h4,
+  h6 {
+    color: $grigioScuro !important;
+  }
+}
+
+#confermaFattura {
+  margin-top: 5em;
+}
+
 @media (max-width: 768px) {
   #descrizione {
     height: 5em !important;

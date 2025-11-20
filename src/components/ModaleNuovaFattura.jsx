@@ -49,7 +49,12 @@ function ModaleNuovaFattura(props) {
   return (
     <>
       {/*modale conferma */}
-      <Modal show={showConferma} size="sm" onHide={handleClose}>
+      <Modal
+        show={showConferma}
+        size="sm"
+        id="confermaFattura"
+        onHide={handleClose}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Nuova Fattura</Modal.Title>
         </Modal.Header>
@@ -71,7 +76,11 @@ function ModaleNuovaFattura(props) {
         </Modal.Footer>
       </Modal>
 
-      <Modal {...props} aria-labelledby="contained-modal-title-vcenter">
+      <Modal
+        id="nuovaFattura"
+        {...props}
+        aria-labelledby="contained-modal-title-vcenter"
+      >
         <Modal.Header closeButton className="bg-azzurroPolvere">
           <Modal.Title id="contained-modal-title-vcenter ">
             Nuova fattura per {nome + " "}
