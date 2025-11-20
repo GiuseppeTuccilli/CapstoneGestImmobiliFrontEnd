@@ -558,10 +558,7 @@ function DettagliImmobile() {
                     }
                   }}
                 >
-                  <p
-                    className="m-0 p-1 text-end fw-semibold  border border-1 border-beide bg-azzurroPolvere pe-2 border-end-0 "
-                    style={{ fontSize: "0.8em" }}
-                  >
+                  <p className="m-0 p-1 text-end fw-semibold  border border-1 border-beide bg-azzurroPolvere pe-2 border-end-0 sizePiccola">
                     Aggiungi Foto:{" "}
                   </p>
                   <Form.Group controlId="formFile" className=" rounded-0 ">
@@ -607,7 +604,7 @@ function DettagliImmobile() {
                 <i className="bi bi-chevron-double-left"></i>
               </Button>
 
-              <div style={{ maxWidth: "70%" }}>
+              <div id="divFotoImmobile">
                 <img
                   id="fotoImmobile"
                   src={listaFoto[fotoIndex].urlFoto}
