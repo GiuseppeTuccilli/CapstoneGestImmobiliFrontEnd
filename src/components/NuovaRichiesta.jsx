@@ -7,6 +7,7 @@ import Alert from "react-bootstrap/Alert";
 import Spinner from "react-bootstrap/Spinner";
 import base from "../variabili";
 import { useParams, useNavigate } from "react-router-dom";
+import CurrencyInput from "react-currency-input-field";
 
 function NuovaRichiesta() {
   const [token, setToken] = useState(
@@ -303,14 +304,26 @@ function NuovaRichiesta() {
           >
             <div className="d-flex flex-column mb-1">
               <h6 className="m-0 mb-1 ">Prezzo Massimo (€)</h6>
-              <input
+              <CurrencyInput
+                id="input-example"
+                name="input-name"
+                placeholder="Please enter a number"
+                value={prezzoMax}
+                // decimalsLimit={2}
+
+                onValueChange={(value, name, values) => {
+                  //console.log(value, name, values);
+                  setPrezzoMax(value);
+                }}
+              />
+              {/*  <input
                 type="number"
                 min={0}
                 value={prezzoMax}
                 onChange={(e) => {
                   setPrezzoMax(e.target.value);
                 }}
-              ></input>
+              ></input>*/}
             </div>
             <div className="d-flex flex-column mb-1">
               <h6 className="m-0 mb-1 ">Superficie Minimo (mq)</h6>

@@ -6,6 +6,7 @@ import Modal from "react-bootstrap/Modal";
 import Alert from "react-bootstrap/Alert";
 import base from "../variabili";
 import { useNavigate } from "react-router-dom";
+import CurrencyInput from "react-currency-input-field";
 
 function NuovoImmobile() {
   const [token, setToken] = useState(
@@ -28,7 +29,7 @@ function NuovoImmobile() {
   const [local, setLocali] = useState(1);
   const [van, setVani] = useState(1);
   const [desc, setDescrizione] = useState("");
-  const [prez, setPrezzo] = useState(0);
+  const [prez, setPrezzo] = useState(1);
   const [indi, setIndirizzo] = useState("");
   const [cant, setCantina] = useState(false);
   const [asc, setAscensore] = useState(false);
@@ -218,6 +219,7 @@ function NuovoImmobile() {
         id="formImmobile"
         onSubmit={(e) => {
           e.preventDefault();
+          console.log(payload);
           salvaImmobile();
         }}
       >
@@ -285,14 +287,27 @@ function NuovoImmobile() {
 
             <div className="d-flex my-2 justify-content-start w-100">
               <h4 className="m-0 w-50">Prezzo (€)</h4>
-              <input
+              <CurrencyInput
+                id="input-example"
+                name="input-name"
+                placeholder="Please enter a number"
+                value={prez}
+                // decimalsLimit={2}
+
+                onValueChange={(value, name, values) => {
+                  //console.log(value, name, values);
+                  setPrezzo(value);
+                }}
+              />
+
+              {/* <input
                 type="number"
                 min={0}
                 value={prez}
                 onChange={(e) => {
                   setPrezzo(e.target.value);
                 }}
-              ></input>
+              ></input>*/}
             </div>
           </Col>
           <Col
