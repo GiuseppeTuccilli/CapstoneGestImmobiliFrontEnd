@@ -96,6 +96,18 @@ $modal-footer-bg: $bluGuado;
   height: 5em;
 }
 
+#dropdown-menu-align-end {
+  height: 100%;
+  background-color: $success;
+  color: white;
+}
+
+.dropdown-menu {
+  border: 2px solid $beige !important;
+  border-radius: 0 !important;
+  background-color: $bluGuado !important;
+}
+
 //modali
 .modal-content {
   color: white !important;
