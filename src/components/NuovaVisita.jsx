@@ -263,6 +263,7 @@ function NuovaVisita() {
                 value={nome}
                 onChange={(e) => {
                   setNome(e.target.value);
+                  setPage(0);
                 }}
               />
               <Form.Control
@@ -272,6 +273,7 @@ function NuovaVisita() {
                 value={cognome}
                 onChange={(e) => {
                   setCognome(e.target.value);
+                  setPage(0);
                 }}
               />
             </div>
@@ -329,10 +331,11 @@ function NuovaVisita() {
           </Col>
         </Row>
         {/*row scorrimento pages */}
-        <Row className="mb-3">
+        <Row className="my-3 w-100">
           <Col xs={4} md={3} lg={2} className="d-flex justify-content-start">
             {!firstPage && (
               <Button
+                className="rounded-start-5"
                 variant="primary"
                 onClick={() => {
                   if (firstPage) {
@@ -350,43 +353,7 @@ function NuovaVisita() {
           <Col xs={4} md={3} lg={2} className="d-flex justify-content-end">
             {!lastPage && (
               <Button
-                variant="primary"
-                onClick={() => {
-                  if (lastPage) {
-                    return;
-                  }
-                  let next = page + 1;
-                  setPage(next);
-                }}
-              >
-                <i className="bi bi-chevron-right "></i>
-              </Button>
-            )}
-          </Col>
-        </Row>
-
-        {/*row scorrimento pages */}
-        <Row className="mb-3">
-          <Col xs={4} md={3} lg={2} className="d-flex justify-content-start">
-            {!firstPage && (
-              <Button
-                variant="primary"
-                onClick={() => {
-                  if (firstPage) {
-                    return;
-                  }
-                  let prev = page - 1;
-                  setPage(prev);
-                }}
-              >
-                <i className="bi bi-chevron-left"></i>
-              </Button>
-            )}
-          </Col>
-          <Col xs={4} md={6} lg={8}></Col>
-          <Col xs={4} md={3} lg={2} className="d-flex justify-content-end">
-            {!lastPage && (
-              <Button
+                className="rounded-end-5"
                 variant="primary"
                 onClick={() => {
                   if (lastPage) {
