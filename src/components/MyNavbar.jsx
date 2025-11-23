@@ -30,7 +30,7 @@ function MyNavbar() {
           </Button>
         </div>
         <button
-          className="navbar-toggler text-light"
+          className="navbar-toggler text-light p-2 px-3 border-sabbia"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarSupportedContent"
@@ -38,7 +38,8 @@ function MyNavbar() {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span className="navbar-toggler-icon"></span>
+          <i className="bi bi-list"></i>
+          {/* <span className=" navbar-toggler-icon"></span>*/}
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0 w-100 justify-content-around">
