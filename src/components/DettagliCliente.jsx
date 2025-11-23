@@ -33,6 +33,7 @@ function DettagliCliente() {
   const [idVisitaSel, setIdVisitaSel] = useState(0);
   const [idRichiestaSel, setIdRichiestaSel] = useState(0);
   const [idImmoCompSel, setIdImmoCompSel] = useState(0);
+  const [showEliminaRich, setShowEliminaRich] = useState(false);
 
   const [isFirstRender, setIsFirstRender] = useState(true);
 
@@ -190,6 +191,27 @@ function DettagliCliente() {
       });
   };
 
+  const eliminaRichiesta = () => {
+    fetch(base + "/richieste/" + idRichiestaSel, {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          alert("richiesta eliminata");
+          window.location.reload();
+        } else {
+          throw new Error(res.status);
+        }
+      })
+      .catch((er) => {
+        alert("errore nell'eliminazione: " + er.toString());
+      });
+  };
+
   useEffect(() => {
     if (token === null) {
       navigate("/login");
@@ -229,6 +251,37 @@ function DettagliCliente() {
             onClick={() => {
               eliminaCliente();
               handleClose();
+            }}
+          >
+            Elimina
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      {/*modale elimina richiesta*/}
+      <Modal
+        show={showEliminaRich}
+        onHide={() => {
+          setShowEliminaRich(false);
+        }}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Eliminazione Richiesta</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Sicuro di voler eliminare questo Richiesta?</Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              setShowEliminaRich(false);
+            }}
+          >
+            Annulla
+          </Button>
+          <Button
+            variant="danger"
+            onClick={() => {
+              eliminaRichiesta();
+              setShowEliminaRich(false);
             }}
           >
             Elimina
@@ -462,15 +515,25 @@ function DettagliCliente() {
                           Richieste
                         </h4>
                       </div>
-                      {idRichiestaSel > 0 && (
-                        <Button
-                          variant="success"
-                          onClick={() => {
-                            setShowImmobili(true);
-                          }}
-                        >
-                          Immobili Compatibili{" "}
-                        </Button>
+                      {idRichiestaSel > 0 && showImmobili === false && (
+                        <>
+                          <Button
+                            variant="success"
+                            onClick={() => {
+                              setShowImmobili(true);
+                            }}
+                          >
+                            Immobili Compatibili{" "}
+                          </Button>
+                          <Button
+                            variant="danger"
+                            onClick={() => {
+                              setShowEliminaRich(true);
+                            }}
+                          >
+                            <i className="bi bi-trash3-fill"></i>
+                          </Button>
+                        </>
                       )}
                     </div>
                   </th>
