@@ -51,6 +51,7 @@ function HomePage() {
         console.log("catch");
         setError(true);
         setLoading(false);
+        navigate("/login");
       });
   };
 

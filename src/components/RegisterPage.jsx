@@ -24,7 +24,7 @@ function RegisterForm() {
   const handleClose = () => {
     setShow(false);
 
-    navigate("/");
+    navigate("/login");
   };
   const handleShow = () => setShow(true);
 
@@ -44,8 +44,8 @@ function RegisterForm() {
     })
       .then((res) => {
         if (res.ok) {
-          handleShow();
           console.log(res);
+          handleShow();
         } else {
           throw new Error(res.status);
         }
