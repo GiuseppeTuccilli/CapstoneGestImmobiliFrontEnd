@@ -338,7 +338,7 @@ function NuovaRichiesta() {
               ></input>
             </div>
             <div className="d-flex flex-column mb-1">
-              <h6 className="m-0 mb-1 ">Vani Minimo (mq)</h6>
+              <h6 className="m-0 mb-1 ">Vani Minimo </h6>
               <input
                 type="number"
                 min={0}
@@ -350,7 +350,7 @@ function NuovaRichiesta() {
               ></input>
             </div>
             <div className="d-flex flex-column mb-1">
-              <h6 className="m-0 mb-1 ">Locali Minimo (mq)</h6>
+              <h6 className="m-0 mb-1 ">Locali Minimo </h6>
               <input
                 type="number"
                 min={0}
