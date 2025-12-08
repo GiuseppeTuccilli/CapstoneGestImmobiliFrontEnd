@@ -21,6 +21,7 @@ import ModificaCliente from "./components/ModificaCliente";
 import NuovaRichiesta from "./components/NuovaRichiesta";
 import DettagliImmobile from "./components/DettagliImmobile";
 import MieVisite from "./components/MieVisite";
+import RichiediCodice from "./components/RichiediCodice";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Routes>
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/richiediCodice" element={<RichiediCodice />} />
           <Route
             path="/"
             element={

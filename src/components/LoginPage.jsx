@@ -112,11 +112,19 @@ function LoginPage() {
               {" "}
               login{" "}
             </Button>
-            <p className="mt-2">
+            <p className="mt-2 mb-0">
               Non sei registrato registrato? <br />{" "}
               <span>
                 <Link to={"/register"} className="text-danger fw-semibold">
                   registrati
+                </Link>
+              </span>
+            </p>
+            <p className="mt-2">
+              Hai dimenticato la password?{" "}
+              <span>
+                <Link to={"/register"} className="text-danger fw-semibold">
+                  clicca quì
                 </Link>
               </span>
             </p>
