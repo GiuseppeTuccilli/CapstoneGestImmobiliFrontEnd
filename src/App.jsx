@@ -22,6 +22,7 @@ import NuovaRichiesta from "./components/NuovaRichiesta";
 import DettagliImmobile from "./components/DettagliImmobile";
 import MieVisite from "./components/MieVisite";
 import RichiediCodice from "./components/RichiediCodice";
+import ResetPassword from "./components/ResetPassword";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/richiediCodice" element={<RichiediCodice />} />
+          <Route path="/reset/:email" element={<ResetPassword />} />
           <Route
             path="/"
             element={

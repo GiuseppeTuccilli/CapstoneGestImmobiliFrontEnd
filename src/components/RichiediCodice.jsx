@@ -19,7 +19,7 @@ function RichiediCodice() {
 
   const richiediCodice = () => {
     fetch(base + "/auth/richiediCodice", {
-      method: "GET",
+      method: "POST",
       body: JSON.stringify(payload),
       headers: { "Content-type": "application/json" },
     })
@@ -67,12 +67,14 @@ function RichiediCodice() {
           <Form
             onSubmit={(e) => {
               e.preventDefault();
+              richiediCodice();
             }}
             className="border border-1 border-beige bg-polvereScuro p-3"
           >
             <p className="border corder-1 border-bluGuado bg-sabbia fw-semibold p-2">
-              Verrà inviata una email al tuo indirizzo con un codice per
-              resettare la password del tuo profilo
+              Verrà inviata una email dal dominio Mailgun Sandbox al tuo
+              indirizzo con un codice per resettare la password del tuo profilo,
+              se non la vedi, controlla negli spam
             </p>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Inserisci la tua email </Form.Label>

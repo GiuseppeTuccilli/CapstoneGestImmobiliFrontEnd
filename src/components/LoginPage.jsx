@@ -123,7 +123,10 @@ function LoginPage() {
             <p className="mt-2">
               Hai dimenticato la password?{" "}
               <span>
-                <Link to={"/register"} className="text-danger fw-semibold">
+                <Link
+                  to={"/richiediCodice"}
+                  className="text-danger fw-semibold"
+                >
                   clicca quì
                 </Link>
               </span>
