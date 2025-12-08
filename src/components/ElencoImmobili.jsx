@@ -326,7 +326,7 @@ function ElencoImmobili() {
                 className="d-flex flex-column justify-content-center border  border-1"
               >
                 <p className="  fw-semibold m-1">
-                  Locali <span>{i.locali}</span>{" "}
+                  Locali: <span>{i.locali}</span>{" "}
                 </p>
 
                 <p className=" fw-semibold m-1">

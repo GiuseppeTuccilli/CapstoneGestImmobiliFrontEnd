@@ -8,9 +8,7 @@ import { useNavigate } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 
 function HomePage() {
-  const [token, setToken] = useState(
-    localStorage.getItem("token").slice(1, -1)
-  );
+  const [token, setToken] = useState("");
 
   const [userNome, setUserNome] = useState("");
   const [userCognome, setUserCognome] = useState("");
@@ -56,10 +54,12 @@ function HomePage() {
   };
 
   useEffect(() => {
-    if (token === null) {
+    if (localStorage.getItem("token") === null) {
       navigate("/login");
+    } else {
+      setToken(localStorage.getItem("token").slice(1, -1));
+      getMe();
     }
-    getMe();
   }, [token]);
 
   return (

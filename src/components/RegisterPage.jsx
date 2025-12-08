@@ -15,9 +15,11 @@ function RegisterForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [telefono, setTelefono] = useState("");
+  const [confPassword, setConfPassword] = useState("");
 
   const [show, setShow] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [errorPassword, setErrorPassword] = useState(false);
 
   const navigate = useNavigate();
 
@@ -82,8 +84,11 @@ function RegisterForm() {
           <Form
             onSubmit={(e) => {
               e.preventDefault();
-              console.log(payload);
-              submitForm();
+              if (password !== confPassword) {
+                setErrorPassword(true);
+              } else {
+                submitForm();
+              }
             }}
             className="border border-1 border-beige bg-polvereScuro p-3"
           >
@@ -149,6 +154,32 @@ function RegisterForm() {
                 }}
               />
             </Form.Group>
+            <Form.Group className="mb-3" controlId="formConfPassword">
+              <Form.Label>Conferma Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Conferma Password"
+                required
+                value={confPassword}
+                onChange={(e) => {
+                  setConfPassword(e.target.value);
+                }}
+              />
+            </Form.Group>
+            {/* alert errore password*/}
+            <Alert show={errorPassword} variant="danger">
+              <Alert.Heading>La Password non corrisponde</Alert.Heading>
+
+              <hr />
+              <div className="d-flex justify-content-end">
+                <Button
+                  onClick={() => setErrorPassword(false)}
+                  variant="outline-danger"
+                >
+                  Ok
+                </Button>
+              </div>
+            </Alert>
             <Form.Group className="mb-3" controlId="phone">
               <Form.Label>Telefono Cellulare</Form.Label>
 
