@@ -8,8 +8,6 @@ import { useNavigate } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 
 function HomePage() {
-  const [token, setToken] = useState("");
-
   const [userNome, setUserNome] = useState("");
   const [userCognome, setUserCognome] = useState("");
   const [userRuolo, setUserRuolo] = useState("");
@@ -23,6 +21,8 @@ function HomePage() {
   const handleShow = () => setShow(true);
 
   const navigate = useNavigate();
+
+  let token = "";
 
   const getMe = () => {
     fetch(base + "/utenti/me", {
@@ -46,10 +46,9 @@ function HomePage() {
       })
       .catch((er) => {
         console.log(er);
-        console.log("catch");
+
         setError(true);
         setLoading(false);
-        navigate("/login");
       });
   };
 
@@ -57,10 +56,10 @@ function HomePage() {
     if (localStorage.getItem("token") === null) {
       navigate("/login");
     } else {
-      setToken(localStorage.getItem("token").slice(1, -1));
+      token = localStorage.getItem("token").slice(1, -1);
       getMe();
     }
-  }, [token]);
+  }, []);
 
   return (
     <Container>
@@ -143,17 +142,13 @@ function HomePage() {
                   navigate("/nuovoCliente");
                 }}
               >
-                Nuovo cliente
+                + Cliente
               </Button>
-              <Button
-                variant="success"
-                className="my-1 "
-                onClick={() => {
-                  navigate("/visite");
-                }}
-              >
-                Visite
-              </Button>
+              {userRuolo === "ADMIN" && (
+                <Button variant="success" className="my-1 ">
+                  + Utente
+                </Button>
+              )}
               {userRuolo === "ADMIN" && (
                 <Button
                   variant="success"
@@ -162,7 +157,7 @@ function HomePage() {
                     navigate("/NuovoImmobile");
                   }}
                 >
-                  Nuovo Immobile
+                  + Immobile
                 </Button>
               )}
             </Col>
