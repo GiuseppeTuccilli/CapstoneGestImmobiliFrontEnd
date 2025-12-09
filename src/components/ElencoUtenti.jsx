@@ -15,6 +15,7 @@ function ElencoUtenti(props) {
   const [idUtenteSel, setIdUtenteSel] = useState(0);
   const [nomeSel, setNomeSel] = useState("");
   const [cognomeSel, setCognomeSel] = useState("");
+  const [ruoloSel, setRuoloSel] = useState("");
   const [utenti, setUtenti] = useState([]);
   const [page, setPage] = useState(0);
   const [firstPage, setFirstPage] = useState(true);
@@ -40,6 +41,9 @@ function ElencoUtenti(props) {
       })
       .then((data) => {
         setUtenti(data.content);
+        setPage(data.number);
+        setFirstPage(data.first);
+        setLastPage(data.last);
       })
       .catch((er) => {
         console.log(er.toString());
@@ -111,7 +115,7 @@ function ElencoUtenti(props) {
                       Utenti
                     </h4>
                   </div>
-                  {idUtenteSel > 0 && (
+                  {idUtenteSel > 0 && ruoloSel !== "ADMIN" && (
                     <Button
                       variant="success"
                       onClick={() => {
@@ -144,6 +148,7 @@ function ElencoUtenti(props) {
                         setIdUtenteSel(u.id);
                         setNomeSel(u.nome);
                         setCognomeSel(u.cognome);
+                        setRuoloSel(u.ruolo);
                       }}
                       className={
                         idUtenteSel === u.id && "border border-2 border-success"
