@@ -13,6 +13,7 @@ function HomePage() {
   const [userCognome, setUserCognome] = useState("");
   const [userRuolo, setUserRuolo] = useState("");
   const [userId, setUserId] = useState(0);
+  const [showUtenti, setShowUtenti] = useState(false);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -122,9 +123,14 @@ function HomePage() {
           </div>
           <div className="text-end">
             {userRuolo !== "" && (
-              <Button variant="danger" className="my-1  " onClick={handleShow}>
-                Log-out
-              </Button>
+              <div className="d-flex justify-content-between">
+                <Button variant="primary" className="my-1">
+                  Cambia Password
+                </Button>
+                <Button variant="danger" className="my-1" onClick={handleShow}>
+                  Log-out
+                </Button>
+              </div>
             )}
           </div>
         </Col>
@@ -173,8 +179,30 @@ function HomePage() {
           </Row>
         </Col>
       </Row>
+      <Row className="bg-bluGuado p-2 border border-1 border-sabbia ">
+        <div className="text-center">
+          <Button
+            variant="primary"
+            onClick={() => {
+              if (showUtenti) {
+                setShowUtenti(false);
+              } else {
+                setShowUtenti(true);
+              }
+            }}
+          >
+            {" "}
+            {showUtenti ? (
+              <i className="bi bi-x-lg"></i>
+            ) : (
+              <i className="bi bi-arrow-90deg-down"></i>
+            )}{" "}
+            Utenti
+          </Button>
+        </div>
+      </Row>
 
-      <Row>
+      <Row className={!showUtenti && "d-none"}>
         <ElencoUtenti base={base} ruolo={userRuolo} mioId={userId} />
       </Row>
     </Container>

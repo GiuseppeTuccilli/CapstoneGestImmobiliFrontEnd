@@ -13,10 +13,16 @@ function ElencoUtenti(props) {
   let mioId = props.mioId;
 
   const [idUtenteSel, setIdUtenteSel] = useState(0);
+  const [nomeSel, setNomeSel] = useState("");
+  const [cognomeSel, setCognomeSel] = useState("");
   const [utenti, setUtenti] = useState([]);
   const [page, setPage] = useState(0);
   const [firstPage, setFirstPage] = useState(true);
   const [lastPage, setLastPage] = useState(false);
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const getUtenti = () => {
     fetch(base + "/utenti" + "?page=" + page, {
@@ -40,6 +46,26 @@ function ElencoUtenti(props) {
       });
   };
 
+  const setToAdmin = () => {
+    fetch(base + "/utenti/" + idUtenteSel, {
+      method: "PATCH",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token").slice(1, -1),
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          alert(nomeSel + " " + cognomeSel + " è ora un Amministarore");
+          window.location.reload();
+        } else {
+          throw new Error(res.status);
+        }
+      })
+      .catch((er) => {
+        alert("errore: " + er.toString());
+      });
+  };
+
   useEffect(() => {
     if (localStorage.getItem("token") !== null) {
       getUtenti();
@@ -48,6 +74,29 @@ function ElencoUtenti(props) {
 
   return (
     <>
+      <Modal show={show} size="sm" id="confermaFattura" onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Permessi Amministratore</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {nomeSel} {cognomeSel} avrà permessi da Amministratore
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="danger" onClick={handleClose}>
+            Annulla
+          </Button>
+          <Button
+            variant="success"
+            onClick={() => {
+              handleClose();
+
+              setToAdmin();
+            }}
+          >
+            Conferma
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <Col
         style={{ height: "20em", overflowY: "auto" }}
         className={"bg-bluGuado" + (mioRuolo === "ADMIN" ? " " : " d-none")}
@@ -63,7 +112,14 @@ function ElencoUtenti(props) {
                     </h4>
                   </div>
                   {idUtenteSel > 0 && (
-                    <Button variant="success">Rendi Amministratore </Button>
+                    <Button
+                      variant="success"
+                      onClick={() => {
+                        handleShow();
+                      }}
+                    >
+                      Rendi Amministratore{" "}
+                    </Button>
                   )}
                 </div>
               </th>
@@ -86,6 +142,8 @@ function ElencoUtenti(props) {
                       style={{ cursor: "pointer" }}
                       onClick={() => {
                         setIdUtenteSel(u.id);
+                        setNomeSel(u.nome);
+                        setCognomeSel(u.cognome);
                       }}
                       className={
                         idUtenteSel === u.id && "border border-2 border-success"
@@ -99,6 +157,43 @@ function ElencoUtenti(props) {
                 })}
             </tbody>
           </Table>
+        </Row>
+        <Row className="my-3">
+          <Col xs={4} md={3} lg={2} className="d-flex justify-content-start">
+            {!firstPage && (
+              <Button
+                className="rounded-start-5"
+                variant="primary"
+                onClick={() => {
+                  if (firstPage) {
+                    return;
+                  }
+                  let prev = page - 1;
+                  setPage(prev);
+                }}
+              >
+                <i className="bi bi-chevron-left "></i>
+              </Button>
+            )}
+          </Col>
+          <Col xs={4} md={6} lg={8}></Col>
+          <Col xs={4} md={3} lg={2} className="d-flex justify-content-end">
+            {!lastPage && (
+              <Button
+                className=" rounded-end-5"
+                variant="primary"
+                onClick={() => {
+                  if (lastPage) {
+                    return;
+                  }
+                  let next = page + 1;
+                  setPage(next);
+                }}
+              >
+                <i className="bi bi-chevron-right "></i>
+              </Button>
+            )}
+          </Col>
         </Row>
       </Col>
     </>
