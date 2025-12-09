@@ -78,7 +78,7 @@ function ElencoUtenti(props) {
 
   return (
     <>
-      <Modal show={show} size="sm" id="confermaFattura" onHide={handleClose}>
+      <Modal show={show} size="sm" id="confermaAdmin" onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Permessi Amministratore</Modal.Title>
         </Modal.Header>

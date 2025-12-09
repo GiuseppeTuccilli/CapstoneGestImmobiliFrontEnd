@@ -50,7 +50,6 @@ function HomePage() {
       })
       .catch((er) => {
         console.log(er);
-
         setError(true);
         setLoading(false);
       });
@@ -179,7 +178,7 @@ function HomePage() {
           </Row>
         </Col>
       </Row>
-      <Row className="bg-bluGuado p-2 border border-1 border-sabbia ">
+      <Row className="bg-bluGuado p-2 border border-1 border-sabbia">
         <div className="text-center">
           <Button
             variant="primary"
