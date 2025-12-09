@@ -63,6 +63,7 @@ function DettagliImmobile() {
     })
       .then((res) => {
         if (res.ok) {
+          console.log(res);
           return res.json();
         } else {
           throw new Error(res.status);

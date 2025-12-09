@@ -6,11 +6,13 @@ import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
+import ElencoUtenti from "./ElencoUtenti";
 
 function HomePage() {
   const [userNome, setUserNome] = useState("");
   const [userCognome, setUserCognome] = useState("");
   const [userRuolo, setUserRuolo] = useState("");
+  const [userId, setUserId] = useState(0);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -42,6 +44,7 @@ function HomePage() {
         setUserNome(data.nome);
         setUserCognome(data.cognome);
         setUserRuolo(data.ruolo);
+        setUserId(data.id);
         setLoading(false);
       })
       .catch((er) => {
@@ -169,6 +172,10 @@ function HomePage() {
             </Col>
           </Row>
         </Col>
+      </Row>
+
+      <Row>
+        <ElencoUtenti base={base} ruolo={userRuolo} mioId={userId} />
       </Row>
     </Container>
   );
