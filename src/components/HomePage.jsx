@@ -7,6 +7,7 @@ import Alert from "react-bootstrap/Alert";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import ElencoUtenti from "./ElencoUtenti";
+import ModaleCambioPassword from "./ModaleCambioPassword";
 
 function HomePage() {
   const [userNome, setUserNome] = useState("");
@@ -19,6 +20,8 @@ function HomePage() {
   const [error, setError] = useState(false);
 
   const [show, setShow] = useState(false);
+
+  const [modalShow, setModalShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -72,6 +75,12 @@ function HomePage() {
         </Alert>
       )}
       <>
+        <ModaleCambioPassword
+          show={modalShow}
+          onHide={() => {
+            setModalShow(false);
+          }}
+        />
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Log-out</Modal.Title>
@@ -123,7 +132,13 @@ function HomePage() {
           <div className="text-end">
             {userRuolo !== "" && (
               <div className="d-flex justify-content-between">
-                <Button variant="primary" className="my-1">
+                <Button
+                  variant="primary"
+                  className="my-1"
+                  onClick={() => {
+                    setModalShow(true);
+                  }}
+                >
                   Cambia Password
                 </Button>
                 <Button variant="danger" className="my-1" onClick={handleShow}>

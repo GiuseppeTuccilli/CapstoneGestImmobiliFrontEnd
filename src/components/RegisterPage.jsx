@@ -16,6 +16,7 @@ function RegisterForm() {
   const [password, setPassword] = useState("");
   const [telefono, setTelefono] = useState("");
   const [confPassword, setConfPassword] = useState("");
+  const [tooShort, setTooShort] = useState(false);
 
   const [show, setShow] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
@@ -86,9 +87,13 @@ function RegisterForm() {
               e.preventDefault();
               if (password !== confPassword) {
                 setErrorPassword(true);
-              } else {
-                submitForm();
+                return;
               }
+              if (password.length < 8) {
+                setTooShort(true);
+                return;
+              }
+              submitForm();
             }}
             className="border border-1 border-beige bg-polvereScuro p-3"
           >
@@ -174,6 +179,22 @@ function RegisterForm() {
               <div className="d-flex justify-content-end">
                 <Button
                   onClick={() => setErrorPassword(false)}
+                  variant="outline-danger"
+                >
+                  Ok
+                </Button>
+              </div>
+            </Alert>
+            {/* alert password corta*/}
+            <Alert show={tooShort} variant="danger">
+              <Alert.Heading>
+                La Password deve avere almeno 8 caratteri
+              </Alert.Heading>
+
+              <hr />
+              <div className="d-flex justify-content-end">
+                <Button
+                  onClick={() => setTooShort(false)}
                   variant="outline-danger"
                 >
                   Ok

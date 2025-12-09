@@ -204,7 +204,7 @@ function ElencoClienti() {
                       style={{ cursor: "pointer" }}
                       className={
                         "bg-bianchetto " +
-                        (idSel === c.id && " border border-2 border-primary")
+                        (idSel === c.id && " border border-2 border-success")
                       }
                       key={c.id}
                       onClick={() => {
