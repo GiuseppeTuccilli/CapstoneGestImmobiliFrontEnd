@@ -23,6 +23,7 @@ import DettagliImmobile from "./components/DettagliImmobile";
 import MieVisite from "./components/MieVisite";
 import RichiediCodice from "./components/RichiediCodice";
 import ResetPassword from "./components/ResetPassword";
+import NuovoUtente from "./components/NuovoUtente";
 
 function App() {
   return (
@@ -39,6 +40,15 @@ function App() {
               <>
                 <MyNavbar />
                 <HomePage />
+              </>
+            }
+          />
+          <Route
+            path="/NuovoUtente"
+            element={
+              <>
+                <MyNavbar />
+                <NuovoUtente />
               </>
             }
           />

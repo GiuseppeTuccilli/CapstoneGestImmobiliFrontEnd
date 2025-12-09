@@ -145,7 +145,13 @@ function HomePage() {
                 + Cliente
               </Button>
               {userRuolo === "ADMIN" && (
-                <Button variant="success" className="my-1 ">
+                <Button
+                  variant="success"
+                  className="my-1 "
+                  onClick={() => {
+                    navigate("/NuovoUtente");
+                  }}
+                >
                   + Utente
                 </Button>
               )}
