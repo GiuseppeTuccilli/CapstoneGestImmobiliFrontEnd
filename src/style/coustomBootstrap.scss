@@ -224,6 +224,11 @@ $modal-scale-transform: scale(1.02) !default;
   cursor: pointer;
 }
 
+.provinciaSelect:hover {
+  color: $sabbia;
+  text-decoration: underline;
+}
+
 $btn-border-radius: 0;
 $btn-border-radius-sm: 0;
 $btn-border-radius-lg: 0;
