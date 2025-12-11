@@ -250,7 +250,7 @@ function HomePage() {
           md={6}
           className="d-flex flex-column align-items-center justify-content-center border border-3 border-bluGuado bg-polvereScuro p-3"
         >
-          <Row className="d-flex justify-content-center">
+          <Row className="d-flex justify-content-center w-100">
             <Col
               xs={12}
               className="d-flex flex-column justify-content-center p-2 border border-1 border-beige bg-bluGuado"
@@ -262,7 +262,7 @@ function HomePage() {
                   navigate("/nuovoCliente");
                 }}
               >
-                + Cliente
+                <i className="bi bi-people"></i> Nuovo Cliente
               </Button>
               {userRuolo === "ADMIN" && (
                 <Button
@@ -272,7 +272,7 @@ function HomePage() {
                     navigate("/NuovoUtente");
                   }}
                 >
-                  + Utente
+                  <i className="bi bi-person-add"></i> Nuovo Utente
                 </Button>
               )}
               {userRuolo === "ADMIN" && (
@@ -283,7 +283,7 @@ function HomePage() {
                     navigate("/NuovoImmobile");
                   }}
                 >
-                  + Immobile
+                  <i className="bi bi-house-add"></i> Nuovo Immobile
                 </Button>
               )}
             </Col>
