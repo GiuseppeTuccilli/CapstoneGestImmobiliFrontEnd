@@ -11,6 +11,7 @@ import ModaleCambioPassword from "./ModaleCambioPassword";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import ModaleModificaEmail from "./ModaleModificaEmail";
 import ModaleModificaDati from "./ModaleModificaDati";
+import ModaleCancellazioneProfilo from "./ModaleCancellazioneProfilo";
 
 function HomePage() {
   const [userNome, setUserNome] = useState("");
@@ -29,6 +30,7 @@ function HomePage() {
   const [modalShow, setModalShow] = useState(false);
   const [modEmail, setModEmail] = useState(false);
   const [modDati, setModDati] = useState(false);
+  const [cancProfilo, setCancProfilo] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -106,6 +108,12 @@ function HomePage() {
           telefono={userTelefono}
           onHide={() => {
             setModDati(false);
+          }}
+        />
+        <ModaleCancellazioneProfilo
+          show={cancProfilo}
+          onHide={() => {
+            setCancProfilo(false);
           }}
         />
 
@@ -192,7 +200,12 @@ function HomePage() {
             </Link>
           </div>
           <div className="border border-2 border-sabbia p-3 mt-5">
-            <Link className="text-white fw-semibold d-flex align-items-center">
+            <Link
+              className="text-white fw-semibold d-flex align-items-center"
+              onClick={() => {
+                setCancProfilo(true);
+              }}
+            >
               <i className="bi bi-x-octagon"></i>
               <p className="mb-0 ms-1 ">Cancella Profilo Utente</p>
             </Link>
