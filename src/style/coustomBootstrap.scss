@@ -72,6 +72,17 @@ $modal-scale-transform: scale(1.02) !default;
   }
 }
 
+.offcanvas {
+  a:hover {
+    color: $sabbia !important;
+  }
+  .btn-close {
+    background-color: $primary !important;
+    border-radius: 0 !important;
+    border: 2px solid $nero;
+  }
+}
+
 .posseduto {
   border: 2px solid #279e7a;
 }
@@ -121,6 +132,17 @@ $modal-scale-transform: scale(1.02) !default;
     color: $grigioScuro;
     border-radius: 0 !important;
     background-color: $azzurroPolvere;
+    .modal-title {
+      border: 2px solid $bluGuado;
+      padding-right: 0.4em !important;
+      padding-left: 0.4em !important;
+      background-color: $sabbia;
+    }
+    .btn-close {
+      border-radius: 0 !important;
+      border: 2px solid $nero !important;
+      background-color: $bluGuado;
+    }
   }
 
   .modal-footer {

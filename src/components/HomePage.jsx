@@ -4,10 +4,11 @@ import Button from "react-bootstrap/Button";
 import base from "../variabili";
 import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import ElencoUtenti from "./ElencoUtenti";
 import ModaleCambioPassword from "./ModaleCambioPassword";
+import Offcanvas from "react-bootstrap/Offcanvas";
 
 function HomePage() {
   const [userNome, setUserNome] = useState("");
@@ -20,11 +21,13 @@ function HomePage() {
   const [error, setError] = useState(false);
 
   const [show, setShow] = useState(false);
-
+  const [showCanva, setShowCanva] = useState(false);
   const [modalShow, setModalShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const handleShowCanva = () => setShowCanva(true);
+  const handleCloseCanva = () => setShowCanva(false);
 
   const navigate = useNavigate();
 
@@ -110,6 +113,56 @@ function HomePage() {
           </Modal.Footer>
         </Modal>
       </>
+      <Offcanvas
+        show={showCanva}
+        onHide={handleCloseCanva}
+        className="bg-bluGuado"
+      >
+        <Offcanvas.Header
+          className="border border-2 border-azzurroPolvere bg-sabbia"
+          closeButton
+        >
+          <Offcanvas.Title>
+            <i className="bi bi-person-circle"></i> Impostazioni Profilo
+          </Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          <div className="d-flex flex-column border border-2 border-sabbia p-3">
+            <Link
+              className="text-white fw-semibold d-flex align-items-center my-1"
+              onClick={() => {
+                setModalShow(true);
+              }}
+            >
+              <i className="bi bi-lock"> </i>
+              <p className="mb-0 ms-1">Modifica Password</p>
+            </Link>
+            <Link className="text-white fw-semibold d-flex align-items-center my-1">
+              <i class="bi bi-envelope"></i>
+              <p className="mb-0 ms-1">Modifica Email</p>
+            </Link>
+            <Link className="text-white fw-semibold d-flex align-items-center my-1">
+              <i className="bi bi-person-vcard"></i>
+              <p className="mb-0 ms-1">Modifica Dati Profilo</p>
+            </Link>
+          </div>
+          <div className="border border-2 border-sabbia p-3 mt-3">
+            <Link
+              className="text-white fw-semibold d-flex align-items-center "
+              onClick={handleShow}
+            >
+              <i className="bi bi-person-dash"></i>
+              <p className="mb-0 ms-1">Log-out</p>
+            </Link>
+          </div>
+          <div className="border border-2 border-sabbia p-3 mt-5">
+            <Link className="text-white fw-semibold d-flex align-items-center">
+              <i className="bi bi-x-octagon"></i>
+              <p className="mb-0 ms-1 ">Cancella Profilo Utente</p>
+            </Link>
+          </div>
+        </Offcanvas.Body>
+      </Offcanvas>
       <Row className="mt-3 ">
         <Col
           xs={12}
@@ -135,14 +188,9 @@ function HomePage() {
                 <Button
                   variant="primary"
                   className="my-1"
-                  onClick={() => {
-                    setModalShow(true);
-                  }}
+                  onClick={handleShowCanva}
                 >
-                  Cambia Password
-                </Button>
-                <Button variant="danger" className="my-1" onClick={handleShow}>
-                  Log-out
+                  <i className="bi bi-arrow-bar-right"></i> Profilo Utente
                 </Button>
               </div>
             )}
