@@ -40,6 +40,8 @@ function NuovaRichiesta() {
   const [cognome, setCognome] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [searchProvincia, setSearchProvincia] = useState("");
+  const [searchComune, setSearchComune] = useState("");
 
   const handleCloseProv = () => setShow(false);
   const handleShowProv = () => setShow(true);
@@ -197,42 +199,83 @@ function NuovaRichiesta() {
       </>
       {/*modale province*/}
       <Modal show={show} onHide={handleCloseProv} style={{ height: "20em" }}>
-        <Modal.Header className="sticky-top top-0 z-1 bg-light" closeButton>
-          <Modal.Title>Seleziona Provincia</Modal.Title>
-        </Modal.Header>
-        {province.map((p) => {
-          return (
-            <Modal.Body
-              className="provinciaSelect"
-              onClick={() => {
-                setProvincia(p.nomeProvincia);
-                setIdProvincia(p.id);
-                handleCloseProv();
+        <div className="sticky-top top-0 z-1 w-100 p-0 ">
+          <Modal.Header closeButton>
+            <Modal.Title>Seleziona Provincia</Modal.Title>
+          </Modal.Header>
+          <div className="p-2 border border-1 border-sabbia bg-polvereScuro text-center ">
+            <input
+              type="text"
+              placeholder="Provincia..."
+              value={searchProvincia}
+              onChange={(e) => {
+                setSearchProvincia(e.target.value);
               }}
-            >
-              {p.nomeProvincia}
-            </Modal.Body>
-          );
-        })}
+            ></input>
+          </div>
+        </div>
+
+        {province
+          .filter((p) => {
+            return p.nomeProvincia
+              .toLowerCase()
+              .startsWith(searchProvincia.toLowerCase());
+          })
+          .map((p) => {
+            return (
+              <Modal.Body className=" border-bottom border-1 border-sabbia p-3">
+                <p
+                  className="provinciaSelect m-0"
+                  onClick={() => {
+                    setProvincia(p.nomeProvincia);
+                    setIdProvincia(p.id);
+                    handleCloseProv();
+                  }}
+                >
+                  {p.nomeProvincia}
+                </p>
+              </Modal.Body>
+            );
+          })}
       </Modal>
       {/*modale comuni*/}
       <Modal show={showCom} onHide={handleCloseCom} style={{ height: "20em" }}>
-        <Modal.Header className="sticky-top top-0 z-1 bg-light" closeButton>
-          <Modal.Title>Seleziona Comune</Modal.Title>
-        </Modal.Header>
-        {comuni.map((p) => {
-          return (
-            <Modal.Body
-              className="provinciaSelect"
-              onClick={() => {
-                setComune(p.denominazione);
-                handleCloseCom();
+        <div className="sticky-top top-0 z-1 w-100 p-0 ">
+          <Modal.Header closeButton>
+            <Modal.Title>Seleziona Comune</Modal.Title>
+          </Modal.Header>
+          <div className="p-2 border border-1 border-sabbia bg-polvereScuro text-center ">
+            <input
+              type="text"
+              placeholder="Comune..."
+              value={searchComune}
+              onChange={(e) => {
+                setSearchComune(e.target.value);
               }}
-            >
-              {p.denominazione}
-            </Modal.Body>
-          );
-        })}
+            ></input>
+          </div>
+        </div>
+        {comuni
+          .filter((c) => {
+            return c.denominazione
+              .toLowerCase()
+              .startsWith(searchComune.toLowerCase());
+          })
+          .map((p) => {
+            return (
+              <Modal.Body className=" border-bottom border-1 border-sabbia p-3">
+                <p
+                  className="provinciaSelect m-0"
+                  onClick={() => {
+                    setComune(p.denominazione);
+                    handleCloseCom();
+                  }}
+                >
+                  {p.denominazione}
+                </p>
+              </Modal.Body>
+            );
+          })}
       </Modal>
       {/*modale conferma */}
       <Modal show={showConferma} onHide={handleClose}>
@@ -309,10 +352,8 @@ function NuovaRichiesta() {
                 name="input-name"
                 placeholder="Please enter a number"
                 value={prezzoMax}
-                // decimalsLimit={2}
-
+                groupSeparator="."
                 onValueChange={(value, name, values) => {
-                  //console.log(value, name, values);
                   setPrezzoMax(value);
                 }}
               />

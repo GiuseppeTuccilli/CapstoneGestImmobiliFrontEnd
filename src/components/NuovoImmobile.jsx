@@ -335,10 +335,8 @@ function NuovoImmobile() {
                 name="input-name"
                 placeholder="Please enter a number"
                 value={prez}
-                // decimalsLimit={2}
-
+                groupSeparator="."
                 onValueChange={(value, name, values) => {
-                  //console.log(value, name, values);
                   setPrezzo(value);
                 }}
               />
