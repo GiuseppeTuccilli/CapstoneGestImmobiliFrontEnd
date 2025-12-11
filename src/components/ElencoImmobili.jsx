@@ -238,7 +238,7 @@ function ElencoImmobili() {
             </div>
           </div>
           <div className="mt-1  d-flex justify-content-around mt-2 ">
-            <div className="p-2 border border-1 bprder-azzurroPolvere bg-bluGuado ">
+            <div className="p-2 mb-1 border border-1 bprder-azzurroPolvere bg-bluGuado ">
               <h5 className="m-0 text-sabbia ">Seleziona un Immobile</h5>
             </div>
             {idImmoSel > 0 && (
