@@ -64,6 +64,10 @@ $modal-scale-transform: scale(1.02) !default;
     color: $azzurroPolvere !important;
   }
 
+  .navbar-toggler {
+    border-radius: 0 !important;
+  }
+
   .active {
     color: $primary !important;
     text-decoration: underline;
@@ -81,6 +85,10 @@ $modal-scale-transform: scale(1.02) !default;
     border-radius: 0 !important;
     border: 2px solid $nero;
   }
+}
+
+.alert {
+  border-radius: 0 !important;
 }
 
 .posseduto {

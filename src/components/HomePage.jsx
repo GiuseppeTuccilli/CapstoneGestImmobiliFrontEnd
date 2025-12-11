@@ -9,11 +9,15 @@ import Modal from "react-bootstrap/Modal";
 import ElencoUtenti from "./ElencoUtenti";
 import ModaleCambioPassword from "./ModaleCambioPassword";
 import Offcanvas from "react-bootstrap/Offcanvas";
+import ModaleModificaEmail from "./ModaleModificaEmail";
+import ModaleModificaDati from "./ModaleModificaDati";
 
 function HomePage() {
   const [userNome, setUserNome] = useState("");
   const [userCognome, setUserCognome] = useState("");
   const [userRuolo, setUserRuolo] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [userTelefono, setUserTelefono] = useState("");
   const [userId, setUserId] = useState(0);
   const [showUtenti, setShowUtenti] = useState(false);
 
@@ -23,6 +27,8 @@ function HomePage() {
   const [show, setShow] = useState(false);
   const [showCanva, setShowCanva] = useState(false);
   const [modalShow, setModalShow] = useState(false);
+  const [modEmail, setModEmail] = useState(false);
+  const [modDati, setModDati] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -51,6 +57,8 @@ function HomePage() {
         setUserNome(data.nome);
         setUserCognome(data.cognome);
         setUserRuolo(data.ruolo);
+        setUserEmail(data.email);
+        setUserTelefono(data.telefono);
         setUserId(data.id);
         setLoading(false);
       })
@@ -84,6 +92,24 @@ function HomePage() {
             setModalShow(false);
           }}
         />
+        <ModaleModificaEmail
+          userEmail={userEmail}
+          show={modEmail}
+          onHide={() => {
+            setModEmail(false);
+          }}
+        />
+        <ModaleModificaDati
+          show={modDati}
+          nome={userNome}
+          cognome={userCognome}
+          telefono={userTelefono}
+          onHide={() => {
+            setModDati(false);
+          }}
+        />
+
+        {/*modale logout */}
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Log-out</Modal.Title>
@@ -137,11 +163,21 @@ function HomePage() {
               <i className="bi bi-lock"> </i>
               <p className="mb-0 ms-1">Modifica Password</p>
             </Link>
-            <Link className="text-white fw-semibold d-flex align-items-center my-1">
+            <Link
+              className="text-white fw-semibold d-flex align-items-center my-1"
+              onClick={() => {
+                setModEmail(true);
+              }}
+            >
               <i class="bi bi-envelope"></i>
               <p className="mb-0 ms-1">Modifica Email</p>
             </Link>
-            <Link className="text-white fw-semibold d-flex align-items-center my-1">
+            <Link
+              className="text-white fw-semibold d-flex align-items-center my-1"
+              onClick={() => {
+                setModDati(true);
+              }}
+            >
               <i className="bi bi-person-vcard"></i>
               <p className="mb-0 ms-1">Modifica Dati Profilo</p>
             </Link>
