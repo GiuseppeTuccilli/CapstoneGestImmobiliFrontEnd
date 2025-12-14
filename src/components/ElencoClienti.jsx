@@ -7,6 +7,7 @@ import base from "../variabili";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { useNavigate } from "react-router-dom";
+
 function ElencoClienti() {
   const [token, setToken] = useState(
     localStorage.getItem("token").slice(1, -1)

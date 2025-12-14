@@ -24,6 +24,7 @@ import MieVisite from "./components/MieVisite";
 import RichiediCodice from "./components/RichiediCodice";
 import ResetPassword from "./components/ResetPassword";
 import NuovoUtente from "./components/NuovoUtente";
+import MyFooter from "./components/MyFooter";
 
 function App() {
   return (
@@ -144,6 +145,7 @@ function App() {
             }
           />
         </Routes>
+        <MyFooter />
       </BrowserRouter>
     </>
   );

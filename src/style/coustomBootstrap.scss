@@ -32,6 +32,7 @@ $new-theme-colors: (
   "primary": $primary,
   "success": $success,
   "danger": $danger,
+  "grigioScuro": $grigioScuro,
 );
 
 $modal-content-bg: $azzurroPolvere;
@@ -234,6 +235,14 @@ $modal-scale-transform: scale(1.02) !default;
 .provinciaSelect:hover {
   color: $sabbia;
   text-decoration: underline;
+}
+
+.linkFooter {
+  color: $polvereScuro;
+  text-decoration: none;
+}
+.linkFooter:hover {
+  color: $azzurroPolvere;
 }
 
 $btn-border-radius: 0;
