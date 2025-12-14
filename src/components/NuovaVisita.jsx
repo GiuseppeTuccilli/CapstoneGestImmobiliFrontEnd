@@ -166,12 +166,12 @@ function NuovaVisita() {
           <Col
             xs={9}
             md={6}
-            className="px-0 ps-2 border border-1 border-sabbia"
+            className="px-0 px-2 border border-1 border-sabbia"
           >
-            <h2 className="text-center border border-1 border-azzurroPolvere p-3 bg-beige my-1">
+            <h2 className="text-center border border-1 border-azzurroPolvere p-3 bg-sabbia my-1">
               Nuova Visita
             </h2>
-            <div className="d-flex justify-content-evenly border border-1 border-beige p-2 bg-polvereScuro">
+            <div className="d-flex justify-content-evenly border border-1 border-beige p-2 mb-1 bg-polvereScuro">
               <div className="d-flex align-items-center border border-1 border-azzurroPolvere p-2 bg-bianchetto ">
                 <div>
                   <h6>Seleziona la data</h6>
@@ -308,7 +308,7 @@ function NuovaVisita() {
                   <th colSpan={3}>
                     <div className="d-flex  justify-content-around p-3 border border-1 border-beige bg-polvereScuro">
                       <div>
-                        <h4 className="m-0 p-2 border border-1 border-azzurroPolvere bg-beige">
+                        <h4 className="m-0 p-2 border border-1 border-azzurroPolvere bg-sabbia">
                           Clienti
                         </h4>
                       </div>
