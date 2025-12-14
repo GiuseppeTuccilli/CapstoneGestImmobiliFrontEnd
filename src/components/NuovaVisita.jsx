@@ -162,13 +162,17 @@ function NuovaVisita() {
         </Alert>
       )}
       <Container className="d-flex flex-column align-items-center bg-bluGuado">
-        <Row className="d-flex justify-content-center  bg-secondary py-2">
-          <Col xs={9} md={6} className="px-0 ps-2">
-            <h2 className="text-center border border-1 border-azzurroPolvere p-3 bg-beige ">
+        <Row className="d-flex justify-content-center  bg-bluGuado pt-2 w-100 ">
+          <Col
+            xs={9}
+            md={6}
+            className="px-0 ps-2 border border-1 border-sabbia"
+          >
+            <h2 className="text-center border border-1 border-azzurroPolvere p-3 bg-beige my-1">
               Nuova Visita
             </h2>
-            <div className="d-flex justify-content-between border border-1 border-beige p-2 bg-polvereScuro">
-              <div className="d-flex align-items-center">
+            <div className="d-flex justify-content-evenly border border-1 border-beige p-2 bg-polvereScuro">
+              <div className="d-flex align-items-center border border-1 border-azzurroPolvere p-2 bg-bianchetto ">
                 <div>
                   <h6>Seleziona la data</h6>
                   <input
@@ -180,31 +184,37 @@ function NuovaVisita() {
                     min={new Date().toISOString().split("T")[0]}
                   ></input>
                 </div>
-                <h5 className="m-0 ms-3 d-none d-lg-block">
-                  Immobile <i className="bi bi-arrow-right-short"></i>
-                </h5>
               </div>
-              <div className="d-flex flex-column border border-1 border-beige p-1 bg-bianchetto">
-                <div>
-                  {tipoImmobile === "" ? (
-                    <Spinner />
-                  ) : (
-                    <p className="m-0 fw-semibold">{tipoImmobile}</p>
-                  )}
-                </div>
-                <div>
-                  {indImmobile === "" ? (
-                    <Spinner />
-                  ) : (
-                    <p className="m-0 fw-semibold">{indImmobile}</p>
-                  )}
-                </div>
-                <div>
-                  {comuneImm === "" ? (
-                    <Spinner />
-                  ) : (
-                    <p className="m-0 fw-semibold">{comuneImm}</p>
-                  )}
+              <div>
+                <div className="d-flex flex-column border border-1 border-beige p-1 bg-bianchetto">
+                  <h5 className="m-0 d-none d-lg-block mb-1 text-decoration-underline">
+                    Immobile:
+                  </h5>
+                  <div>
+                    {tipoImmobile === "" ? (
+                      <Spinner />
+                    ) : (
+                      <p className="m-0 fw-semibold breakWord">
+                        {tipoImmobile.split("_")[0] +
+                          " " +
+                          tipoImmobile.split("_")[1]}
+                      </p>
+                    )}
+                  </div>
+                  <div>
+                    {indImmobile === "" ? (
+                      <Spinner />
+                    ) : (
+                      <p className="m-0 fw-semibold">{indImmobile}</p>
+                    )}
+                  </div>
+                  <div>
+                    {comuneImm === "" ? (
+                      <Spinner />
+                    ) : (
+                      <p className="m-0 fw-semibold">{comuneImm}</p>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -212,7 +222,7 @@ function NuovaVisita() {
           <Col
             xs={3}
             md={3}
-            className="d-flex flex-column justify-content-around"
+            className="d-flex flex-column justify-content-around border border-1 border-sabbia"
           >
             <div className="d-flex flex-column justify-content-around">
               <Button
@@ -242,17 +252,22 @@ function NuovaVisita() {
             </div>
             <div
               className="p-2 border border-1 border-sabbia bg-azzurroPolvere d-flex flex-column justify-content-center"
-              style={{ height: "6em" }}
+              id="height6em"
             >
               <h5 className="text-center">Cliente:</h5>
               <div className="d-flex justify-content-center p-2 border border-1 border-bluGuado bg-beigeChiaro">
-                <p className="m-0 me-1 fw-semibold">{nomeSelected} </p>
-                <p className="m-0 fw-semibold">{cognomeSelected}</p>
+                <p className="m-0 me-1 fw-semibold">
+                  {nomeSelected} {cognomeSelected}
+                </p>
               </div>
             </div>
           </Col>
-          <Col xs={12} md={9}>
-            <h5 className="m-0 mt-2 text-light">
+          <Col
+            xs={12}
+            md={9}
+            className="bg-polvereScuro border border-1 border-sabbia p-2"
+          >
+            <h5 className="m-0 text-center border border-1 border-azzurroPolvere bg-bluGuado text-bianchetto p-1 ">
               Seleziona un cliente <i className="bi bi-arrow-bar-down"></i>
             </h5>
             <div className="d-flex mt-2 ">
@@ -281,10 +296,15 @@ function NuovaVisita() {
         </Row>
         {/*row clienti */}
         <Row className=" w-100 justify-content-center">
-          <Col style={{ height: "25em", overflowY: "auto" }} xs={12} md={9}>
+          <Col className="colOvervlow" xs={12} md={9}>
             <Row>
-              <Table striped bordered hover className="mb-0">
-                <thead className="position-sticky" style={{ top: "-0.5%" }}>
+              <Table
+                striped
+                bordered
+                hover
+                className="mb-0 border border-1 border-sabbia"
+              >
+                <thead className="position-sticky" id="top05">
                   <th colSpan={3}>
                     <div className="d-flex  justify-content-around p-3 border border-1 border-beige bg-polvereScuro">
                       <div>
@@ -308,15 +328,15 @@ function NuovaVisita() {
                     return (
                       <tr
                         key={c.id}
-                        style={{ cursor: "pointer" }}
                         onClick={() => {
                           setIdSelected(c.id);
                           setNomeSelected(c.nome);
                           setCognomeSelected(c.cognome);
                         }}
                         className={
-                          idSelected === c.id &&
-                          "border border-2 border-success"
+                          "tableRowPonter " +
+                          (idSelected === c.id &&
+                            "border border-2 border-success")
                         }
                       >
                         <td>{c.nome}</td>

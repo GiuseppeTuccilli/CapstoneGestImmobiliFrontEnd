@@ -109,6 +109,10 @@ $modal-scale-transform: scale(1.02) !default;
   height: 3.8em;
 }
 
+.breakWord {
+  word-wrap: break-word;
+}
+
 .sizePiccola {
   font-size: 0.8em;
 }
@@ -243,6 +247,23 @@ $modal-scale-transform: scale(1.02) !default;
 }
 .linkFooter:hover {
   color: $azzurroPolvere;
+}
+
+#top05 {
+  top: -0.5% !important;
+}
+
+#height6em {
+  height: 6em !important;
+}
+
+.colOvervlow {
+  height: 25em !important;
+  overflow-y: auto !important;
+}
+
+.tableRowPonter {
+  cursor: pointer;
 }
 
 $btn-border-radius: 0;
