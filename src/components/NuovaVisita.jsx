@@ -31,7 +31,7 @@ function NuovaVisita() {
   const [indImmobile, setIndImmobile] = useState("");
   const [tipoImmobile, setTipoImmobile] = useState("");
   const [comuneImm, setComuneImm] = useState("");
-  const [provImm, setProvImm] = useState("");
+  const [provImm, setProvImm] = useState(null);
 
   const [clienti, setClienti] = useState([]);
   const [idSelected, setIdSelected] = useState(0);
@@ -67,7 +67,7 @@ function NuovaVisita() {
         setIndImmobile(im.indirizzo);
         setTipoImmobile(im.macroTipologia);
         setComuneImm(im.comune.denominazione);
-        setProvImm(im.comune.provincia.nomeProvincia);
+        setProvImm(im.comune.provincia);
         setLoadImm(false);
         setErrImm(false);
       })
@@ -212,7 +212,9 @@ function NuovaVisita() {
                     {comuneImm === "" ? (
                       <Spinner />
                     ) : (
-                      <p className="m-0 fw-semibold">{comuneImm}</p>
+                      <p className="m-0 fw-semibold">
+                        {comuneImm} ({provImm.sigla})
+                      </p>
                     )}
                   </div>
                 </div>
