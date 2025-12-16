@@ -9,9 +9,6 @@ import InputGroup from "react-bootstrap/InputGroup";
 import { useNavigate } from "react-router-dom";
 
 function ElencoClienti() {
-  const [token, setToken] = useState(
-    localStorage.getItem("token").slice(1, -1)
-  );
   const [clienti, setClienti] = useState([]);
 
   const [filtroNome, setFiltroNome] = useState(false);
@@ -59,7 +56,7 @@ function ElencoClienti() {
     }
   };
 
-  const getClienti = () => {
+  const getClienti = (token) => {
     fetch(
       base + "/clienti?nome=" + nome + "&cognome=" + cognome + "&page=" + page,
       {
@@ -92,8 +89,13 @@ function ElencoClienti() {
   };
 
   useEffect(() => {
-    getClienti();
-  }, [nome, cognome, token, page]);
+    if (localStorage.getItem("token") === null) {
+      navigate("/login");
+    } else {
+      let tok = localStorage.getItem("token").slice(1, -1);
+      getClienti(tok);
+    }
+  }, [nome, cognome, page]);
 
   return (
     <>
