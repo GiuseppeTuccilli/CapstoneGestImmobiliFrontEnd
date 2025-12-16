@@ -2,7 +2,7 @@ import { Container, Row, Col, Image, Spinner, Table } from "react-bootstrap";
 import { Modal, Alert } from "react-bootstrap/";
 import Button from "react-bootstrap/Button";
 import { useEffect, useState } from "react";
-import base from "../variabili";
+
 import { useParams, useNavigate } from "react-router-dom";
 import ModaleNuovaFattura from "./ModaleNuovaFattura";
 function FattureCliente(props) {

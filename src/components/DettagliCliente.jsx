@@ -45,7 +45,7 @@ function DettagliCliente() {
   const params = useParams();
   const navigate = useNavigate();
 
-  const getMe = () => {
+  const getMe = (token) => {
     fetch(base + "/utenti/me", {
       method: "GET",
       headers: {
@@ -68,7 +68,7 @@ function DettagliCliente() {
       });
   };
 
-  const getCliente = () => {
+  const getCliente = (token) => {
     fetch(base + "/clienti/" + params.idCliente, {
       method: "GET",
       headers: {
@@ -99,7 +99,7 @@ function DettagliCliente() {
       });
   };
 
-  const getVisite = () => {
+  const getVisite = (token) => {
     fetch(base + "/clienti/" + params.idCliente + "/visite", {
       method: "GET",
       headers: {
@@ -121,7 +121,7 @@ function DettagliCliente() {
       });
   };
 
-  const eliminaCliente = () => {
+  const eliminaCliente = (token) => {
     fetch(base + "/clienti/" + id.toString(), {
       method: "DELETE",
       headers: {
@@ -146,7 +146,7 @@ function DettagliCliente() {
       });
   };
 
-  const getRichieste = () => {
+  const getRichieste = (token) => {
     fetch(base + "/clienti/" + params.idCliente + "/richieste", {
       method: "GET",
       headers: {
@@ -168,7 +168,7 @@ function DettagliCliente() {
       });
   };
 
-  const getImmoCompatibili = () => {
+  const getImmoCompatibili = (token) => {
     fetch(base + "/richieste/" + idRichiestaSel + "/incroci", {
       method: "GET",
       headers: {
@@ -191,7 +191,7 @@ function DettagliCliente() {
       });
   };
 
-  const eliminaRichiesta = () => {
+  const eliminaRichiesta = (token) => {
     fetch(base + "/richieste/" + idRichiestaSel, {
       method: "DELETE",
       headers: {
@@ -213,14 +213,16 @@ function DettagliCliente() {
   };
 
   useEffect(() => {
-    if (token === null) {
+    if (localStorage.getItem("token") === null) {
       navigate("/login");
+    } else {
+      let tok = localStorage.getItem("token").slice(1, -1);
+      getMe(tok);
+      getCliente(tok);
+      getVisite(tok);
+      getRichieste(tok);
     }
-    getMe();
-    getCliente();
-    getVisite();
-    getRichieste();
-  }, [token]);
+  }, []);
 
   useEffect(() => {
     if (isFirstRender) {
@@ -230,8 +232,12 @@ function DettagliCliente() {
     if (idRichiestaSel === 0) {
       return;
     }
-
-    getImmoCompatibili();
+    if (localStorage.getItem("token") === null) {
+      navigate("/login");
+    } else {
+      let tok = localStorage.getItem("token").slice(1, -1);
+      getImmoCompatibili(tok);
+    }
   }, [idRichiestaSel]);
 
   return (
@@ -249,8 +255,13 @@ function DettagliCliente() {
           <Button
             variant="danger"
             onClick={() => {
-              eliminaCliente();
-              handleClose();
+              if (localStorage.getItem("token") === null) {
+                navigate("/login");
+              } else {
+                let tok = localStorage.getItem("token").slice(1, -1);
+                eliminaCliente(tok);
+                handleClose();
+              }
             }}
           >
             Elimina
@@ -280,8 +291,13 @@ function DettagliCliente() {
           <Button
             variant="danger"
             onClick={() => {
-              eliminaRichiesta();
-              setShowEliminaRich(false);
+              if (localStorage.getItem("token") === null) {
+                navigate("/login");
+              } else {
+                let tok = localStorage.getItem("token").slice(1, -1);
+                eliminaRichiesta(tok);
+                setShowEliminaRich(false);
+              }
             }}
           >
             Elimina
