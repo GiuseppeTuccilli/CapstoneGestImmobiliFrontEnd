@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Container, Row, Col, Image, Spinner } from "react-bootstrap";
+import { Container, Row, Col, Image, Spinner, Alert } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import base from "../variabili";
@@ -99,6 +99,12 @@ function ElencoClienti() {
 
   return (
     <>
+      {" "}
+      {error && (
+        <Alert variant="danger" className="text-center">
+          Errore nel recupero dati
+        </Alert>
+      )}
       <div>
         <Row className="d-flex justify-content-center position-fixed w-">
           <div className="bg-polvereScuro m-0, py-2 px-3  d-flex">
