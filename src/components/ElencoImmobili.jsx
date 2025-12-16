@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Container, Row, Col, Image } from "react-bootstrap";
+import { Container, Row, Col, Image, Alert } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import base from "../variabili";
@@ -11,9 +11,6 @@ import InputGroup from "react-bootstrap/InputGroup";
 import { Link, useNavigate } from "react-router-dom";
 
 function ElencoImmobili() {
-  const [token, setToken] = useState(
-    localStorage.getItem("token").slice(1, -1)
-  );
   const [immobili, setImmobili] = useState([]);
   const [filtroComune, setFiltroComune] = useState(false);
   const [filtroProvincia, setFiltroProvincia] = useState(false);
@@ -27,10 +24,11 @@ function ElencoImmobili() {
   const [lastPage, setLastPage] = useState(false);
   const [page, setPage] = useState(0);
   const [idImmoSel, setIdImmoSel] = useState(0);
+  const [error, setError] = useState(false);
 
   const navigate = useNavigate();
 
-  const getImmobili = () => {
+  const getImmobili = (token) => {
     fetch(
       base +
         "/immobili?provincia=" +
@@ -65,15 +63,18 @@ function ElencoImmobili() {
       })
       .catch((er) => {
         console.log(er.toString());
+        setError(true);
       });
   };
 
   useEffect(() => {
-    if (!token) {
+    if (localStorage.getItem("token") === null) {
       navigate("/login");
+    } else {
+      let tok = localStorage.getItem("token").slice(1, -1);
+      getImmobili(tok);
     }
-    getImmobili();
-  }, [comune, provincia, indirizzo, tipologia, token, page]);
+  }, [comune, provincia, indirizzo, tipologia, page]);
 
   const handleCheckProvincia = (e) => {
     let val = e.target.checked;
@@ -147,6 +148,11 @@ function ElencoImmobili() {
 
   return (
     <>
+      {error && (
+        <Alert variant="danger" className="text-center">
+          Errore nel recupero dati
+        </Alert>
+      )}
       <Row className="d-flex justify-content-center">
         <div className="bg-bluGuado m-0, pt-2 px-3 border-bottom border-1 border-sabbia position-fixed d-flex flex-column">
           <div className="d-flex">
