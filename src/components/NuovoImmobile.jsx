@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Button, Spinner } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Modal from "react-bootstrap/Modal";
@@ -21,6 +21,7 @@ function NuovoImmobile() {
   const [salvatoShow, setSalvatoShow] = useState(false);
   const [searchProvincia, setSearchProvincia] = useState("");
   const [searchComune, setSearchComune] = useState("");
+  const [salvInCorso, setSalvInCorso] = useState(false);
 
   //parametri payload--------------
   const [macro, setMacroTipo] = useState("Entità Urbana");
@@ -114,6 +115,7 @@ function NuovoImmobile() {
   };
 
   const salvaImmobile = (token) => {
+    setSalvInCorso(true);
     fetch(base + "/immobili", {
       method: "POST",
       body: JSON.stringify(payload),
@@ -124,7 +126,7 @@ function NuovoImmobile() {
     })
       .then((res) => {
         if (res.ok) {
-          console.log(res.status.valueOf());
+          setSalvInCorso(false);
           handleShowSalvato();
         } else {
           throw new Error(res.status.toString());
@@ -132,6 +134,7 @@ function NuovoImmobile() {
       })
       .catch((er) => {
         console.log(er);
+        setSalvInCorso(false);
         alert("errore nel salvataggio");
       });
   };
@@ -252,6 +255,13 @@ function NuovoImmobile() {
             Ok
           </Button>
         </Modal.Footer>
+      </Modal>
+      {/*modale salvataggio in corso*/}
+      <Modal size="sm" show={salvInCorso}>
+        <div className="text-center py-3">
+          <p className="fw-semibold">Salvataggio in corso</p>
+          <Spinner />
+        </div>
       </Modal>
       <Form
         className="pb-3"
