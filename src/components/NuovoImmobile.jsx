@@ -9,9 +9,6 @@ import { useNavigate } from "react-router-dom";
 import CurrencyInput from "react-currency-input-field";
 
 function NuovoImmobile() {
-  const [token, setToken] = useState(
-    localStorage.getItem("token").slice(1, -1)
-  );
   const [comune, setComune] = useState("");
   const [provincia, setProvincia] = useState("");
   const [idProvincia, setIdProvincia] = useState(null);
@@ -20,7 +17,7 @@ function NuovoImmobile() {
   const [showAlert, setShowAlert] = useState(false);
   const [province, setProvince] = useState([]);
   const [comuni, setComuni] = useState([]);
-  const [erroreSalvataggio, isErroreSalvataggio] = useState(false);
+
   const [salvatoShow, setSalvatoShow] = useState(false);
   const [searchProvincia, setSearchProvincia] = useState("");
   const [searchComune, setSearchComune] = useState("");
@@ -68,7 +65,7 @@ function NuovoImmobile() {
 
   const navigate = useNavigate();
 
-  const getProvince = () => {
+  const getProvince = (token) => {
     fetch(base + "/province", {
       method: "GET",
       headers: {
@@ -83,7 +80,6 @@ function NuovoImmobile() {
         }
       })
       .then((data) => {
-        console.log(data);
         setProvince(data);
       })
       .catch((er) => {
@@ -91,7 +87,7 @@ function NuovoImmobile() {
       });
   };
 
-  const getComuniProvincia = () => {
+  const getComuniProvincia = (token) => {
     if (provincia === "") {
       setShowAlert(true);
       return;
@@ -117,7 +113,7 @@ function NuovoImmobile() {
       });
   };
 
-  const salvaImmobile = () => {
+  const salvaImmobile = (token) => {
     fetch(base + "/immobili", {
       method: "POST",
       body: JSON.stringify(payload),
@@ -129,14 +125,14 @@ function NuovoImmobile() {
       .then((res) => {
         if (res.ok) {
           console.log(res.status.valueOf());
-          setSalvatoShow(true);
+          handleShowSalvato();
         } else {
           throw new Error(res.status.toString());
         }
       })
       .catch((er) => {
         console.log(er);
-        isErroreSalvataggio(true);
+        alert("errore nel salvataggio");
       });
   };
 
@@ -262,8 +258,13 @@ function NuovoImmobile() {
         id="formImmobile"
         onSubmit={(e) => {
           e.preventDefault();
-          console.log(payload);
-          salvaImmobile();
+          if (localStorage.getItem("token") === null) {
+            alert("errore nel token, effettua il login");
+            navigate("/login");
+          } else {
+            let tok = localStorage.getItem("token").slice(1, -1);
+            salvaImmobile(tok);
+          }
         }}
       >
         <h3 className="text-center my-2 py-2 border border-1 border-beige bg-azzurroPolvere">
@@ -336,19 +337,10 @@ function NuovoImmobile() {
                 placeholder="Please enter a number"
                 value={prez}
                 groupSeparator="."
-                onValueChange={(value, name, values) => {
+                onValueChange={(value) => {
                   setPrezzo(value);
                 }}
               />
-
-              {/* <input
-                type="number"
-                min={0}
-                value={prez}
-                onChange={(e) => {
-                  setPrezzo(e.target.value);
-                }}
-              ></input>*/}
             </div>
           </Col>
           <Col
@@ -497,7 +489,13 @@ function NuovoImmobile() {
                 <Button
                   onClick={() => {
                     handleShowProv();
-                    getProvince();
+                    if (localStorage.getItem("token") === null) {
+                      alert("errore nel token, effettua il login");
+                      navigate("/login");
+                    } else {
+                      let tok = localStorage.getItem("token").slice(1, -1);
+                      getProvince(tok);
+                    }
                   }}
                 >
                   <i className="bi bi-search"></i>
@@ -520,7 +518,13 @@ function NuovoImmobile() {
                     setShowAlert(true);
                   } else {
                     handleShowCom();
-                    getComuniProvincia();
+                    if (localStorage.getItem("token") === null) {
+                      alert("errore nel token, effettua il login");
+                      navigate("/login");
+                    } else {
+                      let tok = localStorage.getItem("token").slice(1, -1);
+                      getComuniProvincia(tok);
+                    }
                   }
                 }}
               >
