@@ -3,10 +3,9 @@ import { Modal, Alert } from "react-bootstrap/";
 import Button from "react-bootstrap/Button";
 import { useEffect, useState } from "react";
 
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ModaleNuovaFattura from "./ModaleNuovaFattura";
 function FattureCliente(props) {
-  let token = props.token;
   let idCliente = props.idCliente;
   let base = props.base;
   let ruolo = props.ruolo;
@@ -19,7 +18,9 @@ function FattureCliente(props) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const getFatture = () => {
+  const navigate = useNavigate();
+
+  const getFatture = (token) => {
     fetch(base + "/clienti/" + idCliente + "/fatture", {
       method: "GET",
       headers: {
@@ -43,7 +44,7 @@ function FattureCliente(props) {
       });
   };
 
-  const cancellaFattura = () => {
+  const cancellaFattura = (token) => {
     if (idFatturaSel <= 0) {
       return;
     }
@@ -67,7 +68,12 @@ function FattureCliente(props) {
   };
 
   useEffect(() => {
-    getFatture();
+    if (localStorage.getItem("token") === null) {
+      navigate("/login");
+    } else {
+      let tok = localStorage.getItem("token").slice(1, -1);
+      getFatture(tok);
+    }
   }, []);
 
   return (
@@ -79,7 +85,6 @@ function FattureCliente(props) {
         idClient={idCliente}
         nome={props.nomeCliente}
         cognome={props.cognomeCliente}
-        tok={token}
       />
 
       {/*modale elimina */}
@@ -96,7 +101,13 @@ function FattureCliente(props) {
             variant="danger"
             onClick={() => {
               handleClose();
-              cancellaFattura();
+              if (localStorage.getItem("token") === null) {
+                alert("token non valido, effettua il login");
+                navigate("/login");
+              } else {
+                let tok = localStorage.getItem("token").slice(1, -1);
+                cancellaFattura(tok);
+              }
             }}
           >
             Elimina

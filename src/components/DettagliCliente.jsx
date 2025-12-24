@@ -7,9 +7,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import FattureCliente from "./FattureCliente";
 
 function DettagliCliente() {
-  const [token, setToken] = useState(
-    localStorage.getItem("token").slice(1, -1)
-  );
   const [show, setShow] = useState(false);
   const [nome, SetNome] = useState("");
   const [cognome, setCognome] = useState("");
@@ -665,7 +662,6 @@ function DettagliCliente() {
           <FattureCliente
             ruolo={ruolo}
             idCliente={params.idCliente}
-            token={token}
             base={base}
             nomeCliente={nome}
             cognomeCliente={cognome}

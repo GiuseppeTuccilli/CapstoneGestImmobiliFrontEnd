@@ -3,12 +3,12 @@ import { Container, Row, Col, Image, Spinner, Table } from "react-bootstrap";
 import { Modal, Alert } from "react-bootstrap/";
 import Button from "react-bootstrap/Button";
 import base from "../variabili";
+import { useNavigate } from "react-router-dom";
 
 function ModaleNuovaFattura(props) {
   let idC = props.idClient;
   let nome = props.nome;
   let cognome = props.cognome;
-  let token = props.tok;
 
   const [data, setData] = useState("");
   const [causale, setCausale] = useState("");
@@ -17,6 +17,8 @@ function ModaleNuovaFattura(props) {
   const handleClose = () => setShowConferma(false);
   const handleShow = () => setShowConferma(true);
 
+  const navigate = useNavigate();
+
   const payload = {
     importo: importo,
     data: data,
@@ -24,7 +26,7 @@ function ModaleNuovaFattura(props) {
     idCliente: idC,
   };
 
-  const salvaFattura = () => {
+  const salvaFattura = (token) => {
     fetch(base + "/fatture", {
       method: "POST",
       body: JSON.stringify(payload),
@@ -66,9 +68,15 @@ function ModaleNuovaFattura(props) {
           <Button
             variant="success"
             onClick={() => {
-              handleClose();
-              props.onHide();
-              salvaFattura();
+              if (localStorage.getItem("token") === null) {
+                alert("token non valido, effettua il login");
+                navigate("/login");
+              } else {
+                let tok = localStorage.getItem("token").slice(1, -1);
+                handleClose();
+                props.onHide();
+                salvaFattura(tok);
+              }
             }}
           >
             Salva
