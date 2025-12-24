@@ -28,6 +28,7 @@ function DettagliImmobile() {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [loadingFoto, setLoadingFoto] = useState(true);
+  const [salvInCorso, setSalvInCorso] = useState(false);
   const [ruolo, setRuolo] = useState("");
   const [showConferma, setShowConferma] = useState(false);
   const [showElimina, setShowElimina] = useState(false);
@@ -164,6 +165,7 @@ function DettagliImmobile() {
   };
 
   const aggiungiFoto = (token) => {
+    setSalvInCorso(true);
     const formData = new FormData();
     formData.append("foto", file);
     fetch(base + "/immobili/" + params.idImmobile + "/foto", {
@@ -183,11 +185,13 @@ function DettagliImmobile() {
       })
       .then((data) => {
         console.log(data);
+        setSalvInCorso(false);
         alert("foto aggiunta");
         setFile(null);
         window.location.reload();
       })
       .catch((er) => {
+        setSalvInCorso(false);
         console.log(er.toString());
       });
   };
@@ -331,6 +335,13 @@ function DettagliImmobile() {
             Elimina
           </Button>
         </Modal.Footer>
+      </Modal>
+      {/*modale salvataggio in corso*/}
+      <Modal size="sm" show={salvInCorso}>
+        <div className="text-center py-3">
+          <p className="fw-semibold">Salvataggio in corso</p>
+          <Spinner />
+        </div>
       </Modal>
       <Container>
         <Row>

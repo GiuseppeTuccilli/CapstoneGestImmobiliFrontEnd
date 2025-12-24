@@ -4,7 +4,7 @@ import { PatternFormat } from "react-number-format";
 import { NumericFormat } from "react-number-format";
 import Form from "react-bootstrap/Form";
 import { Link, useNavigate } from "react-router-dom";
-import Modal from "react-bootstrap/Modal";
+import { Modal, Spinner } from "react-bootstrap";
 import Alert from "react-bootstrap/Alert";
 import base from "../variabili";
 
@@ -14,6 +14,7 @@ function NuovoCliente() {
   const [email, setEmail] = useState("");
   const [indirizzo, setIndirizzo] = useState("");
   const [telefono, setTelefono] = useState("");
+  const [salvInCorso, setSalvInCorso] = useState(false);
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -42,6 +43,7 @@ function NuovoCliente() {
   }, []);
 
   const submitForm = (token) => {
+    setSalvInCorso(true);
     fetch(base + "/clienti", {
       method: "POST",
       body: JSON.stringify(payload),
@@ -52,7 +54,7 @@ function NuovoCliente() {
     })
       .then((res) => {
         if (res.ok) {
-          console.log("ok");
+          setSalvInCorso(false);
           handleShowSalvato();
         } else {
           throw new Error(res.status);
@@ -60,6 +62,7 @@ function NuovoCliente() {
       })
       .catch((er) => {
         console.log(er.toString());
+        setSalvInCorso(false);
         setError(true);
       });
   };
@@ -111,6 +114,13 @@ function NuovoCliente() {
               Ok
             </Button>
           </Modal.Footer>
+        </Modal>
+        {/*modale salvataggio in corso*/}
+        <Modal size="sm" show={salvInCorso}>
+          <div className="text-center py-3">
+            <p className="fw-semibold">Salvataggio in corso</p>
+            <Spinner />
+          </div>
         </Modal>
         {/*alert errore */}
         {error && (

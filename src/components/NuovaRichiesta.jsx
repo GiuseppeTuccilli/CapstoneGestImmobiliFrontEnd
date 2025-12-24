@@ -38,6 +38,7 @@ function NuovaRichiesta() {
   const [error, setError] = useState(false);
   const [searchProvincia, setSearchProvincia] = useState("");
   const [searchComune, setSearchComune] = useState("");
+  const [salvInCorso, setSalvInCorso] = useState(false);
 
   const handleCloseProv = () => setShow(false);
   const handleShowProv = () => setShow(true);
@@ -144,6 +145,7 @@ function NuovaRichiesta() {
   };
 
   const salvaRichiesta = (token) => {
+    setSalvInCorso(true);
     fetch(base + "/clienti/" + params.idCliente + "/richieste", {
       method: "POST",
       body: JSON.stringify(payload),
@@ -154,6 +156,7 @@ function NuovaRichiesta() {
     })
       .then((res) => {
         if (res.ok) {
+          setSalvInCorso(false);
           alert("richiesta salvata correttamente");
           navigate("/clienti/" + params.idCliente);
         } else {
@@ -161,6 +164,7 @@ function NuovaRichiesta() {
         }
       })
       .catch((er) => {
+        setSalvInCorso(false);
         alert("errore salvataggio dati: " + er.toString());
       });
   };
@@ -194,6 +198,13 @@ function NuovaRichiesta() {
           <Alert variant="danger">Errore caricamento dati cliente</Alert>
         )}
       </>
+      {/*modale salvataggio in corso*/}
+      <Modal size="sm" show={salvInCorso}>
+        <div className="text-center py-3">
+          <p className="fw-semibold">Salvataggio in corso</p>
+          <Spinner />
+        </div>
+      </Modal>
       {/*modale province*/}
       <Modal show={show} onHide={handleCloseProv} style={{ height: "20em" }}>
         <div className="sticky-top top-0 z-1 w-100 p-0 ">
@@ -541,7 +552,7 @@ function NuovaRichiesta() {
               ></input>
               <Button
                 onClick={() => {
-                  if (localStorage.getItem("token")) {
+                  if (localStorage.getItem("token") === null) {
                     alert("errore nel token, effettua il login");
                     navigate("/login");
                   } else {

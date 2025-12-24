@@ -6,6 +6,7 @@ import {
   Button,
   Form,
   AlertHeading,
+  Modal,
 } from "react-bootstrap";
 import { useParams, useNavigate } from "react-router-dom";
 import Table from "react-bootstrap/Table";
@@ -38,6 +39,7 @@ function NuovaVisita() {
   const [errImm, setErrImm] = useState(false);
 
   const [errSalv, setErrSalv] = useState(false);
+  const [salvInCorso, setSalvInCorso] = useState(false);
 
   const params = useParams();
 
@@ -106,6 +108,7 @@ function NuovaVisita() {
   };
 
   const salvaVisita = (token) => {
+    setSalvInCorso(true);
     fetch(base + "/visite", {
       method: "POST",
       body: JSON.stringify(payload),
@@ -116,7 +119,7 @@ function NuovaVisita() {
     })
       .then((res) => {
         if (res.ok) {
-          console.log(res);
+          setSalvInCorso(false);
           alert("visita salvata");
           navigate(-1);
         } else {
@@ -124,6 +127,7 @@ function NuovaVisita() {
         }
       })
       .catch((er) => {
+        setSalvInCorso(false);
         setErrSalv(true);
         console.log(er.toString());
       });
@@ -166,6 +170,13 @@ function NuovaVisita() {
           </div>
         </Alert>
       )}
+      {/*modale salvataggio in corso*/}
+      <Modal size="sm" show={salvInCorso}>
+        <div className="text-center py-3">
+          <p className="fw-semibold">Salvataggio in corso</p>
+          <Spinner />
+        </div>
+      </Modal>
       <Container className="d-flex flex-column align-items-center bg-bluGuado">
         <Row className="d-flex justify-content-center  bg-bluGuado pt-2 w-100 ">
           <Col

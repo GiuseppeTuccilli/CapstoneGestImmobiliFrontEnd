@@ -21,6 +21,7 @@ function NuovoUtente() {
   const [show, setShow] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [errorPassword, setErrorPassword] = useState(false);
+  const [salvInCorso, setSalvInCorso] = useState(false);
 
   const navigate = useNavigate();
 
@@ -39,6 +40,7 @@ function NuovoUtente() {
   };
 
   const submitForm = () => {
+    setSalvInCorso(true);
     fetch(base + "/utenti", {
       method: "POST",
       body: JSON.stringify(payload),
@@ -49,7 +51,7 @@ function NuovoUtente() {
     })
       .then((res) => {
         if (res.ok) {
-          console.log(res);
+          setSalvInCorso(false);
           handleShow();
         } else {
           throw new Error(res.status);
@@ -57,6 +59,7 @@ function NuovoUtente() {
       })
       .catch((er) => {
         if (er.toString() === "Error: 400") {
+          setSalvInCorso(false);
           setShowAlert(true);
         }
       });
@@ -71,6 +74,13 @@ function NuovoUtente() {
   return (
     <>
       <Container className="p-5 d-flex justify-content-center pb-0">
+        {/*modale salvataggio in corso*/}
+        <Modal size="sm" show={salvInCorso}>
+          <div className="text-center py-3">
+            <p className="fw-semibold">Salvataggio in corso</p>
+            <Spinner />
+          </div>
+        </Modal>
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Utnete salvato con il ruolo "User"</Modal.Title>

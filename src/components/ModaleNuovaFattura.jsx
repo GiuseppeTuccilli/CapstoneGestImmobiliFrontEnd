@@ -14,6 +14,7 @@ function ModaleNuovaFattura(props) {
   const [causale, setCausale] = useState("");
   const [importo, setImporto] = useState(0);
   const [showConferma, setShowConferma] = useState(false);
+  const [salvInCorso, setSalvInCorso] = useState(false);
   const handleClose = () => setShowConferma(false);
   const handleShow = () => setShowConferma(true);
 
@@ -27,6 +28,7 @@ function ModaleNuovaFattura(props) {
   };
 
   const salvaFattura = (token) => {
+    setSalvInCorso(true);
     fetch(base + "/fatture", {
       method: "POST",
       body: JSON.stringify(payload),
@@ -37,6 +39,7 @@ function ModaleNuovaFattura(props) {
     })
       .then((res) => {
         if (res.ok) {
+          setSalvInCorso(false);
           alert("fattura salvata");
           window.location.reload();
         } else {
@@ -44,12 +47,20 @@ function ModaleNuovaFattura(props) {
         }
       })
       .catch((er) => {
+        setSalvInCorso(false);
         alert("errore nel salvataggio: " + er.toString());
       });
   };
 
   return (
     <>
+      {/*modale salvataggio in corso*/}
+      <Modal size="sm" show={salvInCorso}>
+        <div className="text-center py-3">
+          <p className="fw-semibold">Salvataggio in corso</p>
+          <Spinner />
+        </div>
+      </Modal>
       {/*modale conferma */}
       <Modal
         show={showConferma}

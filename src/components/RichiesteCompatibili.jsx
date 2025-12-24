@@ -7,6 +7,7 @@ import {
   Button,
   Modal,
   Alert,
+  Spinner,
 } from "react-bootstrap";
 import { useParams, useNavigate } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -22,6 +23,7 @@ function RichiesteCompatibili(props) {
   const [idClienteSel, setIdClienteSel] = useState(0);
   const [nomeSel, setNomeSel] = useState("");
   const [cognomeSel, setCognomeSel] = useState("");
+  const [salvInCorso, setSalvInCorso] = useState(false);
 
   const [data, setData] = useState("");
   const [showConferma, setShowConferma] = useState(false);
@@ -43,6 +45,7 @@ function RichiesteCompatibili(props) {
   const navigate = useNavigate();
 
   const salvaVisita = (token) => {
+    setSalvInCorso(true);
     fetch(base + "/visite", {
       method: "POST",
       body: JSON.stringify(visitaPayload),
@@ -53,7 +56,7 @@ function RichiesteCompatibili(props) {
     })
       .then((res) => {
         if (res.ok) {
-          console.log(res);
+          setSalvInCorso(false);
           alert("visita salvata");
           window.location.reload();
         } else {
@@ -61,6 +64,7 @@ function RichiesteCompatibili(props) {
         }
       })
       .catch((er) => {
+        setSalvInCorso(false);
         setErrSalv(true);
         console.log(er.toString());
       });
@@ -143,6 +147,13 @@ function RichiesteCompatibili(props) {
             Salva
           </Button>
         </Modal.Footer>
+      </Modal>
+      {/*modale salvataggio in corso*/}
+      <Modal size="sm" show={salvInCorso}>
+        <div className="text-center py-3">
+          <p className="fw-semibold">Salvataggio in corso</p>
+          <Spinner />
+        </div>
       </Modal>
       <Container fluid>
         <Row className="p-3 border border-2 border-sabbia bg-bluGuado ">
