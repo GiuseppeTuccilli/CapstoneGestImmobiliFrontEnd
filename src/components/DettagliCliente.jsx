@@ -335,34 +335,66 @@ function DettagliCliente() {
             </div>
           </Col>
         </Row>
+        {error && (
+          <Alert variant="danger" className="text-center">
+            Errore nel recupero dati
+          </Alert>
+        )}
+        {errElimina && (
+          <>
+            <Alert variant="danger">
+              <Alert.Heading className="text-center">
+                Errore nell'eliminazione
+              </Alert.Heading>
+
+              <hr />
+              <div className="d-flex justify-content-center">
+                <Button
+                  onClick={() => {
+                    setErrElimina(false);
+                  }}
+                  variant="outline-danger"
+                >
+                  Ok
+                </Button>
+              </div>
+            </Alert>
+          </>
+        )}
         <Row className="d-flex justify-content-center border border-1 border-polvereScuro p-3 bg-bluGuado">
-          <Col xs={6} md={3} className="px-3">
-            <div className="p-1 border border-1 border-polvereScuro bg-beigeChiaro">
-              <p className="mb-0">Nome</p>
-              <h6>{nome}</h6>
-            </div>
-            <div className="p-1 border border-1 border-polvereScuro bg-beigeChiaro">
-              <p className="mb-0">Cognome</p>
-              <h6>{cognome}</h6>
-            </div>
-          </Col>
-          <Col xs={6} md={3} className="px-3">
-            <div className="p-1 border border-1 border-polvereScuro bg-beigeChiaro">
-              <p className="mb-0">Indirizzo</p>
-              <h6 style={{ fontSize: "0.8em" }}>{indirizzo}</h6>
-            </div>
-            <div className="p-1 border border-1 border-polvereScuro bg-beigeChiaro">
-              <p className="mb-0">Telefono</p>
-              <h6>{telefono}</h6>
-            </div>
-          </Col>
-          <Col xs={12} md={3} className="px-3">
-            <div className="p-1 border border-1 border-polvereScuro bg-beigeChiaro">
-              <p className="mb-0">Email</p>
-              <h6 style={{ fontSize: "0.7em" }}>{email}</h6>
-            </div>
-          </Col>
-          <Col xs={0} md={3} className="d-md-none"></Col>
+          {loading ? (
+            <Spinner />
+          ) : (
+            <>
+              <Col xs={6} md={3} className="px-3">
+                <div className="p-1 border border-1 border-polvereScuro bg-beigeChiaro">
+                  <p className="mb-0">Nome</p>
+                  <h6>{nome}</h6>
+                </div>
+                <div className="p-1 border border-1 border-polvereScuro bg-beigeChiaro">
+                  <p className="mb-0">Cognome</p>
+                  <h6>{cognome}</h6>
+                </div>
+              </Col>
+              <Col xs={6} md={3} className="px-3">
+                <div className="p-1 border border-1 border-polvereScuro bg-beigeChiaro">
+                  <p className="mb-0">Indirizzo</p>
+                  <h6 style={{ fontSize: "0.8em" }}>{indirizzo}</h6>
+                </div>
+                <div className="p-1 border border-1 border-polvereScuro bg-beigeChiaro">
+                  <p className="mb-0">Telefono</p>
+                  <h6>{telefono}</h6>
+                </div>
+              </Col>
+              <Col xs={12} md={3} className="px-3">
+                <div className="p-1 border border-1 border-polvereScuro bg-beigeChiaro">
+                  <p className="mb-0">Email</p>
+                  <h6 style={{ fontSize: "0.7em" }}>{email}</h6>
+                </div>
+              </Col>
+              <Col xs={0} md={3} className="d-md-none"></Col>
+            </>
+          )}
         </Row>
         <Row className="d-flex justify-content-center border border-1 border-azzurroPolvere bg-polvereScuro p-3">
           <Col xs={12} md={6} className="d-flex justify-content-evenly">

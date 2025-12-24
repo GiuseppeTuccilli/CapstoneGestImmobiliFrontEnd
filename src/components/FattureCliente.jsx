@@ -188,6 +188,13 @@ function FattureCliente(props) {
               })}
             </tbody>
           </Table>
+          {error && (
+            <>
+              <Alert variant="danger" className="text-center">
+                Errore nel caricamento delle fatture
+              </Alert>
+            </>
+          )}
         </Row>
       </Col>
     </>
