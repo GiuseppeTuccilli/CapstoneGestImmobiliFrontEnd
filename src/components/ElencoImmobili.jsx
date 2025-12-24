@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Container, Row, Col, Image, Alert } from "react-bootstrap";
+import { Container, Row, Col, Image, Alert, Spinner } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import base from "../variabili";
@@ -25,6 +25,7 @@ function ElencoImmobili() {
   const [page, setPage] = useState(0);
   const [idImmoSel, setIdImmoSel] = useState(0);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
@@ -60,10 +61,13 @@ function ElencoImmobili() {
         setPage(data.number);
         setFirstPage(data.first);
         setLastPage(data.last);
+        setError(false);
+        setLoading(false);
       })
       .catch((er) => {
         console.log(er.toString());
         setError(true);
+        setLoading(false);
       });
   };
 
@@ -266,82 +270,92 @@ function ElencoImmobili() {
         style={{ marginTop: " 9em" }}
         className="bg-polvereScuro containerImmobili border border-2 border-beige"
       >
-        {immobili.map((i) => {
-          return (
-            <Row
-              className={idImmoSel === i.id && "border border-3 border-success"}
-              key={i.id}
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                setIdImmoSel(i.id);
-              }}
-            >
-              <Col
-                xs={6}
-                md={3}
-                lg={3}
-                className="d-flex flex-column justify-content-center align-items-center border  border-1"
+        {loading ? (
+          <div className="text-center pt-3">
+            <Spinner />
+          </div>
+        ) : (
+          immobili.map((i) => {
+            return (
+              <Row
+                className={
+                  idImmoSel === i.id && "border border-3 border-success"
+                }
+                key={i.id}
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  setIdImmoSel(i.id);
+                }}
               >
-                <p className="  fw-semibold m-1 mb-0 ">
-                  <span style={{ fontSize: "0.8em" }}>{i.macroTipologia}</span>
-                </p>
-                <Image
-                  className="mb-1"
-                  src={getImage(i)}
-                  thumbnail
-                  style={{ height: "3.5em" }}
-                />
-              </Col>
-              <Col
-                xs={6}
-                md={3}
-                lg={4}
-                className=" d-flex flex-column justify-content-start  border  border-1"
-              >
-                <div>
-                  <h5 className="  fw-semibold mb-0">Descrizione:</h5>
-                  <div className=" " id="descrizioneImmobile">
-                    <p>{i.descrizione}</p>
+                <Col
+                  xs={6}
+                  md={3}
+                  lg={3}
+                  className="d-flex flex-column justify-content-center align-items-center border  border-1"
+                >
+                  <p className="  fw-semibold m-1 mb-0 ">
+                    <span style={{ fontSize: "0.8em" }}>
+                      {i.macroTipologia}
+                    </span>
+                  </p>
+                  <Image
+                    className="mb-1"
+                    src={getImage(i)}
+                    thumbnail
+                    style={{ height: "3.5em" }}
+                  />
+                </Col>
+                <Col
+                  xs={6}
+                  md={3}
+                  lg={4}
+                  className=" d-flex flex-column justify-content-start  border  border-1"
+                >
+                  <div>
+                    <h5 className="  fw-semibold mb-0">Descrizione:</h5>
+                    <div className=" " id="descrizioneImmobile">
+                      <p>{i.descrizione}</p>
+                    </div>
                   </div>
-                </div>
-              </Col>
-              <Col
-                xs={6}
-                md={3}
-                lg={3}
-                className="d-flex flex-column justify-content-center border  border-1"
-              >
-                <p className="  fw-semibold m-1">
-                  Prezzo: € <span>{i.prezzo}</span>{" "}
-                </p>
+                </Col>
+                <Col
+                  xs={6}
+                  md={3}
+                  lg={3}
+                  className="d-flex flex-column justify-content-center border  border-1"
+                >
+                  <p className="  fw-semibold m-1">
+                    Prezzo: € <span>{i.prezzo}</span>{" "}
+                  </p>
 
-                <p className=" fw-semibold m-1">
-                  Comune:{" "}
-                  <span>
-                    {i.comune.denominazione +
-                      " (" +
-                      i.comune.provincia.sigla +
-                      ")"}{" "}
-                  </span>
-                </p>
-              </Col>
-              <Col
-                xs={6}
-                md={3}
-                lg={2}
-                className="d-flex flex-column justify-content-center border  border-1"
-              >
-                <p className="  fw-semibold m-1">
-                  Locali: <span>{i.locali}</span>{" "}
-                </p>
+                  <p className=" fw-semibold m-1">
+                    Comune:{" "}
+                    <span>
+                      {i.comune.denominazione +
+                        " (" +
+                        i.comune.provincia.sigla +
+                        ")"}{" "}
+                    </span>
+                  </p>
+                </Col>
+                <Col
+                  xs={6}
+                  md={3}
+                  lg={2}
+                  className="d-flex flex-column justify-content-center border  border-1"
+                >
+                  <p className="  fw-semibold m-1">
+                    Locali: <span>{i.locali}</span>{" "}
+                  </p>
 
-                <p className=" fw-semibold m-1">
-                  mq: <span>{i.superficie} </span>
-                </p>
-              </Col>
-            </Row>
-          );
-        })}
+                  <p className=" fw-semibold m-1">
+                    mq: <span>{i.superficie} </span>
+                  </p>
+                </Col>
+              </Row>
+            );
+          })
+        )}
         <Row className="my-3">
           <Col xs={4} md={3} lg={2} className="d-flex justify-content-start">
             {!firstPage && (
