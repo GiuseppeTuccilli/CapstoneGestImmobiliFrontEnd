@@ -54,7 +54,7 @@ function DettagliImmobile() {
   const handleCloseEliminaImmo = () => setShowEliminaImmo(false);
   const handleShowEliminaImmo = () => setShowEliminaImmo(true);
 
-  const getImmobile = () => {
+  const getImmobile = (token) => {
     fetch(base + "/immobili/" + params.idImmobile, {
       method: "GET",
       headers: {
@@ -98,7 +98,7 @@ function DettagliImmobile() {
       });
   };
 
-  const getFotoImmobile = () => {
+  const getFotoImmobile = (token) => {
     fetch(base + "/immobili/" + params.idImmobile + "/foto", {
       method: "GET",
       headers: {
@@ -125,7 +125,7 @@ function DettagliImmobile() {
       });
   };
 
-  const getMe = () => {
+  const getMe = (token) => {
     fetch(base + "/utenti/me", {
       method: "GET",
       headers: {
@@ -148,7 +148,7 @@ function DettagliImmobile() {
       });
   };
 
-  const cancellaImmobile = () => {
+  const cancellaImmobile = (token) => {
     fetch(base + "/immobili/" + params.idImmobile, {
       method: "DELETE",
       headers: {
@@ -168,7 +168,7 @@ function DettagliImmobile() {
       });
   };
 
-  const aggiungiFoto = () => {
+  const aggiungiFoto = (token) => {
     const formData = new FormData();
     formData.append("foto", file);
     fetch(base + "/immobili/" + params.idImmobile + "/foto", {
@@ -197,7 +197,7 @@ function DettagliImmobile() {
       });
   };
 
-  const cancellaFoto = () => {
+  const cancellaFoto = (token) => {
     fetch(base + "/immobili/" + params.idImmobile + "/foto/" + fotoId, {
       method: "DELETE",
 
@@ -248,10 +248,15 @@ function DettagliImmobile() {
   };
 
   useEffect(() => {
-    getImmobile();
-    getFotoImmobile();
-    getMe();
-  }, [token, params.idImmobile]);
+    if (localStorage.getItem("token") === null) {
+      navigate("/login");
+    } else {
+      let tok = localStorage.getItem("token").slice(1, -1);
+      getImmobile(tok);
+      getFotoImmobile(tok);
+      getMe(tok);
+    }
+  }, [params.idImmobile]);
 
   return (
     <>
@@ -269,7 +274,13 @@ function DettagliImmobile() {
             variant="success"
             onClick={() => {
               handleClose();
-              aggiungiFoto();
+              if (localStorage.getItem("token") === null) {
+                alert("errore nel token, effettua il login");
+                navigate("/login");
+              } else {
+                let tok = localStorage.getItem("token").slice(1, -1);
+                aggiungiFoto(tok);
+              }
             }}
           >
             Salva
@@ -288,7 +299,13 @@ function DettagliImmobile() {
             variant="danger"
             onClick={() => {
               handleCloseElimina();
-              cancellaFoto();
+              if (localStorage.getItem("token") === null) {
+                alert("errore nel token, effettua il login");
+                navigate("/login");
+              } else {
+                let tok = localStorage.getItem("token").slice(1, -1);
+                cancellaFoto(tok);
+              }
             }}
           >
             Elimina
@@ -307,7 +324,13 @@ function DettagliImmobile() {
             variant="danger"
             onClick={() => {
               handleCloseEliminaImmo();
-              cancellaImmobile();
+              if (localStorage.getItem("token") === null) {
+                alert("errore nel token, effettua il login");
+                navigate("/login");
+              } else {
+                let tok = localStorage.getItem("token").slice(1, -1);
+                cancellaImmobile(tok);
+              }
             }}
           >
             Elimina
