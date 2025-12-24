@@ -9,9 +9,6 @@ import Alert from "react-bootstrap/Alert";
 import base from "../variabili";
 
 function NuovoCliente() {
-  const [token, setToken] = useState(
-    localStorage.getItem("token").slice(1, -1)
-  );
   const [nome, setNome] = useState("");
   const [cognome, setCognome] = useState("");
   const [email, setEmail] = useState("");
@@ -39,12 +36,12 @@ function NuovoCliente() {
   };
 
   useEffect(() => {
-    if (token === null) {
+    if (localStorage.getItem("token") === null) {
       navigate("/login");
     }
-  }, [token]);
+  }, []);
 
-  const submitForm = () => {
+  const submitForm = (token) => {
     fetch(base + "/clienti", {
       method: "POST",
       body: JSON.stringify(payload),
@@ -84,7 +81,13 @@ function NuovoCliente() {
               variant="success"
               onClick={() => {
                 handleClose();
-                submitForm();
+                if (localStorage.getItem("token") === null) {
+                  alert("errore nel token, effettua il login");
+                  navigate("/login");
+                } else {
+                  let tok = localStorage.getItem("token").slice(1, -1);
+                  submitForm(tok);
+                }
               }}
             >
               Salva
