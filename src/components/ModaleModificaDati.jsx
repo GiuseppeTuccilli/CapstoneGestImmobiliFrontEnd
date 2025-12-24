@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Modal, Alert } from "react-bootstrap/";
 import Button from "react-bootstrap/Button";

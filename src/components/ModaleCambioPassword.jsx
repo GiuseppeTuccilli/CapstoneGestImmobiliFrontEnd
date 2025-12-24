@@ -3,6 +3,7 @@ import { Container, Row, Col, Image, Spinner, Table } from "react-bootstrap";
 import { Modal, Alert } from "react-bootstrap/";
 import Button from "react-bootstrap/Button";
 import base from "../variabili";
+import { useNavigate } from "react-router-dom";
 
 function ModaleCambioPassword(props) {
   const [nuovaPassword, setNuovaPassword] = useState("");
@@ -12,18 +13,20 @@ function ModaleCambioPassword(props) {
   const [tooShort, setTooShort] = useState(false);
   const [passwordErrata, setPasswordErrata] = useState(false);
 
+  const navigate = useNavigate();
+
   const payload = {
     oldPassword: oldPassword,
     password: nuovaPassword,
   };
 
-  const cambiaPassword = () => {
+  const cambiaPassword = (token) => {
     fetch(base + "/utenti/me", {
       method: "PATCH",
       body: JSON.stringify(payload),
       headers: {
         "Content-type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token").slice(1, -1),
+        Authorization: "Bearer " + token,
       },
     })
       .then((res) => {
@@ -165,7 +168,13 @@ function ModaleCambioPassword(props) {
                 setTooShort(true);
                 return;
               }
-              cambiaPassword();
+              if (localStorage.getItem("token") === null) {
+                alert("errore nel token, effettua il login");
+                navigate("/login");
+              } else {
+                let tok = localStorage.getItem("token").slice(1, -1);
+                cambiaPassword(tok);
+              }
             }}
           >
             Conferma

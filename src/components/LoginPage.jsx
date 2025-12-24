@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Col, Container, Alert } from "react-bootstrap";
+import { Col, Container, Alert, Modal } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Value } from "sass";
-import Modal from "react-bootstrap/Modal";
+
 import { Link, useNavigate } from "react-router-dom";
 import base from "../variabili";
 function LoginPage() {
@@ -32,7 +32,6 @@ function LoginPage() {
         }
       })
       .then((data) => {
-        console.log(data);
         localStorage.setItem("token", JSON.stringify(data.token));
         console.log(localStorage.getItem("token"));
         navigate("/");

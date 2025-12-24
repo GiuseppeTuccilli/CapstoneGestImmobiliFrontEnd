@@ -9,9 +9,6 @@ import Alert from "react-bootstrap/Alert";
 import base from "../variabili";
 
 function ModificaCliente() {
-  const [token, setToken] = useState(
-    localStorage.getItem("token").slice(1, -1)
-  );
   const [id, setId] = useState(0);
   const [nome, setNome] = useState("");
   const [cognome, setCognome] = useState("");
@@ -39,7 +36,7 @@ function ModificaCliente() {
     indirizzo: indirizzo,
     email: email,
   };
-  const getCliente = () => {
+  const getCliente = (token) => {
     fetch(base + "/clienti/" + params.idCliente, {
       method: "GET",
       headers: {
@@ -66,13 +63,15 @@ function ModificaCliente() {
       });
   };
   useEffect(() => {
-    if (token === null) {
+    if (localStorage.getItem("token") === null) {
       navigate("/login");
+    } else {
+      let tok = localStorage.getItem("token").slice(1, -1);
+      getCliente(tok);
     }
-    getCliente();
-  }, [token]);
+  }, []);
 
-  const submitForm = () => {
+  const submitForm = (token) => {
     fetch(base + "/clienti/" + id, {
       method: "PUT",
       body: JSON.stringify(payload),
@@ -112,7 +111,13 @@ function ModificaCliente() {
               variant="success"
               onClick={() => {
                 handleClose();
-                submitForm();
+                if (localStorage.getItem("token") === null) {
+                  alert("errore nel token, effettua il login");
+                  navigate("/login");
+                } else {
+                  let tok = localStorage.getItem("token").slice(1, -1);
+                  submitForm(tok);
+                }
               }}
             >
               Salva

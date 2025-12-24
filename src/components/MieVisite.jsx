@@ -3,13 +3,9 @@ import Button from "react-bootstrap/Button";
 import { useEffect, useState } from "react";
 import base from "../variabili";
 import { Modal, Alert } from "react-bootstrap/";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function MieVisite() {
-  const [token, setToken] = useState(
-    localStorage.getItem("token").slice(1, -1)
-  );
-
   const [visite, setVisite] = useState([]);
   const [idVisitaSel, setIdVisitaSel] = useState(0);
   const [idImmobileSel, setIdImmobileSel] = useState(0);
@@ -21,7 +17,7 @@ function MieVisite() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const getVisite = () => {
+  const getVisite = (token) => {
     fetch(base + "/visite/mieVisite", {
       method: "GET",
       headers: {
@@ -43,7 +39,7 @@ function MieVisite() {
       });
   };
 
-  const cancellaVisita = () => {
+  const cancellaVisita = (token) => {
     if (idVisitaSel <= 0) {
       return;
     }
@@ -67,8 +63,13 @@ function MieVisite() {
   };
 
   useEffect(() => {
-    getVisite();
-  }, [token]);
+    if (localStorage.getItem("token") === null) {
+      navigate("/login");
+    } else {
+      let tok = localStorage.getItem("token").slice(1, -1);
+      getVisite(tok);
+    }
+  }, []);
 
   return (
     <>
@@ -86,7 +87,13 @@ function MieVisite() {
             variant="danger"
             onClick={() => {
               handleClose();
-              cancellaVisita();
+              if (localStorage.getItem("token") === null) {
+                alert("errore nel token, effettua il login");
+                navigate("/login");
+              } else {
+                let tok = localStorage.getItem("token").slice(1, -1);
+                cancellaVisita(tok);
+              }
             }}
           >
             Elimina

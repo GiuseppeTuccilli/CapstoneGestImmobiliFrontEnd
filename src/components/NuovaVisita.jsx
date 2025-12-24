@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   Container,
   Row,
@@ -14,12 +14,8 @@ import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
 
 function NuovaVisita() {
-  const [token, setToken] = useState(
-    localStorage.getItem("token").slice(1, -1)
-  );
-  const [isFirstRender, setIsFirstRender] = useState(true);
   const [data, setData] = useState("");
-  const [giorno, setGiorno] = useState("");
+
   const [nome, setNome] = useState("");
   const [cognome, setCognome] = useState("");
   const [page, setPage] = useState(0);
@@ -39,7 +35,6 @@ function NuovaVisita() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  const [loadImm, setLoadImm] = useState(true);
   const [errImm, setErrImm] = useState(false);
 
   const [errSalv, setErrSalv] = useState(false);
@@ -48,7 +43,7 @@ function NuovaVisita() {
 
   const navigate = useNavigate();
 
-  const getImmobile = () => {
+  const getImmobile = (token) => {
     fetch(base + "/immobili/" + params.idImmobile, {
       method: "GET",
       headers: {
@@ -68,17 +63,17 @@ function NuovaVisita() {
         setTipoImmobile(im.macroTipologia);
         setComuneImm(im.comune.denominazione);
         setProvImm(im.comune.provincia);
-        setLoadImm(false);
+
         setErrImm(false);
       })
       .catch((er) => {
         setErrImm(true);
-        setLoadImm(false);
+
         console.log(er.toString());
       });
   };
 
-  const getClienti = () => {
+  const getClienti = (token) => {
     fetch(
       base + "/clienti?nome=" + nome + "&cognome=" + cognome + "&page=" + page,
       {
@@ -110,7 +105,7 @@ function NuovaVisita() {
       });
   };
 
-  const salvaVisita = () => {
+  const salvaVisita = (token) => {
     fetch(base + "/visite", {
       method: "POST",
       body: JSON.stringify(payload),
@@ -135,11 +130,21 @@ function NuovaVisita() {
   };
 
   useEffect(() => {
-    getImmobile();
+    if (localStorage.getItem("token") === null) {
+      navigate("/login");
+    } else {
+      let tok = localStorage.getItem("token").slice(1, -1);
+      getImmobile(tok);
+    }
   }, []);
 
   useEffect(() => {
-    getClienti();
+    if (localStorage.getItem("token") === null) {
+      navigate("/login");
+    } else {
+      let tok = localStorage.getItem("token").slice(1, -1);
+      getClienti(tok);
+    }
   }, [nome, cognome, page]);
 
   const payload = {
@@ -187,36 +192,44 @@ function NuovaVisita() {
               </div>
               <div>
                 <div className="d-flex flex-column border border-1 border-beige p-1 bg-bianchetto">
-                  <h5 className="m-0 d-none d-lg-block mb-1 text-decoration-underline">
-                    Immobile:
-                  </h5>
-                  <div>
-                    {tipoImmobile === "" ? (
-                      <Spinner />
-                    ) : (
-                      <p className="m-0 fw-semibold breakWord">
-                        {tipoImmobile.split("_")[0] +
-                          " " +
-                          tipoImmobile.split("_")[1]}
-                      </p>
-                    )}
-                  </div>
-                  <div>
-                    {indImmobile === "" ? (
-                      <Spinner />
-                    ) : (
-                      <p className="m-0 fw-semibold">{indImmobile}</p>
-                    )}
-                  </div>
-                  <div>
-                    {comuneImm === "" ? (
-                      <Spinner />
-                    ) : (
-                      <p className="m-0 fw-semibold">
-                        {comuneImm} ({provImm.sigla})
-                      </p>
-                    )}
-                  </div>
+                  {errImm ? (
+                    <Alert variant="danger" className="text-center">
+                      Errore caricamento dati
+                    </Alert>
+                  ) : (
+                    <>
+                      <h5 className="m-0 d-none d-lg-block mb-1 text-decoration-underline">
+                        Immobile:
+                      </h5>
+                      <div>
+                        {tipoImmobile === "" ? (
+                          <Spinner />
+                        ) : (
+                          <p className="m-0 fw-semibold breakWord">
+                            {tipoImmobile.split("_")[0] +
+                              " " +
+                              tipoImmobile.split("_")[1]}
+                          </p>
+                        )}
+                      </div>
+                      <div>
+                        {indImmobile === "" ? (
+                          <Spinner />
+                        ) : (
+                          <p className="m-0 fw-semibold">{indImmobile}</p>
+                        )}
+                      </div>
+                      <div>
+                        {comuneImm === "" ? (
+                          <Spinner />
+                        ) : (
+                          <p className="m-0 fw-semibold">
+                            {comuneImm} ({provImm.sigla})
+                          </p>
+                        )}
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -238,7 +251,13 @@ function NuovaVisita() {
                     alert("seleziona un cliente");
                     return;
                   }
-                  salvaVisita();
+                  if (localStorage.getItem("token") === null) {
+                    alert("errore nel token, effettua il login");
+                    navigate("/login");
+                  } else {
+                    let tok = localStorage.getItem("token").slice(1, -1);
+                    salvaVisita(tok);
+                  }
                 }}
               >
                 Salva
@@ -325,29 +344,41 @@ function NuovaVisita() {
                   </tr>
                 </thead>
 
-                <tbody>
-                  {clienti.map((c) => {
-                    return (
-                      <tr
-                        key={c.id}
-                        onClick={() => {
-                          setIdSelected(c.id);
-                          setNomeSelected(c.nome);
-                          setCognomeSelected(c.cognome);
-                        }}
-                        className={
-                          "tableRowPonter " +
-                          (idSelected === c.id &&
-                            "border border-2 border-success")
-                        }
-                      >
-                        <td>{c.nome}</td>
-                        <td>{c.cognome}</td>
-                        <td>{c.indirizzo}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
+                {loading ? (
+                  <Spinner />
+                ) : (
+                  <>
+                    {error ? (
+                      <Alert variant="danger" className="text-center">
+                        Errore nel recupero dati
+                      </Alert>
+                    ) : (
+                      <tbody>
+                        {clienti.map((c) => {
+                          return (
+                            <tr
+                              key={c.id}
+                              onClick={() => {
+                                setIdSelected(c.id);
+                                setNomeSelected(c.nome);
+                                setCognomeSelected(c.cognome);
+                              }}
+                              className={
+                                "tableRowPonter " +
+                                (idSelected === c.id &&
+                                  "border border-2 border-success")
+                              }
+                            >
+                              <td>{c.nome}</td>
+                              <td>{c.cognome}</td>
+                              <td>{c.indirizzo}</td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    )}
+                  </>
+                )}
               </Table>
             </Row>
           </Col>

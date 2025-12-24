@@ -10,10 +10,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import CurrencyInput from "react-currency-input-field";
 
 function NuovaRichiesta() {
-  const [token, setToken] = useState(
-    localStorage.getItem("token").slice(1, -1)
-  );
-
   //per il payload
   const [prezzoMax, setPrezzoMax] = useState(0);
   const [superficieMin, setSuperficieMin] = useState(0);
@@ -71,7 +67,7 @@ function NuovaRichiesta() {
     arredato: arredato,
   };
 
-  const getProvince = () => {
+  const getProvince = (token) => {
     fetch(base + "/province", {
       method: "GET",
       headers: {
@@ -86,7 +82,6 @@ function NuovaRichiesta() {
         }
       })
       .then((data) => {
-        console.log(data);
         setProvince(data);
       })
       .catch((er) => {
@@ -94,7 +89,7 @@ function NuovaRichiesta() {
       });
   };
 
-  const getComuniProvincia = () => {
+  const getComuniProvincia = (token) => {
     if (provincia === "") {
       setShowAlert(true);
       return;
@@ -120,7 +115,7 @@ function NuovaRichiesta() {
       });
   };
 
-  const getCliente = () => {
+  const getCliente = (token) => {
     fetch(base + "/clienti/" + params.idCliente, {
       method: "GET",
       headers: {
@@ -148,7 +143,7 @@ function NuovaRichiesta() {
       });
   };
 
-  const salvaRichiesta = () => {
+  const salvaRichiesta = (token) => {
     fetch(base + "/clienti/" + params.idCliente + "/richieste", {
       method: "POST",
       body: JSON.stringify(payload),
@@ -171,11 +166,13 @@ function NuovaRichiesta() {
   };
 
   useEffect(() => {
-    if (token === null) {
+    if (localStorage.getItem("token") === null) {
       navigate("/login");
+    } else {
+      let tok = localStorage.getItem("token").slice(1, -1);
+      getCliente(tok);
     }
-    getCliente();
-  }, [token, params.idCliente]);
+  }, [params.idCliente]);
 
   return (
     <>
@@ -291,7 +288,13 @@ function NuovaRichiesta() {
             variant="success"
             onClick={() => {
               handleClose();
-              salvaRichiesta();
+              if (localStorage.getItem("token") === null) {
+                alert("errore nel token, effettua il login");
+                navigate("/login");
+              } else {
+                let tok = localStorage.getItem("token").slice(1, -1);
+                salvaRichiesta(tok);
+              }
             }}
           >
             Salva
@@ -353,18 +356,10 @@ function NuovaRichiesta() {
                 placeholder="Please enter a number"
                 value={prezzoMax}
                 groupSeparator="."
-                onValueChange={(value, name, values) => {
+                onValueChange={(value) => {
                   setPrezzoMax(value);
                 }}
               />
-              {/*  <input
-                type="number"
-                min={0}
-                value={prezzoMax}
-                onChange={(e) => {
-                  setPrezzoMax(e.target.value);
-                }}
-              ></input>*/}
             </div>
             <div className="d-flex flex-column mb-1">
               <h6 className="m-0 mb-1 ">Superficie Minimo (mq)</h6>
@@ -546,8 +541,14 @@ function NuovaRichiesta() {
               ></input>
               <Button
                 onClick={() => {
-                  handleShowProv();
-                  getProvince();
+                  if (localStorage.getItem("token")) {
+                    alert("errore nel token, effettua il login");
+                    navigate("/login");
+                  } else {
+                    let tok = localStorage.getItem("token").slice(1, -1);
+                    handleShowProv();
+                    getProvince(tok);
+                  }
                 }}
               >
                 <i className="bi bi-search"></i>
@@ -569,8 +570,14 @@ function NuovaRichiesta() {
                   if (provincia === "") {
                     setShowAlert(true);
                   } else {
-                    handleShowCom();
-                    getComuniProvincia();
+                    if (localStorage.getItem("token") === null) {
+                      alert("errore nel token, effettua il login");
+                      navigate("/login");
+                    } else {
+                      let tok = localStorage.getItem("token").slice(1, -1);
+                      handleShowCom();
+                      getComuniProvincia(tok);
+                    }
                   }
                 }}
               >
