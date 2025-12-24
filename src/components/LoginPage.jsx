@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Col, Container, Alert, Modal } from "react-bootstrap";
+import { Col, Container, Alert, Modal, Spinner } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Value } from "sass";
@@ -12,6 +12,7 @@ function LoginPage() {
   const navigate = useNavigate();
   const [passErrata, setPassErrata] = useState(false);
   const [status, setStatus] = useState("");
+  const [salvInCorso, setSalvInCorso] = useState(false);
 
   const payload = {
     email: email,
@@ -19,6 +20,7 @@ function LoginPage() {
   };
 
   const Login = () => {
+    setSalvInCorso(true);
     fetch(base + "/auth/login", {
       method: "POST",
       body: JSON.stringify(payload),
@@ -32,12 +34,14 @@ function LoginPage() {
         }
       })
       .then((data) => {
+        setSalvInCorso(false);
         localStorage.setItem("token", JSON.stringify(data.token));
         console.log(localStorage.getItem("token"));
         navigate("/");
       })
       .catch((er) => {
         console.log(er.toString());
+        setSalvInCorso(false);
         if (er.toString() === "Error: 401" || er.toString() === "Error: 400") {
           setStatus(er.toString());
           setPassErrata(true);
@@ -47,6 +51,13 @@ function LoginPage() {
 
   return (
     <>
+      {/*modale login in corso*/}
+      <Modal size="sm" show={salvInCorso}>
+        <div className="text-center py-3">
+          <p className="fw-semibold">Login in corso</p>
+          <Spinner />
+        </div>
+      </Modal>
       {passErrata && (
         <Alert variant="danger" className="text-center">
           {status === "Error: 401" ? (

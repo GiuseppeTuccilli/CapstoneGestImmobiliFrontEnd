@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Col, Container } from "react-bootstrap";
+import { Col, Container, Spinner } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Value } from "sass";
@@ -21,6 +21,7 @@ function RegisterForm() {
   const [show, setShow] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [errorPassword, setErrorPassword] = useState(false);
+  const [salvInCorso, setSalvInCorso] = useState(false);
 
   const navigate = useNavigate();
 
@@ -40,6 +41,7 @@ function RegisterForm() {
   };
 
   const submitForm = () => {
+    setSalvInCorso(true);
     fetch(base + "/auth/register", {
       method: "POST",
       body: JSON.stringify(payload),
@@ -48,12 +50,14 @@ function RegisterForm() {
       .then((res) => {
         if (res.ok) {
           console.log(res);
+          setSalvInCorso(false);
           handleShow();
         } else {
           throw new Error(res.status);
         }
       })
       .catch((er) => {
+        setSalvInCorso(false);
         if (er.toString() === "Error: 400") {
           setShowAlert(true);
         }
@@ -62,6 +66,13 @@ function RegisterForm() {
 
   return (
     <>
+      {/*modale registrazione in corso*/}
+      <Modal size="sm" show={salvInCorso}>
+        <div className="text-center py-3">
+          <p className="fw-semibold">Registrazione in corso</p>
+          <Spinner />
+        </div>
+      </Modal>
       <Container className="p-5 d-flex justify-content-center pb-0">
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
