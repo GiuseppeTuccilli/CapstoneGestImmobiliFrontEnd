@@ -531,13 +531,7 @@ function DettagliImmobile() {
             </div>
           </Col>
         </Row>
-        {/* <Row className={!showRichieste && "d-none"}>
-          <RichiesteCompatibili
-            idImmo={params.idImmobile}
-            base={base}
-            token={token}
-          />
-        </Row>*/}
+
         <Row>
           <div className="d-flex justify-content-around p-2 border border-2 border-sabbia bg-bluGuado">
             {ruolo === "ADMIN" && (
