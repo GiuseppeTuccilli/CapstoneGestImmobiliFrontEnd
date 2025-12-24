@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Container,
   Row,
@@ -13,17 +13,16 @@ import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 
 function RichiesteCompatibili(props) {
-  const [showImmobili, setShowImmobili] = useState(false);
   const [idRichiestaSel, setIdRichiestaSel] = useState(0);
-  const [idImmoSel, setIdImmoSel] = useState(0);
+
   const [error, setError] = useState(false);
-  const [isFirstRender, setIsFirstRender] = useState(true);
+
   const [richieste, setRichieste] = useState([]);
-  const [immoCompatibili, setImmoCompatibili] = useState([]);
+
   const [idClienteSel, setIdClienteSel] = useState(0);
   const [nomeSel, setNomeSel] = useState("");
   const [cognomeSel, setCognomeSel] = useState("");
-  const [visitaShow, setVisitaShow] = useState(false);
+
   const [data, setData] = useState("");
   const [showConferma, setShowConferma] = useState(false);
   const [errSalv, setErrSalv] = useState(false);
@@ -32,7 +31,6 @@ function RichiesteCompatibili(props) {
 
   let idImmo = props.idImmo;
   let base = props.base;
-  let token = props.token;
 
   const params = useParams();
 
@@ -44,7 +42,7 @@ function RichiesteCompatibili(props) {
 
   const navigate = useNavigate();
 
-  const salvaVisita = () => {
+  const salvaVisita = (token) => {
     fetch(base + "/visite", {
       method: "POST",
       body: JSON.stringify(visitaPayload),
@@ -68,7 +66,7 @@ function RichiesteCompatibili(props) {
       });
   };
 
-  const getRichiesteCompatibili = () => {
+  const getRichiesteCompatibili = (token) => {
     fetch(base + "/immobili/" + idImmo + "/incroci", {
       method: "GET",
       headers: {
@@ -92,32 +90,14 @@ function RichiesteCompatibili(props) {
       });
   };
 
-  const getImmoCompatibili = () => {
-    fetch(base + "/richieste/" + idRichiestaSel + "/incroci", {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          throw new Error(res.status);
-        }
-      })
-      .then((data) => {
-        console.log(data);
-        setImmoCompatibili(data);
-      })
-      .catch((er) => {
-        alert("errore recupero dati immobili " + er.toString());
-      });
-  };
-
   useEffect(() => {
-    getRichiesteCompatibili();
-  }, [token]);
+    if (localStorage.getItem("token") === null) {
+      navigate("/login");
+    } else {
+      let tok = localStorage.getItem("token").slice(1, -1);
+      getRichiesteCompatibili(tok);
+    }
+  }, []);
 
   return (
     <>
@@ -151,8 +131,13 @@ function RichiesteCompatibili(props) {
             variant="success"
             onClick={() => {
               handleClose();
-
-              salvaVisita();
+              if (localStorage.getItem("token") === null) {
+                alert("errore nel token, effettuta il login");
+                navigate("/login");
+              } else {
+                let tok = localStorage.getItem("token").slice(1, -1);
+                salvaVisita(tok);
+              }
             }}
           >
             Salva
@@ -259,6 +244,13 @@ function RichiesteCompatibili(props) {
                     })}
                 </tbody>
               </Table>
+              {error && (
+                <>
+                  <Alert variant="danger" className="text-center">
+                    Errore nel recupero dati
+                  </Alert>
+                </>
+              )}
             </Row>
           </Col>
         </Row>

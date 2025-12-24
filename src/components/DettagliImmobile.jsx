@@ -8,10 +8,6 @@ import RichiesteCompatibili from "./RichiesteCompatibili";
 import VisiteImmobile from "./VisiteImmobile";
 
 function DettagliImmobile() {
-  const [token, setToken] = useState(
-    localStorage.getItem("token").slice(1, -1)
-  );
-
   //dati immobile
   const [tipo, setTipo] = useState("");
   const [desc, setDesc] = useState("");
@@ -121,7 +117,6 @@ function DettagliImmobile() {
       .catch((er) => {
         console.log(er.toString());
         setLoadingFoto(false);
-        setError(true);
       });
   };
 
@@ -210,7 +205,7 @@ function DettagliImmobile() {
           alert("foto eliminata");
           window.location.reload();
         } else {
-          throw new error(res.status);
+          throw new Error(res.status);
         }
       })
       .catch((er) => {
@@ -352,207 +347,216 @@ function DettagliImmobile() {
             )}
           </div>
         </Row>
-        <Row className="d-flex justify-content-center p-1 border border-1 border-sabbia bg-bluGuado">
-          <Col xs={12} md={8}>
-            {" "}
-            <div className="d-flex justify-content-between">
-              <Button
-                variant="primary"
-                onClick={() => {
-                  if (showRichieste) {
-                    setShowRichieste(false);
-                  } else {
-                    setShowRichieste(true);
-                    setShowVisite(false);
-                  }
-                }}
-              >
-                {showRichieste ? (
-                  <i className="bi bi-x-lg"></i>
-                ) : (
-                  <i className="bi bi-arrow-90deg-down"></i>
-                )}{" "}
-                Richieste
-              </Button>
-              <Button
-                variant="primary"
-                onClick={() => {
-                  if (showVisite) {
-                    setShowVisite(false);
-                  } else {
-                    setShowRichieste(false);
-                    setShowVisite(true);
-                  }
-                }}
-              >
-                {showVisite ? (
-                  <i className="bi bi-x-lg"></i>
-                ) : (
-                  <i className="bi bi-arrow-90deg-down"></i>
-                )}{" "}
-                Visite
-              </Button>
-              <Button
-                variant="success"
-                onClick={() => {
-                  navigate("/immobili/" + params.idImmobile + "/nuovaVisita");
-                }}
-              >
-                + Visita
-              </Button>
-            </div>
-          </Col>
-        </Row>
+        {error ? (
+          <Alert variant="danger" className="text-center">
+            Errore nel recupero dati
+          </Alert>
+        ) : (
+          <Row className="d-flex justify-content-center p-1 border border-1 border-sabbia bg-bluGuado">
+            <Col xs={12} md={8}>
+              {" "}
+              <div className="d-flex justify-content-between">
+                <Button
+                  variant="primary"
+                  onClick={() => {
+                    if (showRichieste) {
+                      setShowRichieste(false);
+                    } else {
+                      setShowRichieste(true);
+                      setShowVisite(false);
+                    }
+                  }}
+                >
+                  {showRichieste ? (
+                    <i className="bi bi-x-lg"></i>
+                  ) : (
+                    <i className="bi bi-arrow-90deg-down"></i>
+                  )}{" "}
+                  Richieste
+                </Button>
+                <Button
+                  variant="primary"
+                  onClick={() => {
+                    if (showVisite) {
+                      setShowVisite(false);
+                    } else {
+                      setShowRichieste(false);
+                      setShowVisite(true);
+                    }
+                  }}
+                >
+                  {showVisite ? (
+                    <i className="bi bi-x-lg"></i>
+                  ) : (
+                    <i className="bi bi-arrow-90deg-down"></i>
+                  )}{" "}
+                  Visite
+                </Button>
+                <Button
+                  variant="success"
+                  onClick={() => {
+                    navigate("/immobili/" + params.idImmobile + "/nuovaVisita");
+                  }}
+                >
+                  + Visita
+                </Button>
+              </div>
+            </Col>
+          </Row>
+        )}
 
         <Row>
-          <Col
-            xs={12}
-            md={6}
-            lg={4}
-            className="border border-2 border-sabbia bg-polvereScuro p-3"
-          >
-            <Row className="d-flex">
-              <Col className="pe-0">
-                <p className="m-0 p-0 fw-semibold border-bottom border-1 border-bianchetto">
-                  Prezzo (€):
-                </p>
-                <p className="m-0 p-0 fw-semibold border-bottom border-1 border-bianchetto">
-                  Superficie (mq):
-                </p>
-                <p className="m-0 p-0 fw-semibold border-bottom border-1 border-bianchetto">
-                  Locali:
-                </p>
-                <p className="m-0 p-0 fw-semibold border-bottom border-1 border-bianchetto">
-                  Vani:
-                </p>
-              </Col>
-              <Col className="ps-0">
-                <p className="m-0 fw-bold border-bottom border-1 border-bianchetto">
-                  {prezzo}
-                </p>
-                <p className="m-0 fw-bold border-bottom border-1 border-bianchetto">
-                  {superficie}
-                </p>
-                <p className="m-0 fw-bold border-bottom border-1 border-bianchetto">
-                  {locali}
-                </p>
-                <p className="m-0 fw-bold border-bottom border-1 border-bianchetto">
-                  {vani}
-                </p>
-              </Col>
-            </Row>
-          </Col>
-          <Col
-            xs={12}
-            md={6}
-            lg={4}
-            className="border border-2 border-sabbia bg-polvereScuro p-3"
-          >
-            <h4 className="m-0 mb-1 p-2 border- border-1 border-bluGuado bg-sabbia text-center">
-              Accessori
-            </h4>
-            <Row>
-              <Col>
-                <p
-                  className={
-                    "m-0 p-0 fw-semibold text-center" +
-                    (cantina ? " posseduto" : " nonPosseduto")
-                  }
-                >
-                  Cantina
-                </p>
-                <p
-                  className={
-                    "m-0 p-0 fw-semibold text-center" +
-                    (ascensore ? " posseduto " : " nonPosseduto")
-                  }
-                >
-                  Ascensore
-                </p>
-                <p
-                  className={
-                    "m-0 p-0 fw-semibold text-center" +
-                    (auto ? " posseduto " : " nonPosseduto")
-                  }
-                >
-                  Posto Auto
-                </p>
-              </Col>
-              <Col>
-                <p
-                  className={
-                    "m-0 p-0 fw-semibold text-center" +
-                    (giardino ? " posseduto " : " nonPosseduto")
-                  }
-                >
-                  Giardino
-                </p>
-                <p
-                  className={
-                    "m-0 p-0 fw-semibold text-center" +
-                    (terrazzo ? " posseduto " : " nonPosseduto")
-                  }
-                >
-                  Terrazzo
-                </p>
-                <p
-                  className={
-                    "m-0 p-0 fw-semibold text-center" +
-                    (arredato ? " posseduto " : " nonPosseduto")
-                  }
-                >
-                  Arredato
-                </p>
-              </Col>
-            </Row>
-          </Col>
-          <Col
-            xs={12}
-            md={12}
-            lg={4}
-            className="border border-2 border-sabbia bg-polvereScuro p-3 d-flex flex-column justify-content-around"
-          >
-            <p className="m-0 p-0 fw-semibold ">
-              Comune: <span className="fw-bold">{comune}</span>
-            </p>
-            <p className="m-0 p-0 fw-semibold ">
-              Indirizzo: <span className="fw-bold">{indirizzo}</span>
-            </p>
-          </Col>
-          {/* richieste compatibili */}
-          <Col xs={12} className={!showRichieste && "d-none"}>
-            <Row className={!showRichieste && "d-none"}>
-              <RichiesteCompatibili
-                idImmo={params.idImmobile}
-                base={base}
-                token={token}
-              />
-            </Row>
-          </Col>
-          {/*visite */}
-          <Col xs={12} className={!showVisite && "d-none"}>
-            <Row>
-              <VisiteImmobile
-                idImmo={params.idImmobile}
-                base={base}
-                token={token}
-              />
-            </Row>
-          </Col>
-          <Col
-            xs={12}
-            className="border border-2 border-sabbia bg-polvereScuro p-3"
-          >
-            <h5 className="m-0 mb-1 p-2 border- border-1 border-bluGuado bg-sabbia text-center">
-              Descrizione:
-            </h5>
-            <div
-              id="descDettagliImmobile"
-              className="p-2 border border-1 border-bluGuado bg-bianchetto"
-            >
-              <p className="m-0 p-0  ">{desc}</p>
+          {loading ? (
+            <div className="text-center">
+              <Spinner />
             </div>
-          </Col>
+          ) : (
+            <>
+              <Col
+                xs={12}
+                md={6}
+                lg={4}
+                className="border border-2 border-sabbia bg-polvereScuro p-3"
+              >
+                <Row className="d-flex">
+                  <Col className="pe-0">
+                    <p className="m-0 p-0 fw-semibold border-bottom border-1 border-bianchetto">
+                      Prezzo (€):
+                    </p>
+                    <p className="m-0 p-0 fw-semibold border-bottom border-1 border-bianchetto">
+                      Superficie (mq):
+                    </p>
+                    <p className="m-0 p-0 fw-semibold border-bottom border-1 border-bianchetto">
+                      Locali:
+                    </p>
+                    <p className="m-0 p-0 fw-semibold border-bottom border-1 border-bianchetto">
+                      Vani:
+                    </p>
+                  </Col>
+                  <Col className="ps-0">
+                    <p className="m-0 fw-bold border-bottom border-1 border-bianchetto">
+                      {prezzo}
+                    </p>
+                    <p className="m-0 fw-bold border-bottom border-1 border-bianchetto">
+                      {superficie}
+                    </p>
+                    <p className="m-0 fw-bold border-bottom border-1 border-bianchetto">
+                      {locali}
+                    </p>
+                    <p className="m-0 fw-bold border-bottom border-1 border-bianchetto">
+                      {vani}
+                    </p>
+                  </Col>
+                </Row>
+              </Col>
+              <Col
+                xs={12}
+                md={6}
+                lg={4}
+                className="border border-2 border-sabbia bg-polvereScuro p-3"
+              >
+                <h4 className="m-0 mb-1 p-2 border- border-1 border-bluGuado bg-sabbia text-center">
+                  Accessori
+                </h4>
+                <Row>
+                  <Col>
+                    <p
+                      className={
+                        "m-0 p-0 fw-semibold text-center" +
+                        (cantina ? " posseduto" : " nonPosseduto")
+                      }
+                    >
+                      Cantina
+                    </p>
+                    <p
+                      className={
+                        "m-0 p-0 fw-semibold text-center" +
+                        (ascensore ? " posseduto " : " nonPosseduto")
+                      }
+                    >
+                      Ascensore
+                    </p>
+                    <p
+                      className={
+                        "m-0 p-0 fw-semibold text-center" +
+                        (auto ? " posseduto " : " nonPosseduto")
+                      }
+                    >
+                      Posto Auto
+                    </p>
+                  </Col>
+                  <Col>
+                    <p
+                      className={
+                        "m-0 p-0 fw-semibold text-center" +
+                        (giardino ? " posseduto " : " nonPosseduto")
+                      }
+                    >
+                      Giardino
+                    </p>
+                    <p
+                      className={
+                        "m-0 p-0 fw-semibold text-center" +
+                        (terrazzo ? " posseduto " : " nonPosseduto")
+                      }
+                    >
+                      Terrazzo
+                    </p>
+                    <p
+                      className={
+                        "m-0 p-0 fw-semibold text-center" +
+                        (arredato ? " posseduto " : " nonPosseduto")
+                      }
+                    >
+                      Arredato
+                    </p>
+                  </Col>
+                </Row>
+              </Col>
+              <Col
+                xs={12}
+                md={12}
+                lg={4}
+                className="border border-2 border-sabbia bg-polvereScuro p-3 d-flex flex-column justify-content-around"
+              >
+                <p className="m-0 p-0 fw-semibold ">
+                  Comune: <span className="fw-bold">{comune}</span>
+                </p>
+                <p className="m-0 p-0 fw-semibold ">
+                  Indirizzo: <span className="fw-bold">{indirizzo}</span>
+                </p>
+              </Col>
+              {/* richieste compatibili */}
+              <Col xs={12} className={!showRichieste && "d-none"}>
+                <Row className={!showRichieste && "d-none"}>
+                  <RichiesteCompatibili
+                    idImmo={params.idImmobile}
+                    base={base}
+                  />
+                </Row>
+              </Col>
+              {/*visite */}
+              <Col xs={12} className={!showVisite && "d-none"}>
+                <Row>
+                  <VisiteImmobile idImmo={params.idImmobile} base={base} />
+                </Row>
+              </Col>
+              <Col
+                xs={12}
+                className="border border-2 border-sabbia bg-polvereScuro p-3"
+              >
+                <h5 className="m-0 mb-1 p-2 border- border-1 border-bluGuado bg-sabbia text-center">
+                  Descrizione:
+                </h5>
+                <div
+                  id="descDettagliImmobile"
+                  className="p-2 border border-1 border-bluGuado bg-bianchetto"
+                >
+                  <p className="m-0 p-0  ">{desc}</p>
+                </div>
+              </Col>
+            </>
+          )}
         </Row>
 
         <Row>
@@ -611,39 +615,45 @@ function DettagliImmobile() {
             )}
           </div>
         </Row>
-        <Row className=" p-2 border border-2 border-sabbia bg-polvereScuro mb-3">
-          {listaFoto.length > 0 ? (
-            <div className="d-flex justify-content-center">
-              <Button
-                variant="primary"
-                onClick={prevFoto}
-                className="rounded-start-4"
-              >
-                <i className="bi bi-chevron-double-left"></i>
-              </Button>
+        {loadingFoto ? (
+          <div className="text-center">
+            <Spinner />
+          </div>
+        ) : (
+          <Row className=" p-2 border border-2 border-sabbia bg-polvereScuro mb-3">
+            {listaFoto.length > 0 ? (
+              <div className="d-flex justify-content-center">
+                <Button
+                  variant="primary"
+                  onClick={prevFoto}
+                  className="rounded-start-4"
+                >
+                  <i className="bi bi-chevron-double-left"></i>
+                </Button>
 
-              <div id="divFotoImmobile">
-                <img
-                  id="fotoImmobile"
-                  src={listaFoto[fotoIndex].urlFoto}
-                  className="img-fluid"
-                  alt="fotoImmobile"
-                ></img>
+                <div id="divFotoImmobile">
+                  <img
+                    id="fotoImmobile"
+                    src={listaFoto[fotoIndex].urlFoto}
+                    className="img-fluid"
+                    alt="fotoImmobile"
+                  ></img>
+                </div>
+                <Button
+                  variant="primary"
+                  onClick={nextFoto}
+                  className="rounded-end-4"
+                >
+                  <i className="bi bi-chevron-double-right"></i>
+                </Button>
               </div>
-              <Button
-                variant="primary"
-                onClick={nextFoto}
-                className="rounded-end-4"
-              >
-                <i className="bi bi-chevron-double-right"></i>
-              </Button>
-            </div>
-          ) : (
-            <h6 className="m-0  p-2 border- border-1 border-bluGuado bg-sabbia text-center">
-              Non ci sono foto per questo immobile
-            </h6>
-          )}
-        </Row>
+            ) : (
+              <h6 className="m-0  p-2 border- border-1 border-bluGuado bg-sabbia text-center">
+                Non ci sono foto per questo immobile
+              </h6>
+            )}
+          </Row>
+        )}
       </Container>
     </>
   );

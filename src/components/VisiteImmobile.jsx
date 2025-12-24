@@ -1,9 +1,8 @@
 import { Container, Row, Col, Image, Spinner, Table } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { useEffect, useState } from "react";
-import base from "../variabili";
 import { Modal, Alert } from "react-bootstrap/";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function VisiteImmobile(props) {
   const [visite, setVisite] = useState([]);
@@ -15,9 +14,8 @@ function VisiteImmobile(props) {
 
   let idImmo = props.idImmo;
   let base = props.base;
-  let token = props.token;
 
-  const getVisite = () => {
+  const getVisite = (token) => {
     fetch(base + "/immobili/" + idImmo + "/visite", {
       method: "GET",
       headers: {
@@ -40,8 +38,13 @@ function VisiteImmobile(props) {
   };
 
   useEffect(() => {
-    getVisite();
-  }, [token]);
+    if (localStorage.getItem("token") === null) {
+      navigate("/login");
+    } else {
+      let tok = localStorage.getItem("token").slice(1, -1);
+      getVisite(tok);
+    }
+  }, []);
 
   return (
     <>
